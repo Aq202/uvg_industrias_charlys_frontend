@@ -13,6 +13,7 @@ export default defineConfig({
     alias: [
       { find: '@customerComponents', replacement: path.resolve(__dirname, './src/customer_view/components') },
       { find: '@customerPages', replacement: path.resolve(__dirname, './src/customer_view/pages') },
+      { find: '@assets', replacement: path.resolve(__dirname, './src/assets') },
     ],
   },
 })
