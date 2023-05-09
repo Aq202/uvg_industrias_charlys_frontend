@@ -1,4 +1,5 @@
-.mainContainer{
+.mainContainer {
+    color: white;
     display: flex;
     flex-direction: column;
 }
@@ -14,27 +15,27 @@
     width: 100%;
 }
 
-.hamburgerMenuContainer{
+.hamburgerMenuContainer {
     margin-right: auto;
     margin-left: 20px;
 }
 
-.hamburgerMenu{
+.hamburgerMenu {
     width: 25px;
     height: 25px;
     cursor: pointer;
 }
 
-.hamburgerMenu:hover{
+.hamburgerMenu:hover {
     filter: drop-shadow(0 0 0.7em #ffffff);
 }
 
-.profilePic{
+.profilePic {
     width: 40px;
     height: 40px;
 }
 
-.loggedUserContainer{
+.loggedUserContainer {
     display: flex;
     width: 100%;
     justify-content: flex-end;
@@ -46,29 +47,29 @@
     margin-right: 20px;
 }
 
-.profilePicContainer{
+.profilePicContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 20px;
 }
 
-.userCredentialsContainer{
+.userCredentialsContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
 
-p{
+p {
     margin: 0;
 }
 
-.userName{
+.userName {
     font-weight: bold;
 }
 
-.menuDisplayed{
+.menuDisplayed {
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -80,7 +81,7 @@ p{
     padding-bottom: 20px;
 }
 
-.menuHidden{
+.menuHidden {
     position: absolute;
     top: 60px;
     background-color: #403f3f;
@@ -90,13 +91,13 @@ p{
     padding-bottom: 20px;
 }
 
-.menuTitle{
+.menuTitle {
     font-size: 1.5em;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.menuItem{
+.menuItem {
     display: flex;
     align-items: center;
     padding-left: 40px;
@@ -107,4 +108,43 @@ p{
     width: 25px;
     height: 25px;
     margin-right: 10px;
+}
+
+.unlogged {
+    height: 60px;
+    background: #292929;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.unlogged button {
+    font-family: 'IBM Plex Sans';
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px white solid;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.signup {
+    background: #292929;
+    color: white;
+    margin-right: 20px;
+}
+
+.signup:hover {
+    background: white;
+    color: #292929;
+}
+
+.login {
+    background: white;
+    color: #292929;
+    margin-right: 25px;
+}
+
+.login:hover {
+    background: #292929;
+    color: white;
 }

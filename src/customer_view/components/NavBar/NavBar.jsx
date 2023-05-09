@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import hamburgerMenu from '../../../assets/hamburger_menu.svg'
 import userProfilePic from '../../../assets/user_place_holder.svg'
 import inProgress from '../../../assets/in_progress.svg'
@@ -7,30 +8,36 @@ import newOrder from '../../../assets/place_new_order.svg'
 import myOrganization from '../../../assets/building_icon.svg'
 import styles from './NavBar.module.css'
 
-const NavBar = (loggedIn) => {
+const NavBar = ({ loggedIn }) => {
   const [displayMenu, setDisplayMenu] = useState(false)
   const showMenu = () => (displayMenu ? styles.menuDisplayed : styles.menuHidden)
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.container}>
-        {loggedIn && (
-        <div className={styles.loggedUserContainer}>
-          <div className={styles.hamburgerMenuContainer}>
-            <img className={styles.hamburgerMenu} src={hamburgerMenu} alt="menu" onClick={() => setDisplayMenu(!displayMenu)} />
-          </div>
-          <div className={styles.userInfoContainer}>
-            <div className={styles.profilePicContainer}>
-              <img className={styles.profilePic} src={userProfilePic} alt="PFP" />
+      {loggedIn && (
+        <div className={styles.container}>
+          <div className={styles.loggedUserContainer}>
+            <div className={styles.hamburgerMenuContainer}>
+              <img className={styles.hamburgerMenu} src={hamburgerMenu} alt="menu" onClick={() => setDisplayMenu(!displayMenu)} />
             </div>
-            <div className={styles.userCredentialsContainer}>
-              <p className={styles.userName}>Pablo Zamora</p>
-              <p className={styles.userOrganization}>Universidad del Valle</p>
+            <div className={styles.userInfoContainer}>
+              <div className={styles.profilePicContainer}>
+                <img className={styles.profilePic} src={userProfilePic} alt="PFP" />
+              </div>
+              <div className={styles.userCredentialsContainer}>
+                <p className={styles.userName}>Pablo Zamora</p>
+                <p className={styles.userOrganization}>Universidad del Valle</p>
+              </div>
             </div>
           </div>
         </div>
-        )}
-      </div>
+      )}
+      {!loggedIn && (
+        <div className={styles.unlogged}>
+          <button type="button" className={styles.signup}>Regístrate</button>
+          <button type="button" className={styles.login}>Ingresar</button>
+        </div>
+      )}
       <div className={`${showMenu()}`}>
         <p className={styles.menuTitle}>Menú</p>
         <div className={styles.menuItem}>
@@ -52,6 +59,14 @@ const NavBar = (loggedIn) => {
       </div>
     </div>
   )
+}
+
+NavBar.defaultProps = {
+  loggedIn: false,
+}
+
+NavBar.propTypes = {
+  loggedIn: PropTypes.bool,
 }
 
 export default NavBar
