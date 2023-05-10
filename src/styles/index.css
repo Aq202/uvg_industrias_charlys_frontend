@@ -2,5 +2,92 @@
   font-family: helvetica;
   line-height: 1.5;
   font-weight: 400;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.divNuevoPedido {
+  width: 80vw;
+}
+
+.divNuevoPedido > h1, buttomEnviarPedido {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.divDatos {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.divDatosCliente {
+  width: 100vw;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 30em 30em;
+}
+
+.divDropContainer {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  color: #444;
+  cursor: pointer;
+  transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.divDropContainer > img {
+  max-width: 100px;
+}
+
+.divDropContainer:hover {
+  background: #eee;
+  border-color: #111;
+}
+
+.input[type=file] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
+}
+
+.divDropContainer > input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+.buttomEnviarPedido {
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #1C2532;
+  color: white;
+  cursor: pointer;
+  padding: 12px 20px;
+  width: fit-content;
+}
+
+
+
+
