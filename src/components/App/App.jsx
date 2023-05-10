@@ -63,8 +63,11 @@ function App() {
             </label>
           </div>
         </div>
+        <span>Tu pedido será evaluado por uno de nuestros colaboradores, quien te contactará para afinar los últimos detalles.</span>
+        <div className="footerDiv">
+          <input className="buttomEnviarPedido" type="submit" />
+        </div>
       </div>
-      <input className="buttomEnviarPedido" type="submit" />
     </div>
   )
 }

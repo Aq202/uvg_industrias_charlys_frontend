@@ -9,16 +9,24 @@
 
 .divNuevoPedido {
   width: 80vw;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 0px 1px 0px;
 }
 
-.divNuevoPedido > h1, buttomEnviarPedido {
+.divNuevoPedido > h1 {
   text-align: center;
-  justify-content: center;
+}
+
+.footerDiv {
+  width: 100%;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .divDatos {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -26,7 +34,7 @@
 }
 
 .divDatosCliente {
-  width: 100vw;
+  width: 100%;
   display: grid;
   gap: 1em;
   grid-template-columns: 30em 30em;
