@@ -9,7 +9,7 @@ function App() {
       <NavBar loggedIn />
       <NewOrderRequest />
     </>
-  )
+  );
 }
 
 export default App;

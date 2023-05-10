@@ -26,7 +26,6 @@ function SessionProvider({ children }) {
         setAccessToken(null);
       }
     })();
-    console.log('Mensaje desde el context');
   }, []);
 
   return (

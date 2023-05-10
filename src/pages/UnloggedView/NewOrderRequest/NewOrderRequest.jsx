@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import InputContainer from '../../../components/InputContainer'
-import styles from './NewOrderRequest.module.css'
+import React, { useState, useEffect } from 'react';
+import InputContainer from '../../../components/InputContainer';
+import styles from './NewOrderRequest.module.css';
 
 function NewOrderRequest() {
   const InputsdatosCliente = [
@@ -13,13 +13,13 @@ function NewOrderRequest() {
     }, {
       titulo: 'Dirección', tipo: 'text', placeholder: 'Ingresa tu dirección.',
     },
-  ]
+  ];
 
-  const [datosCliente, setDatosCliente] = useState([])
+  const [datosCliente, setDatosCliente] = useState([]);
 
   useEffect(() => {
-    setDatosCliente(InputsdatosCliente)
-  }, [])
+    setDatosCliente(InputsdatosCliente);
+  }, []);
 
   return (
     <div className={styles.divNuevoPedido}>
@@ -45,7 +45,12 @@ function NewOrderRequest() {
               }
               }
             />
-            <span style={{ color: 'grey', margin: '5px', textAlign: 'start', marginBottom: '10px', marginTop: '20px' }}>Adjunta imágenes de referencia, como diseños previos y medidas.</span>
+            <span style={{
+              color: 'grey', margin: '5px', textAlign: 'start', marginBottom: '10px', marginTop: '20px',
+            }}
+            >
+              Adjunta imágenes de referencia, como diseños previos y medidas.
+            </span>
             <label className={styles.divDropContainer} htmlFor="images">
               <img src="icono_camara.svg" alt="icono_camara" />
               <span>Arrastre los archivos aquí</span>
@@ -67,7 +72,7 @@ function NewOrderRequest() {
       </div>
       <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit">Enviar pedido</button>
     </div>
-  )
+  );
 }
 
-export default NewOrderRequest
+export default NewOrderRequest;

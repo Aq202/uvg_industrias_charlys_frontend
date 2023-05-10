@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import SessionContext from '@context/SessionContext';
 import UnloggedMainPage from '@pages/UnloggedView/UnloggedMainPage';
 import LoadingView from '@components/LoadingView';
+import CustomerMainPage from '../CustomerView/CustomerMainPage/CustomerMainPage';
 // import getTokenPayload from '../../helpers/getTokenPayload';
 
 function MainPage() {
@@ -11,7 +12,7 @@ function MainPage() {
   if (accessToken === null) page = <UnloggedMainPage />;
   else if (accessToken !== undefined) {
     // const { role } = getTokenPayload(accessToken);
-    page = 'Loggeado';
+    page = <CustomerMainPage />;
   } else page = <LoadingView />;
 
   return (
