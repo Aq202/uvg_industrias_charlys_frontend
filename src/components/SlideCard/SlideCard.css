@@ -1,0 +1,13 @@
+.slideCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    text-align: center;
+}
+
+.slideCard img{
+    max-height: 430px;
+    max-width: 400px;
+    border-radius: 10px;
+}
