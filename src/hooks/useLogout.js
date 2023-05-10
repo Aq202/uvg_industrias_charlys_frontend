@@ -15,11 +15,3 @@ function useLogout() {
 }
 
 export default useLogout;
-
-useLogout.propTypes = {
-
-};
-
-useLogout.defaultProps = {
-
-};
