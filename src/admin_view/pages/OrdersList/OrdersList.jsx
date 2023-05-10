@@ -3,8 +3,16 @@ import NavBar from '../../components/NavBar/NavBar';
 import styles from './OrdersList.module.css';
 import Searcher from '../../components/Searcher/Searcher';
 import Order from '../../components/Order/Order';
+import { serverHost } from '@/config';
+import {}
 
 function OrdersList() {
+
+  const getOrders = async () => {
+    const response = await fetch(`${serverHost}/orderRequest`);
+    const orders = await response.
+  }
+
   return (
     <div className={`${styles.OrdersList}`}>
       <header>
