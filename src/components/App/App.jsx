@@ -1,8 +1,9 @@
 import React from 'react';
+import OrdersList from '../../admin_view/pages/OrdersList/OrdersList';
 
 function App() {
   return (
-    <div>App</div>
+    <OrdersList />
   );
 }
 
