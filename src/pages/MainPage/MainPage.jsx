@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 // import PropTypes from 'prop-types';
-import SessionContext from '../../context/SessionContext';
-import UnloggedMainPage from '../UnloggedView/UnloggedMainPage/UnloggedMainPage';
+import SessionContext from '@context/SessionContext';
+import UnloggedMainPage from '@pages/UnloggedView/UnloggedMainPage';
+import LoadingView from '@components/LoadingView';
 // import getTokenPayload from '../../helpers/getTokenPayload';
 
 function MainPage() {
@@ -11,9 +12,7 @@ function MainPage() {
   else if (accessToken !== undefined) {
     // const { role } = getTokenPayload(accessToken);
     page = 'Loggeado';
-  } else {
-    page = 'Aun como undefined';
-  }
+  } else page = <LoadingView />;
 
   return (
     page
