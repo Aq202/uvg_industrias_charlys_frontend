@@ -1,9 +1,15 @@
 import React from 'react';
-import OrdersList from '../../admin_view/pages/OrdersList/OrdersList';
+import { SessionProvider } from '@context/SessionContext';
+import { BrowserRouter as Router } from 'react-router-dom';
+import MainPage from '@pages/MainPage';
 
 function App() {
   return (
-    <OrdersList />
+    <Router>
+      <SessionProvider>
+        <MainPage />
+      </SessionProvider>
+    </Router>
   );
 }
 
