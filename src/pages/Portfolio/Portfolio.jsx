@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
-import NavBar from '../../components/NavBar/NavBar'
+import NavBar from '@components/NavBar/NavBar'
 import './Portfolio.css'
-import Slider from '../../components/Slider/Slider'
+import Slider from '@components/Slider/Slider'
 
 const Portfolio = () => {
   const uniforms = ['/catalogue/uniforms/chumpa.jpg', '/catalogue/uniforms/completo frente.jpg', '/catalogue/uniforms/completo atras.jpg',

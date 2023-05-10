@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import hamburgerMenu from '../../../assets/hamburger_menu.svg'
-import userProfilePic from '../../../assets/user_place_holder.svg'
-import inProgress from '../../../assets/in_progress.svg'
-import finishedOrders from '../../../assets/done.svg'
-import newOrder from '../../../assets/place_new_order.svg'
-import myOrganization from '../../../assets/building_icon.svg'
+import hamburgerMenu from '@assets/hamburger_menu.svg'
+import userProfilePic from '@assets/user_place_holder.svg'
+import inProgress from '@assets/in_progress.svg'
+import finishedOrders from '@assets/done.svg'
+import newOrder from '@assets/place_new_order.svg'
+import myOrganization from '@assets/building_icon.svg'
 import styles from './NavBar.module.css'
 
 const NavBar = ({ loggedIn }) => {

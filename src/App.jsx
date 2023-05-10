@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Portfolio from './customer_view/pages/Portfolio';
+import Portfolio from '@pages/Portfolio';
 
 function App() {
   return (
