@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Searcher from '@components/Searcher/Searcher';
 import Order from '@components/Order/Order';
 import NavBar from '@components/NavBar/NavBar';
+import { serverHost } from '@/config';
+import {
+  callFetch, result, loading, error,
+} from '@/hooks/useFetch';
 import styles from './OrdersList.module.css';
 
 function OrdersList() {
+  const getOrders = async () => {
+    const response = callFetch(`${serverHost}/orderRequest`);
+  };
+
+  useEffect(() => {
+
+  }, [result, loading, error]);
+
   return (
     <div className={`${styles.OrdersList}`}>
       <header>
