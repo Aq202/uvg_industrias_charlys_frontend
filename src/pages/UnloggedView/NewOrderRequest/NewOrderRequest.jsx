@@ -4,23 +4,53 @@ import styles from './NewOrderRequest.module.css';
 import NavBar from '../../../components/customer_view/NavBar';
 
 function NewOrderRequest() {
+  const [datosCliente, setDatosCliente] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [email, setEmail] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+
   const InputsdatosCliente = [
     {
-      titulo: 'Nombre', tipo: 'text', placeholder: 'Ingresa tu nombre.',
+      titulo: 'Nombre', tipo: 'text', placeholder: 'Ingresa tu nombre.', setState: setNombre,
     }, {
-      titulo: 'Teléfono', tipo: 'tel', placeholder: 'Ingresa tu teléfono.',
+      titulo: 'Teléfono', tipo: 'tel', placeholder: 'Ingresa tu teléfono.', setState: setTelefono,
     }, {
-      titulo: 'Email', tipo: 'email', placeholder: 'Ingresa tu email.',
+      titulo: 'Email', tipo: 'email', placeholder: 'Ingresa tu email.', setState: setEmail,
     }, {
-      titulo: 'Dirección', tipo: 'text', placeholder: 'Ingresa tu dirección.',
+      titulo: 'Dirección', tipo: 'text', placeholder: 'Ingresa tu dirección.', setState: setDireccion,
     },
   ];
-
-  const [datosCliente, setDatosCliente] = useState([]);
 
   useEffect(() => {
     setDatosCliente(InputsdatosCliente);
   }, []);
+
+  const postOrderRequest = async () => {
+    const body = {
+      name: nombre,
+      email,
+      phone: telefono,
+      address: direccion,
+      description: descripcion,
+    };
+
+    // eslint-disable-next-line no-console
+    console.log('body a enviar: ', body);
+
+    const response = await fetch('localhost:3000/api/orderRequest', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const respuesta = await response.json();
+    // eslint-disable-next-line no-console
+    console.log(respuesta);
+  };
 
   return (
     <div className={styles.mainContainer}>
@@ -32,7 +62,12 @@ function NewOrderRequest() {
           <div className={styles.divDatosCliente}>
             {
               datosCliente.map((x) => (
-                <InputContainer titulo={x.titulo} tipo={x.tipo} placeholder={x.placeholder} />
+                <InputContainer
+                  titulo={x.titulo}
+                  tipo={x.tipo}
+                  placeholder={x.placeholder}
+                  setState={x.setState}
+                />
               ))
             }
           </div>
@@ -47,6 +82,7 @@ function NewOrderRequest() {
                   borderRadius: '5px', border: '1px solid grey', padding: '5px', minHeight: '100px', minWidth: '800px', maxHeight: '1em', maxWidth: '1em',
                 }
                 }
+                onChange={(e) => setDescripcion(e.target.value)}
               />
               <span style={{
                 color: 'grey', margin: '5px', textAlign: 'start', marginBottom: '10px', marginTop: '20px',
@@ -73,7 +109,7 @@ function NewOrderRequest() {
             </div>
           </div>
         </div>
-        <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit">Enviar pedido</button>
+        <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit" onClick={() => postOrderRequest()}>Enviar pedido</button>
       </div>
     </div>
   );
