@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import InputContainer from '../InputContainer'
+import InputContainer from '../../../components/InputContainer'
+import styles from './NewOrderRequest.module.css'
 
-function App() {
+function NewOrderRequest() {
   const InputsdatosCliente = [
     {
       titulo: 'Nombre', tipo: 'text', placeholder: 'Ingresa tu nombre.',
@@ -21,21 +22,21 @@ function App() {
   }, [])
 
   return (
-    <div className="divNuevoPedido">
+    <div className={styles.divNuevoPedido}>
       <h1>Nuevo Pedido</h1>
-      <div className="divDatos">
+      <div className={styles.divDatos}>
         <h3>Datos del cliente: </h3>
-        <div className="divDatosCliente">
+        <div className={styles.divDatosCliente}>
           {
             datosCliente.map((x) => (
               <InputContainer titulo={x.titulo} tipo={x.tipo} placeholder={x.placeholder} />
             ))
           }
         </div>
-        <div className="divDetallesPedido">
+        <div className={styles.divDetallesPedido}>
           <h3>Datos del pedido: </h3>
-          <div className="divInputDetalles" style={{ display: 'flex', flexDirection: 'column', margin: '5px' }}>
-            <span style={{ color: 'grey' }}>Incluye detalles como tipo de producto, cantidad, tipo de tela, color, tallas requeridas, etc.</span>
+          <div className={styles.divInputDetalles} style={{ display: 'flex', flexDirection: 'column', margin: '5px' }}>
+            <span style={{ color: 'grey', textAlign: 'start', marginBottom: '10px' }}>Incluye detalles como tipo de producto, cantidad, tipo de tela, color, tallas requeridas, etc.</span>
             <textarea
               type="text"
               style={
@@ -44,10 +45,10 @@ function App() {
               }
               }
             />
-            <span style={{ color: 'grey', margin: '5px' }}>Adjunta imágenes de referencia, como diseños previos y medidas.</span>
-            <label className="divDropContainer" htmlFor="images">
+            <span style={{ color: 'grey', margin: '5px', textAlign: 'start', marginBottom: '10px', marginTop: '20px' }}>Adjunta imágenes de referencia, como diseños previos y medidas.</span>
+            <label className={styles.divDropContainer} htmlFor="images">
               <img src="icono_camara.svg" alt="icono_camara" />
-              <span>Arrastre los archivos aqui</span>
+              <span>Arrastre los archivos aquí</span>
               o
               <input
                 type="file"
@@ -64,9 +65,9 @@ function App() {
           </div>
         </div>
       </div>
-      <input className="buttomEnviarPedido" type="submit" />
+      <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit">Enviar pedido</button>
     </div>
   )
 }
 
-export default App
+export default NewOrderRequest
