@@ -8,6 +8,7 @@
     height: 100vh;
     width: 100%;
     margin: 0;
+    font-family: 'IBM Plex Sans';
 }
 
 .header h1 {
