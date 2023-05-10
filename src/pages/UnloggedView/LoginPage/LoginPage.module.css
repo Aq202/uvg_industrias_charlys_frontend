@@ -1,0 +1,83 @@
+.loginPage{
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.loginPage::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.slider {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    /* box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, .7); */
+}
+
+.slider ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    animation: sliderAnimationX alternate 150s infinite;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.slider ul li {
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.slider li:nth-child(1) {
+    background-image: url(../../../assets/loginBack1.jpg);
+}
+
+.slider li:nth-child(2) {
+    background-image: url(../../../assets/loginBack2.jpg);
+}
+
+.slider li:nth-child(3) {
+    background-image: url(../../../assets/loginBack3.jpg);
+}
+
+.slider li:nth-child(4) {
+    background-image: url(../../../assets/loginBack4.jpg);
+}
+
+.slider li:nth-child(5) {
+    background-image: url(../../../assets/loginBack5.jpg);
+}
+
+.slider li:nth-child(6) {
+    background-image: url(../../../assets/loginBack7.jpg);
+}
+
+
+@keyframes sliderAnimationX {
+
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-500%);
+    }
+}

@@ -1,0 +1,40 @@
+.slider {
+    width: fit-content;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    height: fit-content;
+    align-items: center;
+    max-width: 400px;
+    z-index: 10;
+    height: 430px;
+}
+
+.slideChanger {
+    background: rgb(32, 30, 30);
+    display: inline;
+    border-radius: 100%;
+    color: white;
+    font-family: ddg-serp-icons;
+    height: 25px;
+    width: 25px;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color:#00013E;
+}
+
+.slideChanger:hover{
+    color: white;
+    background:#00013E;
+}
+
+.controllers {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
