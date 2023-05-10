@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import hamburgerMenu from '../../assets/hamburger_menu.svg';
 import userProfilePic from '../../assets/user_place_holder.svg';
 import inProgress from '../../assets/in_progress.svg';
@@ -9,7 +10,7 @@ import newOrder from '../../assets/place_new_order.svg';
 import myOrganization from '../../assets/building_icon.svg';
 import styles from './NavBar.module.css';
 
-function NavBar(loggedIn) {
+function NavBar({ loggedIn }) {
   const [displayMenu, setDisplayMenu] = useState(false);
   const showMenu = () => (displayMenu ? styles.menuDisplayed : styles.menuHidden);
 
@@ -37,28 +38,42 @@ function NavBar(loggedIn) {
             </div>
           </div>
         )}
+        {!loggedIn && (
+          <div className={styles.unLoggedUserContainer}>
+            <div className={styles.buttonsContainer}>
+              <button className={styles.signUpButton} type="submit">Registrarse</button>
+              <button className={styles.loginButton} type="submit">Iniciar sesión</button>
+            </div>
+          </div>
+        )}
       </div>
       <div className={`${showMenu()}`}>
         <p className={styles.menuTitle}>Menú</p>
-        <div className={styles.menuItem}>
-          <img className={styles.menuIcon} src={inProgress} alt="Icon" />
-          <p>Pedidos en progreso</p>
-        </div>
-        <div className={styles.menuItem}>
-          <img className={styles.menuIcon} src={finishedOrders} alt="Icon" />
-          <p>Pedidos completados</p>
-        </div>
-        <div className={styles.menuItem}>
-          <img className={styles.menuIcon} src={newOrder} alt="Icon" />
-          <p>Realizar nuevo pedido</p>
-        </div>
-        <div className={styles.menuItem}>
-          <img className={styles.menuIcon} src={myOrganization} alt="Icon" />
-          <p>Mi organización</p>
+        <div className={styles.optionsContainer}>
+          <div className={styles.menuItem}>
+            <img className={styles.menuIcon} src={inProgress} alt="Icon" />
+            <p>Pedidos en progreso</p>
+          </div>
+          <div className={styles.menuItem}>
+            <img className={styles.menuIcon} src={finishedOrders} alt="Icon" />
+            <p>Pedidos completados</p>
+          </div>
+          <div className={styles.menuItem}>
+            <img className={styles.menuIcon} src={newOrder} alt="Icon" />
+            <p>Realizar nuevo pedido</p>
+          </div>
+          <div className={styles.menuItem}>
+            <img className={styles.menuIcon} src={myOrganization} alt="Icon" />
+            <p>Mi organización</p>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+NavBar.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+};
 
 export default NavBar;
