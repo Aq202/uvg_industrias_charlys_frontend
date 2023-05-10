@@ -2,6 +2,9 @@
     color: white;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    z-index: 1;
+    width: 100vw;
 }
 
 .container {
