@@ -1,27 +1,37 @@
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+}
+
 .divNuevoPedido {
-    width: 80vw;
-    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
   
-  .divNuevoPedido > h1, buttomEnviarPedido {
+  .divNuevoPedido > h1 {
     text-align: center;
     justify-content: center;
     align-items: center;
   }
   
   .divDatos {
-    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    background-color: #FDFDFD;
+    box-shadow: 2px 2px 1px #d8d8d8;
+    padding: 20px;
+    border-radius: 5px;
   }
   
   .divDatosCliente {
-    width: 100vw;
     display: grid;
     gap: 1em;
-    grid-template-columns: 30em 30em;
+    grid-template-columns: 25em 25em;
     justify-content: start;
   }
   

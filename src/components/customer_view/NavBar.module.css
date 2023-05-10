@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     color: #ffffff;
+    margin-bottom: 60px;
 }
 
 .container {
@@ -42,6 +43,13 @@
     align-items: center;
 }
 
+.unLoggedUserContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .userInfoContainer {
     display: flex;
     margin-right: 20px;
@@ -79,16 +87,20 @@ p{
     top: 60px;
     transition: left 0.3s ease;
     padding-bottom: 20px;
+    align-items: center;
 }
 
 .menuHidden{
     position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 60px;
     background-color: #403f3f;
     width: 400px;
     left: -400px;
     transition: left 0.3s ease;
     padding-bottom: 20px;
+    align-items: center;
 }
 
 .menuTitle{
@@ -97,10 +109,16 @@ p{
     margin-bottom: 20px;
 }
 
+.optionsContainer{
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-left: 20px;
+}
+
 .menuItem{
     display: flex;
     align-items: center;
-    padding-left: 40px;
     margin-bottom: 20px;
     cursor: pointer;
 }
@@ -109,4 +127,31 @@ p{
     width: 25px;
     height: 25px;
     margin-right: 10px;
+}
+
+.buttonsContainer {
+    margin-right: 20px;
+}
+
+.signUpButton {
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: #292929;
+    color: white;
+    cursor: pointer;
+    padding: 12px 20px;
+    width: fit-content;
+    border: 2px solid #ffffff;
+    font-weight: bold;
+}
+
+.loginButton {
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #292929;
+    cursor: pointer;
+    padding: 12px 20px;
+    width: fit-content;
+    font-weight: bold;
 }
