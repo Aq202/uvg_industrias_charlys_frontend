@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginForm.css';
 import useLogin from '@hooks/useLogin';
 import InputText from '@components/InputText';
 import { button, aqua } from '@styles/buttons.module.css';
 import Spinner from '@components/Spinner';
+import { useNavigate } from 'react-router';
 
 function LoginForm() {
   const [form, setForm] = useState({});
   const [formError, setFormError] = useState({});
+  const navigate = useNavigate();
 
   const {
     login, success, error, loading,
@@ -42,6 +44,11 @@ function LoginForm() {
 
     login(form);
   };
+
+  useEffect(() => {
+    if (!success) return;
+    navigate('/');
+  }, [success]);
 
   return (
     <form className="loginForm">

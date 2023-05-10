@@ -4,6 +4,7 @@
   font-weight: 400;
   
   --error-color--:#df0303;
+  --navBar-height--: 60px;
 }
 
 html, body{

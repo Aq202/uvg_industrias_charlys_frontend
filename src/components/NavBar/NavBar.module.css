@@ -7,7 +7,7 @@
 
 .container {
     position: absolute;
-    height: 60px;
+    height: var(--navBar-height--);
     background-color: #292929;
     left: 0;
     top: 0;
@@ -79,30 +79,23 @@ p{
     font-weight: bold;
 }
 
-.menuDisplayed{
+.sideMenu{
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 300px;
     background-color: #403f3f;
-    position: absolute;
+    position: fixed;
     left: 0px;
     top: 60px;
     transition: left 0.3s ease;
-    padding-bottom: 20px;
     align-items: center;
+    height: calc(100vh - var(--navBar-height--));
+    box-sizing: border-box;
+    
 }
 
-.menuHidden{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 60px;
-    background-color: #403f3f;
-    width: 400px;
-    left: -400px;
-    transition: left 0.3s ease;
-    padding-bottom: 20px;
-    align-items: center;
+.hideMenu{
+    left: -300px !important;
 }
 
 .menuTitle{
