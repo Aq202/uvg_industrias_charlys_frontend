@@ -8,7 +8,7 @@ function OrdersList() {
   return (
     <div className={`${styles.OrdersList}`}>
       <header>
-        <NavBar />
+        <NavBar loggedIn />
       </header>
       <main>
         <div className={`${styles.top}`}>

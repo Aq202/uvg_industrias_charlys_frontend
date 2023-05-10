@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
-import SessionContext from '@context/SessionContext';
+import React from 'react';
 import UnloggedMainPage from '@pages/UnloggedView/UnloggedMainPage';
 import LoadingView from '@components/LoadingView';
 import consts from '@helpers/consts';
 import CustomerMainPage from '../CustomerView/CustomerMainPage/CustomerMainPage';
 import AdminMainPage from '../AdminView/AdminMainPage';
 import getTokenPayload from '../../helpers/getTokenPayload';
+import useToken from '../../hooks/useToken';
 
 function MainPage() {
-  const { accessToken } = useContext(SessionContext);
+  const token = useToken();
   let page = null;
-  if (accessToken === null) page = <UnloggedMainPage />;
-  else if (accessToken !== undefined) {
-    const { role } = getTokenPayload(accessToken);
+  if (token === null) page = <UnloggedMainPage />;
+  else if (token !== undefined) {
+    const { role } = getTokenPayload(token);
     switch (role) {
       case consts.role.admin:
         page = <AdminMainPage />;
@@ -32,11 +31,3 @@ function MainPage() {
 }
 
 export default MainPage;
-
-MainPage.propTypes = {
-
-};
-
-MainPage.defaultProps = {
-
-};

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import NavBar from '@components/NavBar';
 import InputContainer from '../../../components/InputContainer';
 import styles from './NewOrderRequest.module.css';
-import NavBar from '../../../components/customer_view/NavBar';
 
 function NewOrderRequest() {
   const [datosCliente, setDatosCliente] = useState([]);
