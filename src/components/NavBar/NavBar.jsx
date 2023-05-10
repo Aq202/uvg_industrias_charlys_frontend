@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import hamburgerMenu from '../../assets/hamburger_menu.svg';
 import userProfilePic from '../../assets/user_place_holder.svg';
 import inProgress from '../../assets/in_progress.svg';
@@ -65,8 +66,12 @@ function NavBar({ loggedIn }) {
         {!loggedIn && (
           <div className={styles.unLoggedUserContainer}>
             <div className={styles.buttonsContainer}>
-              <button className={styles.signUpButton} type="submit">Registrarse</button>
-              <button className={styles.loginButton} type="submit">Iniciar sesión</button>
+              <Link to="/newOrder">
+                <button className={styles.signUpButton} type="submit">Nueva compra</button>
+              </Link>
+              <Link to="/login">
+                <button className={styles.loginButton} type="submit">Iniciar sesión</button>
+              </Link>
             </div>
           </div>
         )}
