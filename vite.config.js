@@ -21,9 +21,4 @@ export default defineConfig({
       { find: '@hooks', replacement: path.resolve(__dirname, './src/hooks') },
     ],
   },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
-  },
 });

@@ -1,55 +1,111 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '@components/NavBar';
-import InputContainer from '../../../components/InputContainer';
+import { serverHost } from '@/config';
+import Spinner from '@components/Spinner';
+import { useNavigate } from 'react-router-dom';
+import InputText from '../../../components/InputText/InputText';
+import useFetch from '../../../hooks/useFetch';
 import styles from './NewOrderRequest.module.css';
 
 function NewOrderRequest() {
-  const [datosCliente, setDatosCliente] = useState([]);
-  const [nombre, setNombre] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [email, setEmail] = useState('');
-  const [direccion, setDireccion] = useState('');
+  const {
+    callFetch, result, error, loading,
+  } = useFetch();
+  const [form, setForm] = useState({});
   const [descripcion, setDescripcion] = useState('');
-
-  const InputsdatosCliente = [
-    {
-      titulo: 'Nombre', tipo: 'text', placeholder: 'Ingresa tu nombre.', setState: setNombre,
-    }, {
-      titulo: 'Teléfono', tipo: 'tel', placeholder: 'Ingresa tu teléfono.', setState: setTelefono,
-    }, {
-      titulo: 'Email', tipo: 'email', placeholder: 'Ingresa tu email.', setState: setEmail,
-    }, {
-      titulo: 'Dirección', tipo: 'text', placeholder: 'Ingresa tu dirección.', setState: setDireccion,
-    },
-  ];
+  const [errors, setErrors] = useState({});
+  const handleChange = (e) => {
+    const { name: field, value } = e.target;
+    setForm((lastValue) => ({ ...lastValue, [field]: value }));
+  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setDatosCliente(InputsdatosCliente);
-  }, []);
+    // eslint-disable-next-line no-console
+    if (!result) return;
+    // eslint-disable-next-line no-alert
+    alert('Solicitud enviada exitosamente');
+    navigate('/');
+  }, [result]);
 
-  const postOrderRequest = async () => {
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }, [error]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(loading);
+  }, [loading]);
+
+  const clearError = (e) => {
+    setErrors((lastVal) => ({ ...lastVal, [e.target.name]: null }));
+  };
+
+  const validateName = () => {
+    const value = form.name;
+
+    if (!(value?.length > 0)) {
+      setErrors((lastVal) => ({ ...lastVal, name: 'Se necesita un nombre para el pedido' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const validatePhone = () => {
+    const value = form.phone;
+
+    if (!(value?.length > 0)) {
+      setErrors((lastVal) => ({ ...lastVal, phone: 'Se necesita un teléfono de contacto' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateEmail = () => {
+    const value = form.email;
+
+    if (!(value?.length > 0)) {
+      setErrors((lastVal) => ({ ...lastVal, email: 'Se necesita un teléfono de contacto' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateAddress = () => {
+    const value = form.address;
+
+    if (!(value?.length > 0)) {
+      setErrors((lastVal) => ({ ...lastVal, address: 'Se necesita un teléfono de contacto' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let hasError = false;
+    if (!validateName()) hasError = true;
+    if (!validatePhone()) hasError = true;
+    if (!validateEmail()) hasError = true;
+    if (!validateAddress()) hasError = true;
+
+    if (hasError) return;
+
+    const uri = `${serverHost}/orderRequest`;
     const body = {
-      name: nombre,
-      email,
-      phone: telefono,
-      address: direccion,
+      ...form,
       description: descripcion,
     };
 
-    // eslint-disable-next-line no-console
-    console.log('body a enviar: ', body);
-
-    const response = await fetch('localhost:3000/api/orderRequest', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    callFetch({
+      uri, method: 'POST', body: JSON.stringify(body),
     });
-
-    const respuesta = await response.json();
-    // eslint-disable-next-line no-console
-    console.log(respuesta);
   };
 
   return (
@@ -60,16 +116,42 @@ function NewOrderRequest() {
         <div className={styles.divDatos}>
           <h3>Datos del cliente: </h3>
           <div className={styles.divDatosCliente}>
-            {
-              datosCliente.map((x) => (
-                <InputContainer
-                  titulo={x.titulo}
-                  tipo={x.tipo}
-                  placeholder={x.placeholder}
-                  setState={x.setState}
-                />
-              ))
-            }
+            <InputText
+              name="name"
+              title="Nombre"
+              error={errors.name}
+              value={form.name}
+              onChange={handleChange}
+              onBlur={validateName}
+              onFocus={clearError}
+            />
+            <InputText
+              name="phone"
+              title="Teléfono"
+              error={errors.phone}
+              value={form.phone}
+              onChange={handleChange}
+              onBlur={validatePhone}
+              onFocus={clearError}
+            />
+            <InputText
+              name="email"
+              title="Correo electrónico"
+              error={errors.email}
+              value={form.email}
+              onChange={handleChange}
+              onBlur={validateEmail}
+              onFocus={clearError}
+            />
+            <InputText
+              name="address"
+              title="Dirección"
+              error={errors.address}
+              value={form.address}
+              onChange={handleChange}
+              onBlur={validateAddress}
+              onFocus={clearError}
+            />
           </div>
           <div className={styles.divDetallesPedido}>
             <h3>Datos del pedido: </h3>
@@ -84,8 +166,12 @@ function NewOrderRequest() {
                 }
                 onChange={(e) => setDescripcion(e.target.value)}
               />
-              <span style={{
-                color: 'grey', margin: '5px', textAlign: 'start', marginBottom: '10px', marginTop: '20px',
+              {/* <span style={{
+                color: 'grey',
+                margin: '5px',
+                textAlign: 'start',
+                marginBottom: '10px',
+                marginTop: '20px',
               }}
               >
                 Adjunta imágenes de referencia, como diseños previos y medidas.
@@ -101,15 +187,20 @@ function NewOrderRequest() {
                   multiple
                   style={
                   {
-                    width: '350px', maxWidth: '100%', color: '#444', padding: '5px', background: '#fff', borderRadius: '10px', border: '1px solid #555',
+                    width: '350px',
+                    maxWidth: '100%',
+                    color: '#444'
+                     padding: '5px',
+                     background: '#fff', borderRadius: '10px', border: '1px solid #555',
                   }
                   }
                 />
-              </label>
+              </label> */}
             </div>
           </div>
         </div>
-        <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit" onClick={() => postOrderRequest()}>Enviar pedido</button>
+        {!loading && <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit" onClick={handleSubmit}>Enviar pedido</button>}
+        {loading && <Spinner />}
       </div>
     </div>
   );
