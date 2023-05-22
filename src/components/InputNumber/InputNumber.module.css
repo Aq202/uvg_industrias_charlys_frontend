@@ -1,0 +1,58 @@
+.inputTextContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inputTextContainer label{
+    text-transform: capitalize;
+    font-size: 14px;
+    color:#828484;
+    text-align: left;
+}
+
+.inputBox{
+    border-radius: 7px;
+    border: 1px solid #b8bfc3;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 45px;
+}
+
+.measureUnit{
+    background-color: #BBBBBB;
+    text-transform: uppercase;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-weight: bold;
+    color: rgb(41, 41, 41);
+}
+
+.inputTextContainer input{
+    font-family: var(--app-plain-text-font--);
+    font-size: 17px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 12px;
+}
+
+.inputTextContainer.error .inputBox{
+    border-color: var(--error-color--);
+}
+
+.inputTextContainer.error label{
+    color:var(--error-color--)
+}
+
+.inputTextContainer .inputError{
+    text-align: left;
+    color: var(--error-color--);
+    font-size: 15px;
+}
