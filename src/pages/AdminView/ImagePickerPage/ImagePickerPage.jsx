@@ -1,37 +1,21 @@
-import React, { useState } from 'react';
-import ImagePicker from '../../../components/ImagePicker/ImagePicker';
-import useFetch from '../../../hooks/useFetch';
+import React, { useEffect } from 'react';
+import useApiImage from '../../../hooks/useApiImage';
 import { serverHost } from '../../../config';
-// import PropTypes from 'prop-types';
 
 function ImagePickerPage() {
-  const { callFetch } = useFetch();
-  const [files, setFiles] = useState();
-  const imageChange = (fl) => {
-    setFiles(fl);
-  };
+  const {
+    getApiImage, result, error, loading,
+  } = useApiImage();
 
-  const send = () => {
-    const form = new FormData();
-
-    files?.forEach((file) => {
-      form.append('file[]', file, file.name);
-    });
-
-    form.append('name', 'diego');
-
-    callFetch({
-      uri: `${serverHost}/image`,
-      method: 'POST',
-      body: form,
-      removeContentType: true,
-    });
-  };
+  useEffect(() => {
+    getApiImage(`${serverHost}/image/orderRequest/OR0000000000008-Doqw3NMmbNPEMGl-1684865493414.png`);
+  }, []);
 
   return (
     <div>
-      <ImagePicker setImageFiles={imageChange} />
-      <button onClick={send} type="button">Enviar</button>
+      {loading && <span>Loading...</span>}
+      {error && <span>{`Error: ${error.message}, status:${error.status}`}</span>}
+      {result && <img src={result} alt="result" />}
     </div>
   );
 }
