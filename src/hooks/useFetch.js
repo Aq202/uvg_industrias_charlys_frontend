@@ -6,19 +6,22 @@ function useFetch() {
   const [loading, setLoading] = useState(false);
 
   const callFetch = async ({
-    uri, method = 'GET', body, headers, signal, toJson = true, parse = true,
+    uri, method = 'GET', body, headers, signal, toJson = true, parse = true, removeContentType = false,
   }) => {
     setResult(null);
     setError(null);
     setLoading(true);
     try {
+      const heads = {
+        'Content-Type': 'application/json',
+        ...headers,
+      };
+      if (removeContentType) delete heads['Content-Type'];
+
       const reply = await fetch(uri, {
         method,
         body,
-        headers: {
-          'Content-Type': 'application/json',
-          ...headers,
-        },
+        headers: heads,
         signal,
         credentials: 'include',
       });

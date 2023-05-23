@@ -1,101 +1,114 @@
-.mainContainer{
+.mainContainer {
   display: flex;
   flex-direction: column;
 }
 
+.mainContainer h1{
+  margin: 60px 0 40px 0;
+}
+
 .divNuevoPedido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-  }
-  
-  .divNuevoPedido > h1 {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .divDatos {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    background-color: #FDFDFD;
-    box-shadow: 2px 2px 1px #d8d8d8;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .divDatosCliente {
-    display: grid;
-    gap: 1em;
-    grid-template-columns: 25em 25em;
-    justify-content: start;
-  }
-  
-  .divDropContainer {
-    position: relative;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px dashed #555;
-    color: #444;
-    cursor: pointer;
-    transition: background .2s ease-in-out, border .2s ease-in-out;
-  }
-  
-  .divDropContainer > img {
-    max-width: 100px;
-  }
-  
-  .divDropContainer:hover {
-    background: #eee;
-    border-color: #111;
-  }
-  
-  .input[type=file] {
-    width: 350px;
-    max-width: 100%;
-    color: #444;
-    padding: 5px;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #555;
-  }
-  
-  .divDropContainer > input[type=file]::file-selector-button {
-    margin-right: 20px;
-    border: none;
-    background: #084cdf;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: background .2s ease-in-out;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
 
-  .divDetallesPedido {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .buttonEnviarPedido {
-    margin-top: 20px;
-    border-radius: 5px;
-    background-color: #1C2532;
-    color: white;
-    cursor: pointer;
-    padding: 12px 20px;
-    width: fit-content;
-    border: 0;
-    font-weight: bold;
-  }
+.divNuevoPedido > h1 {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
 
+.divDatos {
+ 
+  background-color: #FDFDFD;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.07);
+  padding: 30px 50px 50px 50px;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 85%;
+  box-sizing: border-box;
+  overflow: hidden;
+  column-gap: 30px;
+  row-gap: 15px;
+  max-width: 900px;
+}
+
+.mainContainer h3{
+  margin: 25px 0 0 0;
+}
+
+.divDropContainer>img {
+  max-width: 100px;
+}
+
+.divDropContainer:hover {
+  background: #eee;
+  border-color: #111;
+}
+
+.input[type=file] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
+}
+
+.divDropContainer>input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+.divDetallesPedido {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.buttonEnviarPedido {
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #1C2532;
+  color: white;
+  cursor: pointer;
+  padding: 12px 20px;
+  width: fit-content;
+  border: 0;
+  font-weight: bold;
+}
+
+.detailsTextArea textarea {
+  border: 1px solid grey;
+  resize: vertical;
+  min-height: 100px !important;
+  max-height: 250px;
+}
+
+.inputDescription {
+
+  color: grey;
+  text-align: start;
+  margin-bottom: '10px';
+}
+
+.oneColumn{
+  grid-column: 1/-1;
+}
+
+@media only screen and (max-width:730px){
+  .divDatos{
+    grid-template-columns: 1fr;
+  }
+}
