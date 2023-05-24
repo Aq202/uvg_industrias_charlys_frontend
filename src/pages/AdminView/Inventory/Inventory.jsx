@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import Searcher from '@components/Searcher/Searcher';
 import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
@@ -27,74 +26,92 @@ function Inventory() {
   useEffect(() => {
     callFetch({ uri: `${serverHost}/generalInfo/material`, headers: { authorization: token } });
     callFetch3({ uri: `${serverHost}/generalInfo/fabric`, headers: { authorization: token } });
-  }, []);
+  }, [type]);
 
   const searchMaterial = () => {
-    if (type === 'Material') { callFetch({ uri: `${serverHost}/generalInfo/material/?search=&#39;${search}&#39;`, headers: { authorization: token } }); }
-    if (type === 'Fabrica') { callFetch({ uri: `${serverHost}/generalInfo/fabrica/?search=&#39;${search}&#39;`, headers: { authorization: token } }); }
+    if (type === 'Material') {
+      callFetch({ uri: `${serverHost}/generalInfo/material?search=${search}`, headers: { authorization: token } });
+    }
+    if (type === 'Fabrica') {
+      callFetch3({ uri: `${serverHost}/generalInfo/fabric?search=${search}`, headers: { authorization: token } });
+    }
+    console.log(search);
+    console.log(result3);
   };
+
+  const renderMaterialInventory = () => (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripcion</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {result.map((val) => (
+          <tr>
+            <td>{val.id}</td>
+            <td>{val.description}</td>
+            <td>{val.quantity}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  const renderFabricInventory = () => (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Color</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {result3.map((val) => (
+          <tr>
+            <td>{val.id}</td>
+            <td>{val.fabric}</td>
+            <td>{val.color}</td>
+            <td>{val.quantity}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   return (
-    <div className={`${styles.inventory}`}>
-      <NavBar />
-      <div className={`${styles.select}`}>
-        <InputSelect
-          title="Tipo"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          name="sizeProduct"
-          options={[{ value: 'Material', title: 'Material' }, { value: 'Fabrica', title: 'Fabrica' }]}
-          placeholder="Selecciona un tipo"
-        />
-      </div>
-      <div className={`${styles.searcher}`}>
-        <InputText
-          onChange={(e) => setSearch(e.target.value)}
-          title="Buscar"
-          name="search"
-          value={search}
-        />
-        <Button text="Buscar" onClick={searchMaterial} type="primary" />
+    <div className={styles.inventory}>
+      <NavBar loggedIn />
+      <h1>Inventario</h1>
+      <div className={`${styles.top}`}>
+        <div className={styles.select}>
+          <InputSelect
+            title="Tipo"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            name="sizeProduct"
+            options={[{ value: 'Material', title: 'Material' }, { value: 'Fabrica', title: 'Fabrica' }]}
+            placeholder="Selecciona un tipo"
+          />
+        </div>
+        <div className={styles.searchContainer}>
+          <InputText
+            onChange={(e) => setSearch(e.target.value)}
+            title="Buscar"
+            name="search"
+            value={search}
+          />
+          <Button text="Buscar" onClick={searchMaterial} type="primary" />
+        </div>
       </div>
       {error && 'Ocurrio un error'}
       {loading && <Spinner />}
-      {result?.length > 0 && type === 'Material' && (
-      <div className={`${styles.info}`}>
-        <div className={`${styles.header}`}>
-          <span>ID</span>
-          <span>Descripcion</span>
-          <span>Cantidad</span>
-        </div>
-        <div>
-          {result.map((val) => (
-            <MaterialInventory id={val.id} desc={val.description} amount={val.quantity} />
-          ))}
-        </div>
-      </div>
-      )}
-
-      {error3 && 'Ocurrio un error'}
-      {loading3 && <Spinner />}
-      {result3?.length > 0 && type === 'Fabrica' && (
-        <div className={`${styles.info}`}>
-          <div className={`${styles.header}`}>
-            <span>ID</span>
-            <span>Nombre</span>
-            <span>Color</span>
-            <span>Cantidad</span>
-          </div>
-          <div className={`${styles.fabrics}`}>
-            {result3.map((val) => (
-              <FabricInventory
-                id={val.id}
-                name={val.fabric}
-                color={val.color}
-                amount={val.quantity}
-              />
-            ))}
-
-          </div>
-        </div>
-      )}
+      {type === 'Material' && result?.length > 0 && renderMaterialInventory()}
+      {type === 'Fabrica' && result3?.length > 0 && renderFabricInventory()}
     </div>
   );
 }

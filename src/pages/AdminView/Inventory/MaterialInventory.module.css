@@ -7,10 +7,12 @@
 }
 
 .material span{
+    flex-basis: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 5px 10px;
     font-size: 13px;
     border:1px solid #000;
+    box-sizing: border-box;
 }

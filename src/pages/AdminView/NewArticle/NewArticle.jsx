@@ -184,12 +184,12 @@ function NewArticle() {
         true
       && (
       <form className={`${styles.formArticle}`}>
-        <div>
-          <InputRadio
+        <div className={`${styles.select}`}>
+          <InputSelect
             title="Categoría"
             options={[
               { title: 'Material', value: 'material' },
-              { title: 'Fabrica', value: 'fabrica' },
+              { title: 'Tela', value: 'fabrica' },
               { title: 'Producto', value: 'producto' },
             ]}
             value={type}
@@ -199,24 +199,26 @@ function NewArticle() {
         </div>
         {type === 'material' && (
         <div className={`${styles.material}`}>
-          <InputText
-            title="Descripcion"
-            value={descMaterial}
-            onChange={(e) => setDescMaterial(e.target.value)}
-            name="descMaterial"
-          />
-          <InputNumber
-            title="Cantidad"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            name="amount"
-          />
-          <InputText
-            title="Unidad de medida"
-            value={measureUnit}
-            onChange={(e) => setMeasureUnit(e.target.value)}
-            name="measure"
-          />
+          <div>
+            <InputText
+              title="Descripcion"
+              value={descMaterial}
+              onChange={(e) => setDescMaterial(e.target.value)}
+              name="descMaterial"
+            />
+            <InputNumber
+              title="Cantidad"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              name="amount"
+            />
+            <InputText
+              title="Unidad de medida"
+              value={measureUnit}
+              onChange={(e) => setMeasureUnit(e.target.value)}
+              name="measure"
+            />
+          </div>
         </div>
         )}
         {type === 'fabrica' && (
