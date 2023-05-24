@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '@components/NavBar/NavBar';
-import PropTypes from 'prop-types';
-// import Card from '@components/SlideCard/SlideCard';
 import TextArea from '@components/TextArea/TextArea';
 import InputDate from '@components/InputDate/InputDate';
 import InputNumber from '@components/InputNumber/InputNumber';
@@ -11,29 +9,35 @@ import ImageViewer from '@components/ImageViewer/ImageViewer';
 import { serverHost } from '@/config';
 import moment from 'moment';
 import useFetch from '@hooks/useFetch';
+import { useParams } from 'react-router';
+import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './OrderRequest.module.css';
-// import useToken from '../../../hooks/useToken';
+import useToken from '../../../hooks/useToken';
 
-function OrderRequest({ orderId }) {
+function OrderRequest() {
   const [form, setForm] = useState({});
-  // const token = useToken();
   const {
     callFetch, result, error, loading,
   } = useFetch();
 
+  const { orderId } = useParams();
+  const token = useToken();
+
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/orderRequest/${orderId}`, headers: { authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJVMDAwMDAwMDAwMDAwMDEiLCJuYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IiIsInNleCI6Ik0iLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODQ5Njk3ODcsInR5cGUiOiJBQ0NFU1MiLCJpYXQiOjE2ODQ4ODMzODd9.hxvI2WrrZxi1j8Qxrvtn0wtIvkLVwawm1w1xRLg61DY' } });
-  }, []);
+    if (!orderId && !token) return;
+    callFetch({
+      uri: `${serverHost}/orderRequest/${orderId}`,
+      headers: {
+        authorization: token,
+      },
+    });
+  }, [orderId, token]);
 
   const handleFormChange = (e) => {
     const field = e.target.name;
     const { value } = e.target;
     setForm((lastValue) => ({ ...lastValue, [field]: value }));
   };
-
-  console.log('result: ', result);
-  console.log('media:', result?.media);
-  console.log('media0:', result?.media[0]);
 
   return (
     <div className={`${styles.OrderRequest}`}>
@@ -64,22 +68,26 @@ function OrderRequest({ orderId }) {
             </div>
             <div className={`${styles.detalles}`}>
               <strong>Detalles: </strong>
-              <p>
-                {result?.description}
-              </p>
+              <p>{result?.description}</p>
             </div>
             <div className={`${styles.files}`}>
               <h3>Archivos adjuntos</h3>
-              <div className={`${styles.divFile}`}>
-                {
-                  result?.media && <ImageViewer images={result?.media} />
-                  // <Card image="https://i.pinimg.com/564x/e3/f3/97/e3f39723e17d353cd53a5d6ac20f4c9f.jpg" text="imagen.png" />
-                }
+              <div className={`${styles.divFile} ${scrollbarGray}`}>
+                {result?.media && (
+                  <div className={styles.imageViewerContainer}>
+                    <ImageViewer images={result?.media} />
+                  </div>
+                )}
               </div>
             </div>
             <div className={`${styles.aditionalDetails}`}>
               <h3>Detalles adicionales</h3>
-              <TextArea title="" onChange={handleFormChange} value={form?.aditionalDetails} name="aditionalDetails" />
+              <TextArea
+                title=""
+                onChange={handleFormChange}
+                value={form?.aditionalDetails}
+                name="aditionalDetails"
+              />
             </div>
             <div className={`${styles.bottomForm}`}>
               <div>
@@ -103,7 +111,3 @@ function OrderRequest({ orderId }) {
 }
 
 export default OrderRequest;
-
-OrderRequest.propTypes = {
-  orderId: PropTypes.string.isRequired,
-};

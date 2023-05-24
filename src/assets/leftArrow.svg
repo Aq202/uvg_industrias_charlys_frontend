@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="210" zoomAndPan="magnify" viewBox="0 0 157.5 251.249989" height="335" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="2c009e4e15"><path d="M 3.0625 0.0234375 L 154.5625 0.0234375 L 154.5625 250.480469 L 3.0625 250.480469 Z M 3.0625 0.0234375 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#2c009e4e15)"><path fill="#000000" d="M 128.117188 250.996094 L 3.082031 126.0625 L 128.988281 0.265625 L 154.589844 25.84375 L 54.285156 126.0625 L 153.71875 225.417969 L 128.117188 250.996094 " fill-opacity="1" fill-rule="nonzero"/></g></svg>
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1">
+
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="null" id="svg_2" height="10.93871" width="8.99922" y="2.45772" x="3.34523" fill="#ffffff"/>
+  <path fill="#334756" id="svg_1" d="m8.05656,0c-4.418,0 -8,3.582 -8,8s3.582,8 8,8s8,-3.582 8,-8s-3.582,-8 -8,-8zm2.354,12.646l-0.707,0.707l-5.354,-5.353l5.354,-5.354l0.707,0.707l-4.647,4.647l4.647,4.646z"/>
+ </g>
+</svg>
