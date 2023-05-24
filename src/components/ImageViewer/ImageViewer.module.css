@@ -1,0 +1,98 @@
+
+.imageViewer{
+    /* width: 500px;
+    height:  400px; */
+    background-color: white;
+    border-radius: 20px;
+    position: relative;
+    margin: 0 25px 0 25px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.1);
+}
+
+.imageViewer .viewerContainer{
+    margin: auto;
+}
+
+.imageViewer .viewerContainer .imagesList{
+    overflow: hidden;
+    position: relative;
+}
+
+.imageViewer .imagesList .carrousel{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(1, 1fr);
+    overflow: hidden;
+    transition: left .8s ease-in-out;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+}
+
+.imageViewer .imagesList .carrousel > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.imageViewer img{
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.viewerControls{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr 10%;
+}
+
+.arrowContainerLeft, .arrowContainerRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowContainerRight {
+    grid-column: 1;
+    grid-row: span 2;
+}
+
+.arrowContainerRight{
+    grid-column: 3;
+    grid-row: span 2;
+}
+
+.arrowContainerLeft .arrowButtonLeft{
+    background-image: url(../../assets/leftArrow.svg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:5px white solid;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+.arrowContainerRight .arrowButtonRight{
+    background-image: url(../../assets/leftArrow.svg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:5px white solid;
+    cursor: pointer;
+    box-sizing: content-box;
+    margin-left: -100%;
+    transform: rotate(-180deg);
+    margin-right: -100%;
+}
+
+.arrowContainerLeft .arrowButtonLeft:hover{
+    filter: saturate(500%);
+}
