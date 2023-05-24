@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import useApiFetch from './useApiFetch';
 
 function useFetch() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { apiFetch } = useApiFetch();
 
   const callFetch = async ({
     uri, method = 'GET', body, headers, signal, toJson = true, parse = true, removeContentType = false,
@@ -18,15 +20,9 @@ function useFetch() {
       };
       if (removeContentType) delete heads['Content-Type'];
 
-      const reply = await fetch(uri, {
-        method,
-        body,
-        headers: heads,
-        signal,
-        credentials: 'include',
+      const reply = await apiFetch({
+        uri, method, body, headers: heads, signal,
       });
-
-      if (!reply?.ok) throw reply;
 
       let res;
       if (!parse) res = reply;
