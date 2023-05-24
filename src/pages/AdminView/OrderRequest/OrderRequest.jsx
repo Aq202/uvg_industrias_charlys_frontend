@@ -49,14 +49,22 @@ function OrderRequest({ orderId }) {
           {loading && <Spinner />}
           <div className={`${styles.orderInfo}`}>
             <div className={`${styles.orderInfoTop}`}>
-              <span className={`${styles.topInfo}`}>Cliente: </span>
-              {result?.customerName}
-              <span className={`${styles.topInfo}`}>Código: </span>
-              {result?.id}
-              <span className={`${styles.topInfo}`}>Fecha solicitada: </span>
-              {moment(result?.datePlaced).format('DD-MM-YY')}
-              <span className={`${styles.topInfo}`}>Detalles: </span>
-              {result?.description}
+              <p>
+                <strong>Cliente: </strong>
+                {result?.customerName}
+              </p>
+              <p>
+                <strong>Código: </strong>
+                {result?.id}
+              </p>
+              <p>
+                <strong>Fecha solicitada: </strong>
+                {moment(result?.datePlaced).format('DD-MM-YY')}
+              </p>
+              <p>
+                <strong>Detalles: </strong>
+                {result?.description}
+              </p>
             </div>
             <div className={`${styles.files}`}>
               <h3>Archivos adjuntos</h3>
