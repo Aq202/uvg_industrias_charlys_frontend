@@ -1,30 +1,27 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { serverHost } from '../config';
 import SessionContext from '../context/SessionContext';
-import useFetch from './useFetch';
 
 function useRefreshAccessToken() {
   const { setAccessToken } = useContext(SessionContext);
-  const {
-    callFetch, result, error,
-  } = useFetch();
 
-  const refreshAccessToken = () => {
+  /**
+   * Función para obtener un accessToken nuevo del servidor.
+   * @returns accessToken
+   */
+  const refreshAccessToken = async () => {
     const uri = `${serverHost}/session/accessToken`;
-    callFetch(uri);
+    const response = await fetch(uri);
+    if (!response.ok) {
+      // si el refreshToken no está autorizado, cerrar sesión
+      if (response.status === 401 || response.status === 403) setAccessToken(null);
+      throw response;
+    }
+    const { accessToken } = await response.json();
+    return accessToken;
   };
 
-  useEffect(() => {
-    const { accessToken } = result;
-    setAccessToken(accessToken);
-  }, [result]);
-
-  useEffect(() => {
-    // Token invalido
-    setAccessToken(null);
-  }, [error]);
-
-  return { refreshAccessToken };
+  return refreshAccessToken;
 }
 
 export default useRefreshAccessToken;
