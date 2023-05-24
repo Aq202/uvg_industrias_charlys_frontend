@@ -61,8 +61,10 @@ function OrderRequest({ orderId }) {
                 <strong>Fecha solicitada: </strong>
                 {moment(result?.datePlaced).format('DD-MM-YY')}
               </p>
+            </div>
+            <div className={`${styles.detalles}`}>
+              <strong>Detalles: </strong>
               <p>
-                <strong>Detalles: </strong>
                 {result?.description}
               </p>
             </div>
