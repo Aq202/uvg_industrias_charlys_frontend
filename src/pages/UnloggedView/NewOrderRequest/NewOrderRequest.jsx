@@ -3,11 +3,13 @@ import NavBar from '@components/NavBar';
 import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
 import { useNavigate } from 'react-router-dom';
+import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp';
 import InputText from '../../../components/InputText/InputText';
 import useFetch from '../../../hooks/useFetch';
 import styles from './NewOrderRequest.module.css';
 import ImagePicker from '../../../components/ImagePicker/ImagePicker';
 import TextArea from '../../../components/TextArea/TextArea';
+import usePopUp from '../../../hooks/usePopUp';
 
 function NewOrderRequest() {
   const {
@@ -17,6 +19,7 @@ function NewOrderRequest() {
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
+  const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -28,11 +31,9 @@ function NewOrderRequest() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
     if (!result) return;
-    // eslint-disable-next-line no-alert
-    alert('Solicitud enviada exitosamente');
-    navigate('/');
+
+    openSuccess(); // mostrar alerta
   }, [result]);
 
   useEffect(() => {
@@ -124,6 +125,8 @@ function NewOrderRequest() {
     });
   };
 
+  const redirectAfterSubmit = () => navigate('/');
+
   return (
     <div className={styles.mainContainer}>
       <NavBar loggedIn={false} />
@@ -190,16 +193,19 @@ function NewOrderRequest() {
         </div>
 
         {!loading && (
-          <button
-            className={styles.buttonEnviarPedido}
-            aria-label="Send"
-            type="submit"
-          >
+          <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit">
             Enviar pedido
           </button>
         )}
         {loading && <Spinner />}
       </form>
+
+      <SuccessNotificationPopUp
+        close={closeSuccess}
+        isOpen={isSuccessOpen}
+        callback={redirectAfterSubmit}
+        text="La solicitud de compra ha sido enviada correctamente. Pronto nos pondremos en contacto contigo para concretar el pedido."
+      />
     </div>
   );
 }
