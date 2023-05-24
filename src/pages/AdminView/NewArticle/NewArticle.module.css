@@ -4,8 +4,9 @@
     box-sizing:border-box;
 }
 
-.newArticle{
-    height: 100vh;
+.newArticle{    
+    display: flex;
+    justify-content: center;
 }
 
 .formArticle{
@@ -14,6 +15,11 @@
     align-items: center;
     gap: 20px;
     margin-top: 15vh;
+    max-width: 1000px;
+    background-color: #FDFDFD;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #4A8AA4;
 }
 
 .material, .fabric{
@@ -51,29 +57,38 @@
 }
 
 @media screen and (max-width:600px){
+    .formArticle{
+        max-width: 250px;
+        padding: 1px;
+    }
+    
     .fabric div{
-        max-width: 240px;
         width: 100%;
         flex-wrap: wrap;
+        margin: 0 auto;
     }
 
     .fabric div *{
         margin: 0 auto;
+        width: 80%;
     }
 
 }
 
 @media screen and (max-width:900px){
+    .formArticle{
+        max-width: 700px;
+    }
+
     .material, .product div {
-        max-width: 240px;
         width: 100%;
         flex-wrap: wrap;
         margin: 0 auto;
     }
 
-    .material *, .product div *{
+    .material, .product div *{
         margin: 0 auto;
-        width: 240px;
+        width: 80%;
     }
 
 }

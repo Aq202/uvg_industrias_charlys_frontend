@@ -16,6 +16,9 @@ function NewArticle() {
   const {
     callFetch, result, error, loading,
   } = useFetch();
+  const {
+    callFetch: callFetch2, result: result2, error: error2, loading: loading2,
+  } = useFetch();
   const token = useToken();
 
   const [type, setType] = useState('');
@@ -36,20 +39,6 @@ function NewArticle() {
       /* ----------------- Material -----------------*/
       case 'material':
         callFetch({
-          uri: `${serverHost}/inventory`,
-          method: 'POST',
-          body: JSON.stringify(
-            {
-              fabrica: null,
-              producto: null,
-              size: null,
-              quantity: amount,
-              measurementUnit: measureUnit,
-            },
-          ),
-          headers: { authorization: token },
-        });
-        callFetch({
           uri: `${serverHost}/generalInfo/material`,
           method: 'POST',
           body: JSON.stringify(
@@ -59,16 +48,14 @@ function NewArticle() {
           ),
           headers: { authorization: token },
         });
-        break;
-        /* ----------------- Fabrica -----------------*/
-      case 'fabrica':
-        callFetch({
+        callFetch2({
           uri: `${serverHost}/inventory`,
           method: 'POST',
           body: JSON.stringify(
             {
-              material: null,
-              producto: null,
+              material: result,
+              fabrica: null,
+              product: null,
               size: null,
               quantity: amount,
               measurementUnit: measureUnit,
@@ -76,6 +63,10 @@ function NewArticle() {
           ),
           headers: { authorization: token },
         });
+
+        break;
+        /* ----------------- Fabrica -----------------*/
+      case 'fabrica':
         callFetch({
           uri: `${serverHost}/generalInfo/fabric`,
           method: 'POST',
@@ -83,6 +74,21 @@ function NewArticle() {
             {
               fabric: nameFabric,
               color: colorFabric,
+            },
+          ),
+          headers: { authorization: token },
+        });
+        callFetch2({
+          uri: `${serverHost}/inventory`,
+          method: 'POST',
+          body: JSON.stringify(
+            {
+              material: null,
+              fabric: result,
+              product: null,
+              size: null,
+              quantity: amount,
+              measurementUnit: measureUnit,
             },
           ),
           headers: { authorization: token },

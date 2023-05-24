@@ -1,0 +1,89 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+
+.inventory{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select{
+    margin-top: 5vh;
+    width: 20%;
+}
+
+.searcher{
+    margin-top: 5vh;
+    margin-left:50vw;
+    display: flex;
+    justify-content: center;
+}
+
+.searcher button{
+    height: 100%;
+    border-radius: 5px;
+    background-color: #00013E;
+    color: white;
+    cursor: pointer;
+    padding: 12px 20px;
+    width: fit-content;
+    border: 2px solid #ffffff;
+    font-weight: bold;
+}
+
+.info{
+    margin-top: 5vh;
+    width: 80%;
+}
+
+.header{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.header span{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #00013E;
+    padding: 5px 10px;
+    color: #FFF;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.material, .fabric{
+    margin-top: 1vh;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+.material span, .fabric span{
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    padding: 5px 10px;
+    font-size: 13px;
+}
+
+
+@media screen and (max-width:950px){
+    .info{
+        overflow-x:scroll ;
+    }
+    
+}
+
+@media screen and (max-width:750px){
+    .info{
+        overflow-x:scroll ;
+    }
+    
+}
