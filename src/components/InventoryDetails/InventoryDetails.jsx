@@ -8,11 +8,12 @@ import useFetch from '../../hooks/useFetch';
 import InputText from '../InputText/InputText';
 import InputNumber from '../InputNumber/InputNumber';
 import TextArea from '../TextArea/TextArea';
+import useToken from '../../hooks/useToken';
 
 function InventoryDetails({ itemId, onSuccess }) {
   const [info, setInfo] = useState({});
   const [errors, setErrors] = useState({});
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJVMDAwMDAwMDAwMDAwMDEiLCJuYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IiIsInNleCI6Ik0iLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODUwNTg1NDEsInR5cGUiOiJBQ0NFU1MiLCJpYXQiOjE2ODQ5NzIxNDF9.wXIRrivJmhGETy0nqawvGZHzG58AyGgORYopxlqeRLI';
+  const token = useToken();
   const {
     callFetch, result, error, loading,
   } = useFetch();
