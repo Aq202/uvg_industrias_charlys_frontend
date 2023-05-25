@@ -4,10 +4,6 @@
     box-sizing:border-box;
 }
 
-body{
-    background-color: #292929;  
-}
-
 .newArticle{ 
  
     display: flex;

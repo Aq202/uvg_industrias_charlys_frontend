@@ -1,13 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import OrdersList from '../OrdersList/OrdersList';
-import ImagePickerPage from '../ImagePickerPage/ImagePickerPage';
+import NewArticle from '../NewArticle/NewArticle';
+import Inventory from '../Inventory/Inventory';
 
 function AdminMainPage() {
   return (
     <Routes>
       <Route path="*" element={<OrdersList />} />
-      <Route path="/image" element={<ImagePickerPage />} />
+      <Route path="/inventario" element={<Inventory />} />
+      <Route path="/inventario/nuevo" element={<NewArticle />} />
     </Routes>
   );
 }

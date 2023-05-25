@@ -11,6 +11,10 @@ import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
 import InputText from '../../../components/InputText/InputText';
 import Button from '../../../components/Button/Button';
+import usePopUp from '../../../hooks/usePopUp';
+import InventoryDetails from '../../../components/InventoryDetails/InventoryDetails';
+import PopUp from '../../../components/PopUp/PopUp';
+import SuccessNotificationPopUp from '../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 
 function Inventory() {
   const {
@@ -20,9 +24,13 @@ function Inventory() {
     callFetch: callFetch3, result: result3, error: error3, loading: loading3,
   } = useFetch();
 
+  const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
+
   const token = useToken();
   const [type, setType] = useState('');
   const [search, setSearch] = useState('');
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
   useEffect(() => {
     callFetch({ uri: `${serverHost}/generalInfo/material`, headers: { authorization: token } });
     callFetch3({ uri: `${serverHost}/generalInfo/fabric`, headers: { authorization: token } });
@@ -30,10 +38,16 @@ function Inventory() {
 
   const searchMaterial = () => {
     if (type === 'Material') {
-      callFetch({ uri: `${serverHost}/generalInfo/material?search=${search}`, headers: { authorization: token } });
+      callFetch({
+        uri: `${serverHost}/generalInfo/material?search=${search}`,
+        headers: { authorization: token },
+      });
     }
     if (type === 'Fabrica') {
-      callFetch3({ uri: `${serverHost}/generalInfo/fabric?search=${search}`, headers: { authorization: token } });
+      callFetch3({
+        uri: `${serverHost}/generalInfo/fabric?search=${search}`,
+        headers: { authorization: token },
+      });
     }
     console.log(search);
     console.log(result3);
@@ -50,7 +64,7 @@ function Inventory() {
       </thead>
       <tbody>
         {result.map((val) => (
-          <tr>
+          <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.id}</td>
             <td>{val.description}</td>
             <td>{val.quantity}</td>
@@ -59,6 +73,8 @@ function Inventory() {
       </tbody>
     </table>
   );
+
+  const handleOnUpdateSuccess = () => openSuccess();
 
   const renderFabricInventory = () => (
     <table className={styles.table}>
@@ -72,7 +88,7 @@ function Inventory() {
       </thead>
       <tbody>
         {result3.map((val) => (
-          <tr>
+          <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.id}</td>
             <td>{val.fabric}</td>
             <td>{val.color}</td>
@@ -94,7 +110,10 @@ function Inventory() {
             value={type}
             onChange={(e) => setType(e.target.value)}
             name="sizeProduct"
-            options={[{ value: 'Material', title: 'Material' }, { value: 'Fabrica', title: 'Fabrica' }]}
+            options={[
+              { value: 'Material', title: 'Material' },
+              { value: 'Fabrica', title: 'Fabrica' },
+            ]}
             placeholder="Selecciona un tipo"
           />
         </div>
@@ -112,6 +131,18 @@ function Inventory() {
       {loading && <Spinner />}
       {type === 'Material' && result?.length > 0 && renderMaterialInventory()}
       {type === 'Fabrica' && result3?.length > 0 && renderFabricInventory()}
+
+      {selectedItemId !== null && (
+        <PopUp close={() => setSelectedItemId(null)} closeWithBackground={false}>
+          <InventoryDetails itemId={selectedItemId} onSuccess={handleOnUpdateSuccess} />
+        </PopUp>
+      )}
+
+      <SuccessNotificationPopUp
+        close={closeSuccess}
+        isOpen={isSuccessOpen}
+        text="El artículo se ha actualizado correctamente."
+      />
     </div>
   );
 }
