@@ -131,7 +131,7 @@ function NewOrderRequest() {
     <div className={styles.mainContainer}>
       <NavBar loggedIn={false} />
       <form className={styles.divNuevoPedido} onSubmit={handleSubmit}>
-        <h1>Nuevo Pedido</h1>
+        <h1 className={styles.containerTitle}>Nuevo Pedido</h1>
         <div className={styles.divDatos}>
           <h3 className={styles.oneColumn}>Datos del cliente: </h3>
 
