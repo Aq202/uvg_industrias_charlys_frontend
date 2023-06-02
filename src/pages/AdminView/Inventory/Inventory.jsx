@@ -33,11 +33,11 @@ function Inventory() {
 
   useEffect(() => {
     callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
-  }, [result]);
+  }, []);
 
   useEffect(() => {
     callFetch2({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
-  }, [result2]);
+  }, []);
 
   const searchMaterial = () => {
     callFetch({
@@ -124,7 +124,7 @@ function Inventory() {
             value={type}
             onChange={(e) => setType(e.target.value)}
             name="type"
-            options={result2.map((option) => ({
+            options={result2?.result.map((option) => ({
               value: option.name,
               title: option.name,
             }))}
