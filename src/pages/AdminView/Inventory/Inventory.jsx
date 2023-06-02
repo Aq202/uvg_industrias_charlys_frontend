@@ -21,9 +21,6 @@ function Inventory() {
     callFetch, result, error, loading,
   } = useFetch();
   const {
-    callFetch: callFetch3, result: result3, error: error3, loading: loading3,
-  } = useFetch();
-  const {
     callFetch: callFetch2, result: result2, error: error2, loading: loading2,
   } = useFetch();
 
@@ -35,92 +32,46 @@ function Inventory() {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
-    callFetch2({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
-  }, []);
+    callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+  }, [result]);
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/generalInfo/material`, headers: { authorization: token } });
-    callFetch3({ uri: `${serverHost}/generalInfo/fabric`, headers: { authorization: token } });
-    callFetch2({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
-  }, [type]);
+    callFetch2({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
+  }, [result2]);
 
   const searchMaterial = () => {
-    if (type === 'Material') {
-      callFetch({
-        uri: `${serverHost}/generalInfo/material?search=${search}`,
-        headers: { authorization: token },
-      });
-    }
-    if (type === 'Fabrica') {
-      callFetch3({
-        uri: `${serverHost}/generalInfo/fabric?search=${search}`,
-        headers: { authorization: token },
-      });
-    }
-    if (type === '') {
-      callFetch2({
-        uri: `${serverHost}/inventory?search=${search}`,
-        headers: { authorization: token },
-      });
-    }
+    callFetch({
+      uri: `${serverHost}/inventory?search=${search}`,
+      headers: { authorization: token },
+    });
   };
-
-  const renderMaterialInventory = () => (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Descripcion</th>
-          <th>Cantidad</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {result.map((val) => (
-          <tr onClick={() => setSelectedItemId(val.id)}>
-            <td>{val.id}</td>
-            <td>{val.description}</td>
-            <td>{val.quantity}</td>
-            <td>
-              <div>
-                <UpdateIcon />
-                <DeleteIcon />
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
 
   const handleOnUpdateSuccess = () => openSuccess();
 
-  const renderFabricInventory = () => (
+  const renderTypeInventory = () => (
     <table className={styles.table}>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nombre</th>
           <th>Color</th>
           <th>Cantidad</th>
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
-        {result3.map((val) => (
+        {result.map((val) => (val.materialType === type && (
           <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.id}</td>
-            <td>{val.fabric}</td>
             <td>{val.color}</td>
             <td>{val.quantity}</td>
             <td>
-              <div>
+              <div className={`${styles.icons}`}>
                 <UpdateIcon />
                 <DeleteIcon />
               </div>
             </td>
           </tr>
-        ))}
+        )))}
       </tbody>
     </table>
   );
@@ -137,7 +88,7 @@ function Inventory() {
         </tr>
       </thead>
       <tbody>
-        {result2.map((val) => (
+        {result.map((val) => (
           <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.type}</td>
             <td>{val.materialType}</td>
@@ -162,8 +113,8 @@ function Inventory() {
       <div className={`${styles.store}`}>
         <h2>Inventario en bodega</h2>
         <div className={`${styles.buttons}`}>
-          <Button text="Nuevo" onClick={searchMaterial} type="secondary" />
-          <Button text="Actualizar" onClick={searchMaterial} type="secondary" />
+          <Button text="Nuevo" type="secondary" />
+          <Button text="Actualizar" type="secondary" />
         </div>
       </div>
       <div className={`${styles.top}`}>
@@ -172,11 +123,11 @@ function Inventory() {
             title="Tipo"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            name="sizeProduct"
-            options={[
-              { value: 'Material', title: 'Material' },
-              { value: 'Fabrica', title: 'Fabrica' },
-            ]}
+            name="type"
+            options={result2.map((option) => ({
+              value: option.name,
+              title: option.name,
+            }))}
           />
         </div>
         <div className={styles.searchContainer}>
@@ -190,16 +141,11 @@ function Inventory() {
         </div>
       </div>
       <div className={`${styles.load}`}>
-        {type === 'Material' && error && 'Ocurrio un error'}
-        {type === 'Fabrica' && error3 && 'Ocurrio un error'}
-        {type === '' && error2 && 'Ocurrio un error'}
-        {type === 'Material' && loading && <Spinner />}
-        {type === 'Fabrica' && loading3 && <Spinner />}
-        {type === '' && loading2 && <Spinner />}
+        {(error || error2) && 'Ocurrio un error'}
+        {(loading || loading2) && <Spinner />}
       </div>
-      {type === 'Material' && result?.length > 0 && renderMaterialInventory()}
-      {type === 'Fabrica' && result3?.length > 0 && renderFabricInventory()}
-      {type === '' && result2?.length > 0 && renderInventory()}
+      {type !== '' && result?.length > 0 && renderTypeInventory()}
+      {type === '' && result?.length > 0 && renderInventory()}
 
       {selectedItemId !== null && (
         <PopUp close={() => setSelectedItemId(null)} closeWithBackground={false}>
