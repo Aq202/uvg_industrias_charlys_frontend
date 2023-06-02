@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
+import UpdateIcon from '@mui/icons-material/Update';
+import DeleteIcon from '@mui/icons-material/Delete';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './Inventory.module.css';
-import MaterialInventory from './MaterialInventory';
-import FabricInventory from './FabricInventory';
 import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
 import InputText from '../../../components/InputText/InputText';
@@ -21,7 +21,7 @@ function Inventory() {
     callFetch, result, error, loading,
   } = useFetch();
   const {
-    callFetch: callFetch3, result: result3, error: error3, loading: loading3,
+    callFetch: callFetch2, result: result2, error: error2, loading: loading2,
   } = useFetch();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
@@ -32,67 +32,74 @@ function Inventory() {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/generalInfo/material`, headers: { authorization: token } });
-    callFetch3({ uri: `${serverHost}/generalInfo/fabric`, headers: { authorization: token } });
-  }, [type]);
+    callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+  }, []);
+
+  useEffect(() => {
+    callFetch2({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
+  }, []);
 
   const searchMaterial = () => {
-    if (type === 'Material') {
-      callFetch({
-        uri: `${serverHost}/generalInfo/material?search=${search}`,
-        headers: { authorization: token },
-      });
-    }
-    if (type === 'Fabrica') {
-      callFetch3({
-        uri: `${serverHost}/generalInfo/fabric?search=${search}`,
-        headers: { authorization: token },
-      });
-    }
-    console.log(search);
-    console.log(result3);
+    callFetch({
+      uri: `${serverHost}/inventory?search=${search}`,
+      headers: { authorization: token },
+    });
   };
 
-  const renderMaterialInventory = () => (
+  const handleOnUpdateSuccess = () => openSuccess();
+
+  const renderTypeInventory = () => (
     <table className={styles.table}>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Descripcion</th>
+          <th>Color</th>
           <th>Cantidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {result.map((val) => (val.materialType === type && (
+          <tr onClick={() => setSelectedItemId(val.id)}>
+            <td>{val.id}</td>
+            <td>{val.color}</td>
+            <td>{val.quantity}</td>
+            <td>
+              <div className={`${styles.icons}`}>
+                <UpdateIcon />
+                <DeleteIcon />
+              </div>
+            </td>
+          </tr>
+        )))}
+      </tbody>
+    </table>
+  );
+
+  const renderInventory = () => (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Característica</th>
+          <th>Color</th>
+          <th>Cantidad</th>
+          <th>Acción</th>
         </tr>
       </thead>
       <tbody>
         {result.map((val) => (
           <tr onClick={() => setSelectedItemId(val.id)}>
-            <td>{val.id}</td>
-            <td>{val.description}</td>
-            <td>{val.quantity}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-
-  const handleOnUpdateSuccess = () => openSuccess();
-
-  const renderFabricInventory = () => (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Color</th>
-          <th>Cantidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        {result3.map((val) => (
-          <tr onClick={() => setSelectedItemId(val.id)}>
-            <td>{val.id}</td>
-            <td>{val.fabric}</td>
+            <td>{val.type}</td>
+            <td>{val.materialType}</td>
             <td>{val.color}</td>
             <td>{val.quantity}</td>
+            <td>
+              <div className={`${styles.icons}`}>
+                <UpdateIcon />
+                <DeleteIcon />
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -103,18 +110,24 @@ function Inventory() {
     <div className={styles.inventory}>
       <NavBar loggedIn />
       <h1>Inventario</h1>
+      <div className={`${styles.store}`}>
+        <h2>Inventario en bodega</h2>
+        <div className={`${styles.buttons}`}>
+          <Button text="Nuevo" type="secondary" />
+          <Button text="Actualizar" type="secondary" />
+        </div>
+      </div>
       <div className={`${styles.top}`}>
         <div className={styles.select}>
           <InputSelect
             title="Tipo"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            name="sizeProduct"
-            options={[
-              { value: 'Material', title: 'Material' },
-              { value: 'Fabrica', title: 'Fabrica' },
-            ]}
-            placeholder="Selecciona un tipo"
+            name="type"
+            options={result2?.result.map((option) => ({
+              value: option.name,
+              title: option.name,
+            }))}
           />
         </div>
         <div className={styles.searchContainer}>
@@ -127,10 +140,12 @@ function Inventory() {
           <Button text="Buscar" onClick={searchMaterial} type="primary" />
         </div>
       </div>
-      {error && 'Ocurrio un error'}
-      {loading && <Spinner />}
-      {type === 'Material' && result?.length > 0 && renderMaterialInventory()}
-      {type === 'Fabrica' && result3?.length > 0 && renderFabricInventory()}
+      <div className={`${styles.load}`}>
+        {(error || error2) && 'Ocurrio un error'}
+        {(loading || loading2) && <Spinner />}
+      </div>
+      {type !== '' && result?.length > 0 && renderTypeInventory()}
+      {type === '' && result?.length > 0 && renderInventory()}
 
       {selectedItemId !== null && (
         <PopUp close={() => setSelectedItemId(null)} closeWithBackground={false}>
