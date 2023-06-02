@@ -4,6 +4,7 @@ import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp';
+import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import InputText from '../../../components/InputText/InputText';
 import useFetch from '../../../hooks/useFetch';
 import styles from './NewOrderRequest.module.css';
@@ -20,6 +21,7 @@ function NewOrderRequest() {
 
   const navigate = useNavigate();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
+  const [isErrorOpen, openError, closeError] = usePopUp();
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -37,8 +39,11 @@ function NewOrderRequest() {
   }, [result]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(error);
+    if (error !== null) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      openError();
+    }
   }, [error]);
 
   useEffect(() => {
@@ -88,6 +93,17 @@ function NewOrderRequest() {
 
     if (!(value?.length > 0)) {
       setErrors((lastVal) => ({ ...lastVal, address: 'Se necesita un teléfono de contacto' }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateDescription = () => {
+    const value = form.description;
+
+    if (!(value?.length > 0)) {
+      setErrors((lastVal) => ({ ...lastVal, description: 'Se necesitan detalles para iniciar el pedido' }));
       return false;
     }
 
@@ -182,6 +198,9 @@ function NewOrderRequest() {
             className={`${styles.detailsTextArea} ${styles.oneColumn}`}
             onChange={handleChange}
             value={form.description}
+            error={errors.description}
+            onBlur={validateDescription}
+            onFocus={clearError}
           />
           <span className={`${styles.inputDescription} ${styles.oneColumn}`}>
             Adjunta imágenes de referencia, como diseños previos y medidas.
@@ -205,6 +224,11 @@ function NewOrderRequest() {
         isOpen={isSuccessOpen}
         callback={redirectAfterSubmit}
         text="La solicitud de compra ha sido enviada correctamente. Pronto nos pondremos en contacto contigo para concretar el pedido."
+      />
+      <ErrorNotificationPopUp
+        close={closeError}
+        isOpen={isErrorOpen}
+        text={error?.message}
       />
     </div>
   );
