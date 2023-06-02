@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
+import UpdateIcon from '@mui/icons-material/Update';
+import DeleteIcon from '@mui/icons-material/Delete';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './Inventory.module.css';
-import MaterialInventory from './MaterialInventory';
-import FabricInventory from './FabricInventory';
 import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
 import InputText from '../../../components/InputText/InputText';
@@ -23,6 +23,9 @@ function Inventory() {
   const {
     callFetch: callFetch3, result: result3, error: error3, loading: loading3,
   } = useFetch();
+  const {
+    callFetch: callFetch2, result: result2, error: error2, loading: loading2,
+  } = useFetch();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
 
@@ -32,8 +35,13 @@ function Inventory() {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
+    callFetch2({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+  }, []);
+
+  useEffect(() => {
     callFetch({ uri: `${serverHost}/generalInfo/material`, headers: { authorization: token } });
     callFetch3({ uri: `${serverHost}/generalInfo/fabric`, headers: { authorization: token } });
+    callFetch2({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
   }, [type]);
 
   const searchMaterial = () => {
@@ -49,8 +57,12 @@ function Inventory() {
         headers: { authorization: token },
       });
     }
-    console.log(search);
-    console.log(result3);
+    if (type === '') {
+      callFetch2({
+        uri: `${serverHost}/inventory?search=${search}`,
+        headers: { authorization: token },
+      });
+    }
   };
 
   const renderMaterialInventory = () => (
@@ -60,6 +72,7 @@ function Inventory() {
           <th>ID</th>
           <th>Descripcion</th>
           <th>Cantidad</th>
+          <th>Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -68,6 +81,12 @@ function Inventory() {
             <td>{val.id}</td>
             <td>{val.description}</td>
             <td>{val.quantity}</td>
+            <td>
+              <div>
+                <UpdateIcon />
+                <DeleteIcon />
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -84,6 +103,7 @@ function Inventory() {
           <th>Nombre</th>
           <th>Color</th>
           <th>Cantidad</th>
+          <th>Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -93,6 +113,42 @@ function Inventory() {
             <td>{val.fabric}</td>
             <td>{val.color}</td>
             <td>{val.quantity}</td>
+            <td>
+              <div>
+                <UpdateIcon />
+                <DeleteIcon />
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  const renderInventory = () => (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Característica</th>
+          <th>Color</th>
+          <th>Cantidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {result2.map((val) => (
+          <tr onClick={() => setSelectedItemId(val.id)}>
+            <td>{val.type}</td>
+            <td>{val.materialType}</td>
+            <td>{val.color}</td>
+            <td>{val.quantity}</td>
+            <td>
+              <div className={`${styles.icons}`}>
+                <UpdateIcon />
+                <DeleteIcon />
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -103,6 +159,13 @@ function Inventory() {
     <div className={styles.inventory}>
       <NavBar loggedIn />
       <h1>Inventario</h1>
+      <div className={`${styles.store}`}>
+        <h2>Inventario en bodega</h2>
+        <div className={`${styles.buttons}`}>
+          <Button text="Nuevo" onClick={searchMaterial} type="secondary" />
+          <Button text="Actualizar" onClick={searchMaterial} type="secondary" />
+        </div>
+      </div>
       <div className={`${styles.top}`}>
         <div className={styles.select}>
           <InputSelect
@@ -114,7 +177,6 @@ function Inventory() {
               { value: 'Material', title: 'Material' },
               { value: 'Fabrica', title: 'Fabrica' },
             ]}
-            placeholder="Selecciona un tipo"
           />
         </div>
         <div className={styles.searchContainer}>
@@ -127,10 +189,17 @@ function Inventory() {
           <Button text="Buscar" onClick={searchMaterial} type="primary" />
         </div>
       </div>
-      {error && 'Ocurrio un error'}
-      {loading && <Spinner />}
+      <div className={`${styles.load}`}>
+        {type === 'Material' && error && 'Ocurrio un error'}
+        {type === 'Fabrica' && error3 && 'Ocurrio un error'}
+        {type === '' && error2 && 'Ocurrio un error'}
+        {type === 'Material' && loading && <Spinner />}
+        {type === 'Fabrica' && loading3 && <Spinner />}
+        {type === '' && loading2 && <Spinner />}
+      </div>
       {type === 'Material' && result?.length > 0 && renderMaterialInventory()}
       {type === 'Fabrica' && result3?.length > 0 && renderFabricInventory()}
+      {type === '' && result2?.length > 0 && renderInventory()}
 
       {selectedItemId !== null && (
         <PopUp close={() => setSelectedItemId(null)} closeWithBackground={false}>
