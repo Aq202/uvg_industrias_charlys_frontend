@@ -102,6 +102,9 @@ function Inventory() {
   return (
     <div className={styles.inventory}>
       <NavBar loggedIn />
+      <PopUp>
+        <InventoryDetails itemId="INV000000000003" onSuccess={openSuccess} />
+      </PopUp>
       <h1>Inventario</h1>
       <div className={`${styles.top}`}>
         <div className={styles.select}>
