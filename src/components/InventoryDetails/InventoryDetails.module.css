@@ -58,8 +58,8 @@
 
 .buttonsContainer{
     display: flex;
-    width: 50%;
+    width: 100%;
     align-items: center;
-    justify-content: space-around;
-    margin: 10px;
+    justify-content: space-evenly;
+    margin: 20px 0 10px 0;
 }

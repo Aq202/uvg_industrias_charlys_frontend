@@ -17,15 +17,11 @@ function InventoryDetails({ itemId }) {
 
   useEffect(() => {
     if (!result) return;
-    // eslint-disable-next-line no-console
-    console.log(result);
     setInfo(() => (result[0]));
     setItemType(() => result[0].type);
   }, [result]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(error);
   }, [error]);
 
   useEffect(() => {
@@ -80,7 +76,7 @@ function InventoryDetails({ itemId }) {
           </div>
           <div className={styles.buttonsContainer}>
             <Button text="Modificar" />
-            <Button text="Eliminar" />
+            <Button text="Eliminar" red />
           </div>
         </div>
       )}
