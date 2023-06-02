@@ -21,6 +21,7 @@
     outline: none;
     height: 45px;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .inputTextContainer.error input{
