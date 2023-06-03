@@ -12,6 +12,7 @@ function Button({
   red,
   emptyRed,
   darkBlue,
+  green,
   className,
 }) {
   return (
@@ -21,6 +22,7 @@ function Button({
       ${emptyRed ? styles.emptyRed : ''}
       ${darkBlue ? styles.darkBlue : ''}
       ${red ? styles.red : ''}
+      ${green ? styles.green : ''}
       ${className}`}
       type={type}
       onClick={onClick}
@@ -41,6 +43,7 @@ Button.propTypes = {
   red: PropTypes.bool,
   emptyRed: PropTypes.bool,
   darkBlue: PropTypes.bool,
+  green: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -49,6 +52,7 @@ Button.defaultProps = {
   red: false,
   emptyRed: false,
   darkBlue: false,
+  green: false,
   type: 'button',
 };
 export default Button;

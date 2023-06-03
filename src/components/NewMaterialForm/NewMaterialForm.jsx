@@ -14,7 +14,7 @@ import parseErrorObject from '../../helpers/parseErrorObject';
 import createMaterialSchema from './createMaterialSchema';
 
 function NewMaterialForm({
-  id, onError, onSuccess, close,
+  id, onError, onSuccess, onCancel,
 }) {
   const [form, setForm] = useState({});
   const [error, setError] = useState({});
@@ -27,10 +27,14 @@ function NewMaterialForm({
   const token = useToken();
 
   const {
-    callFetch: fetchResult,
-    result,
-    loading: actionLoading,
-    error: actionError,
+    callFetch: fetchResult, result, loading: actionLoading, error: actionError,
+  } = useFetch();
+
+  const {
+    callFetch: fetchPrevData,
+    result: resultPrevData,
+    loading: loadingPrevData,
+    error: errorPrevData,
   } = useFetch();
 
   useEffect(() => {
@@ -40,17 +44,35 @@ function NewMaterialForm({
   }, [token]);
 
   useEffect(() => {
-    if (!errorTypes && !actionError) return;
+    if (!errorTypes && !actionError && !errorPrevData) return;
     // mandar mensaje de error
-    onError(errorTypes ?? actionError ?? 'Ocurrió un error.');
-    close(); // cerrar formulario
-  }, [errorTypes, actionError]);
+    onError(
+      errorTypes?.message ?? actionError?.message ?? errorPrevData?.message ?? 'Ocurrió un error.',
+    );
+  }, [errorTypes, actionError, errorPrevData]);
 
   useEffect(() => {
     // activar callback cuando la acción es exitosa
-    if (!result) onSuccess(id ? 'El artículo se ha actualizado exitosamente.' : 'Se ha creado el artículo de forma exitosa.');
-    close();
+    if (!result) return;
+    onSuccess(
+      id
+        ? 'El artículo se ha actualizado exitosamente.'
+        : 'Se ha creado el artículo de forma exitosa.',
+    );
   }, [result]);
+
+  useEffect(() => {
+    if (!id) return;
+    const uri = `${serverHost}/inventory?id=${id}`;
+    fetchPrevData({ uri, headers: { authorization: token } });
+  }, [id]);
+
+  useEffect(() => {
+    if (!resultPrevData) return;
+    const data = resultPrevData[0];
+
+    setForm({ ...data, name: data.materialName, type: data.idMaterialType });
+  }, [resultPrevData]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -103,7 +125,10 @@ function NewMaterialForm({
     const uri = id ? `${serverHost}/inventory/updateMaterial` : `${serverHost}/inventory/material`;
     const method = id ? 'PUT' : 'POST';
     fetchResult({
-      uri, method, headers: { authorization: token }, body: JSON.stringify(formCopy),
+      uri,
+      method,
+      headers: { authorization: token },
+      body: JSON.stringify(formCopy),
     });
 
     setError({});
@@ -184,12 +209,12 @@ function NewMaterialForm({
         {!actionLoading && !result && (
           <>
             <Button text="Enviar" type="submit" />
-            <Button text="Cancelar" emptyRed type="button" onClick={close} />
+            <Button text="Cancelar" emptyRed type="button" onClick={onCancel} />
           </>
         )}
       </div>
 
-      {loadingTypes && (
+      {(loadingTypes || loadingPrevData) && (
         <div className={styles.loadingContainer}>
           <Spinner className={styles.spinner} />
         </div>
@@ -204,7 +229,7 @@ NewMaterialForm.propTypes = {
   id: PropTypes.string,
   onError: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
-  close: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 NewMaterialForm.defaultProps = {

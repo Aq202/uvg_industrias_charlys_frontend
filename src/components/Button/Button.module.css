@@ -83,3 +83,15 @@
 .button.darkBlue:active{
   background-color: #394457;
 }
+
+.button.green{
+  background-color: #18AA4A;
+}
+
+.button.green:hover{
+  background-color: #2b73df;
+}
+.button.green:active{
+  background-color: #084bb1;
+  color: white;
+}

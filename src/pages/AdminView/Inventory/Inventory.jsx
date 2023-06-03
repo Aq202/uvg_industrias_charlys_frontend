@@ -1,10 +1,10 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
 import UpdateIcon from '@mui/icons-material/Update';
-import DeleteIcon from '@mui/icons-material/Delete';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './Inventory.module.css';
 import useToken from '../../../hooks/useToken';
@@ -15,6 +15,7 @@ import usePopUp from '../../../hooks/usePopUp';
 import InventoryDetails from '../../../components/InventoryDetails/InventoryDetails';
 import PopUp from '../../../components/PopUp/PopUp';
 import SuccessNotificationPopUp from '../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
+import NewMaterialFormPopUp from '../../../components/NewMaterialFormPopUp/NewMaterialFormPopUp';
 
 function Inventory() {
   const {
@@ -25,11 +26,13 @@ function Inventory() {
   } = useFetch();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
+  const [isMaterialFormOpen, openMaterialForm, closeMaterialForm] = usePopUp();
 
   const token = useToken();
   const [type, setType] = useState('');
   const [search, setSearch] = useState('');
   const [selectedItemId, setSelectedItemId] = useState(null);
+  const [idToUpdate, setIdToUpdate] = useState(null);
 
   useEffect(() => {
     callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
@@ -46,6 +49,12 @@ function Inventory() {
     });
   };
 
+  const handleUpdateClick = (e, id) => {
+    e.stopPropagation();
+    setIdToUpdate(id);
+    openMaterialForm();
+  };
+
   const handleOnUpdateSuccess = () => openSuccess();
 
   const renderTypeInventory = () => (
@@ -59,19 +68,23 @@ function Inventory() {
         </tr>
       </thead>
       <tbody>
-        {result.map((val) => (val.materialType === type && (
+        {result.map(
+          (val) => val.materialType === type && (
           <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.id}</td>
-            <td>{val.color}</td>
+            <td>{val.materialName}</td>
             <td>{val.quantity}</td>
             <td>
               <div className={`${styles.icons}`}>
-                <UpdateIcon />
-                <DeleteIcon />
+                <button type="button" className={styles.iconButton} onClick={(e) => handleUpdateClick(e, val.id)}>
+                  <UpdateIcon />
+                </button>
+                {/* <DeleteIcon /> */}
               </div>
             </td>
           </tr>
-        )))}
+          ),
+        )}
       </tbody>
     </table>
   );
@@ -82,7 +95,7 @@ function Inventory() {
         <tr>
           <th>Tipo</th>
           <th>Característica</th>
-          <th>Color</th>
+          <th>Nombre</th>
           <th>Cantidad</th>
           <th>Acción</th>
         </tr>
@@ -92,12 +105,14 @@ function Inventory() {
           <tr onClick={() => setSelectedItemId(val.id)}>
             <td>{val.type}</td>
             <td>{val.materialType}</td>
-            <td>{val.color}</td>
+            <td>{val.materialName}</td>
             <td>{val.quantity}</td>
             <td>
               <div className={`${styles.icons}`}>
-                <UpdateIcon />
-                <DeleteIcon />
+                <button type="button" className={styles.iconButton} onClick={(e) => handleUpdateClick(e, val.id)}>
+                  <UpdateIcon />
+                </button>
+                {/* <DeleteIcon /> */}
               </div>
             </td>
           </tr>
@@ -113,8 +128,7 @@ function Inventory() {
       <div className={`${styles.store}`}>
         <h2>Inventario en bodega</h2>
         <div className={`${styles.buttons}`}>
-          <Button text="Nuevo" type="secondary" />
-          <Button text="Actualizar" type="secondary" />
+          <Button text="Nuevo" type="button" green onClick={openMaterialForm} />
         </div>
       </div>
       <div className={`${styles.top}`}>
@@ -148,10 +162,17 @@ function Inventory() {
       {type === '' && result?.length > 0 && renderInventory()}
 
       {selectedItemId !== null && (
-        <PopUp close={() => setSelectedItemId(null)} closeWithBackground={false}>
+        <PopUp close={() => setSelectedItemId(null)} closeWithBackground>
           <InventoryDetails itemId={selectedItemId} onSuccess={handleOnUpdateSuccess} />
         </PopUp>
       )}
+
+      <NewMaterialFormPopUp
+        close={closeMaterialForm}
+        isOpen={isMaterialFormOpen}
+        id={idToUpdate}
+        closeCallback={() => setIdToUpdate(null)}
+      />
 
       <SuccessNotificationPopUp
         close={closeSuccess}

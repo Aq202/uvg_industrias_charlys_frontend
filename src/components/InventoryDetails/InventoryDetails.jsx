@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
 import styles from './InventoryDetails.module.css';
-import Button from '../Button/Button';
 import useFetch from '../../hooks/useFetch';
 import useToken from '../../hooks/useToken';
 
@@ -73,10 +72,6 @@ function InventoryDetails({ itemId }) {
               <span className={styles.sectionTitle}>Detalles</span>
               <span className={styles.sectionContent}>{info.details}</span>
             </div>
-          </div>
-          <div className={styles.buttonsContainer}>
-            <Button text="Modificar" />
-            <Button text="Eliminar" red />
           </div>
         </div>
       )}
