@@ -16,6 +16,7 @@ import useToken from '../../../hooks/useToken';
 
 function OrderRequest() {
   const [form, setForm] = useState({});
+  const [mostrar, setMostrar] = useState(false);
   const {
     callFetch, result, error, loading,
   } = useFetch();
@@ -31,6 +32,7 @@ function OrderRequest() {
         authorization: token,
       },
     });
+    setMostrar(true);
   }, [orderId, token]);
 
   const handleFormChange = (e) => {
@@ -48,6 +50,9 @@ function OrderRequest() {
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>
         </div>
+        {!mostrar && 'Ha ocurrido un error.'}
+        {mostrar
+        && (
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
           {loading && <Spinner />}
@@ -105,6 +110,7 @@ function OrderRequest() {
             <Button title="" text="Iniciar pedido" />
           </div>
         </div>
+        )}
       </main>
     </div>
   );
