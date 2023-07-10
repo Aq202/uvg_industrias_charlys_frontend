@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './NewMaterialForm.module.css';
@@ -117,8 +118,8 @@ function NewMaterialForm({
 
     // Parsear formulario
     const formCopy = { ...form };
-    if (!(formCopy.supplier?.lenght > 0)) delete formCopy.supplier;
-    if (!(formCopy.details?.lenght > 0)) delete formCopy.details;
+    if (!(formCopy.supplier?.length > 0)) delete formCopy.supplier;
+    if (!(formCopy.details?.length > 0)) delete formCopy.details;
     if (id) formCopy.inventoryId = id;
 
     // Enviar formulario
@@ -197,8 +198,8 @@ function NewMaterialForm({
           className={styles.textarea}
           name="details"
           onChange={handleChange}
-          value={form.detail}
-          error={error.detail}
+          value={form.details}
+          error={error.details}
           onBlur={validateField}
           onFocus={clearFieldError}
         />

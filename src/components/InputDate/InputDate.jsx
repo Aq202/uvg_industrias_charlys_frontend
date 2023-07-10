@@ -12,7 +12,7 @@ function InputDate({
       <label htmlFor={id}>
         {title}
       </label>
-      <input type="date" {...props} id={id} name={name} defaultValue={value} onChange={onChange} />
+      <input type="date" {...props} id={id} name={name} value={value} onChange={onChange} />
       {error && <div className={styles.inputError}>{error}</div>}
     </div>
   );

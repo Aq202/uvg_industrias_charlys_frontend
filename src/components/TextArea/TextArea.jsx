@@ -12,7 +12,7 @@ function TextArea({
       <label htmlFor={id}>
         {title}
       </label>
-      <textarea type="text" {...props} id={id} name={name} defaultValue={value} onChange={onChange} />
+      <textarea type="text" {...props} id={id} name={name} value={value} onChange={onChange} />
       {error && <div className={styles.inputError}>{error}</div>}
     </div>
   );
