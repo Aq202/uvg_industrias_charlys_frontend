@@ -1,15 +1,12 @@
-.button {
-    background-color: #1C2532;
-    color: #F5F5F5;
-    border-radius: 10px;
-    padding: 0px 21px;
-    cursor: pointer;
-    border: none;
-    width: hug;
-    height: 34px;
-    font-weight: 700;
-    font-size: 16px;
-  }
+.button{
+  border-radius: 8px;
+  padding: 10px 15px;
+  outline: none;
+  border: none;
+  font-family: helvetica;
+  font-size: 16px;
+  cursor: pointer;
+}
   
   .button[disabled] {
     background-color: #DDD;
@@ -22,3 +19,79 @@
     color: #333;
     border: 1px solid #333;
   }
+
+  
+
+.button:focus{
+    outline: none;
+}
+
+.button:active{
+    background-color: #2f3b4c;
+    opacity: 1;
+}
+
+.button{
+    background-color: #1C2532;
+    color: white;
+    font-weight: bold;
+}
+
+.button:hover{
+    opacity: 0.9;
+}
+
+
+.button.blue{
+  background-color: #0552c7;
+}
+
+.button.blue:hover{
+  background-color: #2b73df;
+}
+.button.blue:active{
+  background-color: #084bb1;
+  color: white;
+}
+
+.button.emptyRed{
+  color: rgb(144, 10, 0);    
+  background-color: #e5e5e5;
+}
+
+.button.emptyRed:hover{
+  color: rgb(255, 46, 31);
+  
+}
+
+.button.red{
+  background-color: #da1212;
+}
+.button.red:hover{
+  background-color: #eb3939;
+}
+.button.red:active{
+  background-color: #c01b1b;
+}
+
+.button.darkBlue{
+  background-color: #394457;
+}
+.button.darkBlue:hover{
+  background-color: #546279;
+}
+.button.darkBlue:active{
+  background-color: #394457;
+}
+
+.button.green{
+  background-color: #18AA4A;
+}
+
+.button.green:hover{
+  background-color: #2b73df;
+}
+.button.green:active{
+  background-color: #084bb1;
+  color: white;
+}

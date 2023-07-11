@@ -14,7 +14,7 @@ function InputText({
           {title}
         </label>
       )}
-      <input type="text" {...props} id={id} name={name} defaultValue={value} onChange={onChange} />
+      <input type="text" {...props} id={id} name={name} value={value} onChange={onChange} />
       {error && <div className={styles.inputError}>{error}</div>}
     </div>
   );

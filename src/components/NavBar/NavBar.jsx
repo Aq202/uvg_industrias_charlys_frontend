@@ -106,6 +106,14 @@ function NavBar({ loggedIn }) {
             <img className={styles.menuIcon} src={myOrganization} alt="Icon" />
             <p>Mi organización</p>
           </div> */}
+          <div className={styles.menuItem} onClick={() => navigate('/orden')}>
+            <img className={styles.menuIcon} src={logoutIcon} alt="Icon" />
+            <p>Pedidos recibidos</p>
+          </div>
+          <div className={styles.menuItem} onClick={() => navigate('/inventario')}>
+            <img className={styles.menuIcon} src={logoutIcon} alt="Icon" />
+            <p>Inventario</p>
+          </div>
           <div className={styles.menuItem} onClick={logoutHandler}>
             <img className={styles.menuIcon} src={logoutIcon} alt="Icon" />
             <p>Salir</p>

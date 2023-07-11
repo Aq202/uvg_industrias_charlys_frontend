@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '@components/NavBar/NavBar';
-import TextArea from '@components/TextArea/TextArea';
-import InputDate from '@components/InputDate/InputDate';
-import InputNumber from '@components/InputNumber/InputNumber';
-import Button from '@components/Button/Button';
 import Spinner from '@components/Spinner/Spinner';
 import ImageViewer from '@components/ImageViewer/ImageViewer';
 import { serverHost } from '@/config';
@@ -15,8 +11,6 @@ import styles from './OrderRequest.module.css';
 import useToken from '../../../hooks/useToken';
 
 function OrderRequest() {
-  const [form, setForm] = useState({});
-  const [mostrar, setMostrar] = useState(false);
   const {
     callFetch, result, error, loading,
   } = useFetch();
@@ -32,14 +26,7 @@ function OrderRequest() {
         authorization: token,
       },
     });
-    setMostrar(true);
   }, [orderId, token]);
-
-  const handleFormChange = (e) => {
-    const field = e.target.name;
-    const { value } = e.target;
-    setForm((lastValue) => ({ ...lastValue, [field]: value }));
-  };
 
   return (
     <div className={`${styles.OrderRequest}`}>
@@ -50,9 +37,6 @@ function OrderRequest() {
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>
         </div>
-        {!mostrar && 'Ha ocurrido un error.'}
-        {mostrar
-        && (
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
           {loading && <Spinner />}
@@ -85,32 +69,8 @@ function OrderRequest() {
                 )}
               </div>
             </div>
-            <div className={`${styles.aditionalDetails}`}>
-              <h3>Detalles adicionales</h3>
-              <TextArea
-                title=""
-                onChange={handleFormChange}
-                value={form?.aditionalDetails}
-                name="aditionalDetails"
-              />
-            </div>
-            <div className={`${styles.bottomForm}`}>
-              <div>
-                <h4>Fecha de entrega:</h4>
-                <InputDate title="" onChange={handleFormChange} />
-              </div>
-              <div>
-                <h4>Cotización inicial:</h4>
-                <InputNumber title="" onChange={handleFormChange} measureUnit="Q" />
-              </div>
-            </div>
-          </div>
-          <div className={`${styles.bottom}`}>
-            <Button title="" text="Rechazar pedido" type="secondary" />
-            <Button title="" text="Iniciar pedido" />
           </div>
         </div>
-        )}
       </main>
     </div>
   );

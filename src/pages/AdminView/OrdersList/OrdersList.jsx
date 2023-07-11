@@ -35,6 +35,7 @@ function OrdersList() {
           {result?.length > 0
             && result.map((val) => (
               <Order
+                id={val.id}
                 cliente={val.customerName}
                 fechaSolicitada={moment(val.datePlaced).format('DD-MM-YYYY')}
                 descripcion={val.description}

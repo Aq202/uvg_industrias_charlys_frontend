@@ -91,7 +91,7 @@ p{
     align-items: center;
     height: calc(100vh - var(--navBar-height--));
     box-sizing: border-box;
-    
+    z-index: 999;
 }
 
 .hideMenu{
