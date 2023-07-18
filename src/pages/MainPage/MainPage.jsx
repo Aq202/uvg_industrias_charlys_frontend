@@ -3,9 +3,9 @@ import UnloggedMainPage from '@pages/UnloggedView/UnloggedMainPage';
 import LoadingView from '@components/LoadingView';
 import consts from '@helpers/consts';
 import CustomerMainPage from '../CustomerView/CustomerMainPage/CustomerMainPage';
-import AdminMainPage from '../AdminView/AdminMainPage';
 import getTokenPayload from '../../helpers/getTokenPayload';
 import useToken from '../../hooks/useToken';
+import OrganizationView from '../CustomerView/OrganizationView/OrganizationView';
 
 function MainPage() {
   const token = useToken();
@@ -15,7 +15,7 @@ function MainPage() {
     const { role } = getTokenPayload(token);
     switch (role) {
       case consts.role.admin:
-        page = <AdminMainPage />;
+        page = <OrganizationView />;
         break;
       case consts.role.client:
         page = <CustomerMainPage />;
