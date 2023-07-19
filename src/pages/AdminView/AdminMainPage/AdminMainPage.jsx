@@ -14,6 +14,7 @@ function AdminMainPage() {
       <Route path="/inventario/nuevo" element={<NewArticle />} />
       <Route path="/image" element={<ImagePickerPage />} />
       <Route path="/orden/:orderId" element={<OrderRequest />} />
+      <Route path="/orden" element={<OrdersList />} />
     </Routes>
   );
 }
