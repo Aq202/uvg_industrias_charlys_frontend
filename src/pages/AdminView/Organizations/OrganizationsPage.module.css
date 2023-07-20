@@ -1,0 +1,51 @@
+.organizationsPageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mainTitle{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tableContainer{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    background-color: #FDFDFD;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.07);
+    border-radius: 20px;
+}
+
+.tableBanner{
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 10px 10px 10px;
+}
+
+.bannerTitle{
+    margin-right: auto;
+}
+
+.confirmation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.confirmationText{
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.organizationName{
+    cursor: pointer;
+}
+
+.organizationName:hover{
+    color: darkblue;
+}

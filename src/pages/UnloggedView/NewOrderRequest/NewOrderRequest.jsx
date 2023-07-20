@@ -81,7 +81,7 @@ function NewOrderRequest() {
     const value = form.email;
 
     if (!(value?.length > 0)) {
-      setErrors((lastVal) => ({ ...lastVal, email: 'Se necesita un teléfono de contacto' }));
+      setErrors((lastVal) => ({ ...lastVal, email: 'Se necesita un correo electrónico de contacto' }));
       return false;
     }
 
@@ -92,7 +92,7 @@ function NewOrderRequest() {
     const value = form.address;
 
     if (!(value?.length > 0)) {
-      setErrors((lastVal) => ({ ...lastVal, address: 'Se necesita un teléfono de contacto' }));
+      setErrors((lastVal) => ({ ...lastVal, address: 'Se necesita una dirección de entrega' }));
       return false;
     }
 
