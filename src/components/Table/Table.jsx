@@ -18,10 +18,11 @@ import styles from './Table.module.css';
  * @param maxCellWidth max-width de las celdas de la tabla
  * @param showCheckbox boolean. Mostrar los check para seleccionar filas.
  * @param onSelectedRowsChange callback que devuelve las filas seleccionadas.
+ * @param className clase a aplicar al contenedor de la tabla.
  *
  */
 function Table({
-  header, children, breakPoint, maxCellWidth, showCheckbox, onSelectedRowsChange,
+  header, children, breakPoint, maxCellWidth, showCheckbox, onSelectedRowsChange, className,
 }) {
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [useVerticalStyle, setUseVerticalStyle] = useState(false);
@@ -65,7 +66,7 @@ function Table({
     <div
       className={`${styles.tableContainer} ${scrollbarGray} ${
         useVerticalStyle ? styles.verticalDesign : ''
-      }`}
+      } ${className}`}
       ref={containerRef}
     >
       <table className={`${styles.table} `} ref={tableRef}>
@@ -110,6 +111,7 @@ Table.propTypes = {
   maxCellWidth: PropTypes.string,
   showCheckbox: PropTypes.bool,
   onSelectedRowsChange: PropTypes.func,
+  className: PropTypes.string,
 };
 
 Table.defaultProps = {
@@ -118,4 +120,5 @@ Table.defaultProps = {
   maxCellWidth: null,
   showCheckbox: true,
   onSelectedRowsChange: null,
+  className: '',
 };
