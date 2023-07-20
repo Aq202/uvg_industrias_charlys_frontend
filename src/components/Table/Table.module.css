@@ -1,10 +1,11 @@
 .tableContainer{
-  width: 70vw;
+  width: 100%;
   height: fit-content;
+  overflow-x: auto;
 }
 
 .table {
-  width: 100%;
+  min-width: 100%;
   text-align: center;
   border: none;
   border-spacing: 0;
@@ -18,9 +19,6 @@
   color: white;
   font-size: 19px;
   font-weight: bold;
-  z-index: 1;
-  position: sticky;
-  top: var(--navBar-height--);
 
 
 }

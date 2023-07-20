@@ -25,7 +25,7 @@ export default SuccessNotificationPopUp;
 
 SuccessNotificationPopUp.propTypes = {
   close: PropTypes.func.isRequired,
-  isOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   callback: PropTypes.func,
   title: PropTypes.string,
   text: PropTypes.string,

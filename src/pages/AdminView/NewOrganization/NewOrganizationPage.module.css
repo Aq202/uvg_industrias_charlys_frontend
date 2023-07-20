@@ -1,0 +1,52 @@
+.NewOrganizationPageContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    background-color: #FDFDFD;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.07);
+    padding: 30px 50px 30px 50px;
+    border-radius: 20px;
+}
+
+.fieldsContainer{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 15px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 700px) {
+    .fieldsContainer{
+        grid-template-columns: 1fr;
+    }
+
+    .formContainer{
+        padding: 30px 10px 50px 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .formContainer{
+        width: 90%;
+    }
+    
+}
+
+.mainTitle{
+    text-align: center;
+    line-height: 1;
+    margin: 0 20px 30px 20px;
+}
