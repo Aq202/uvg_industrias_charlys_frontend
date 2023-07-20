@@ -1,4 +1,4 @@
-.members{
+.requests{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@ Button{
     background-color: #36506C;
 }
 
-.membersList{
+.requestsList{
     width: 80%;
     margin: 5px;
     border: 1px solid #7E7E7E;
@@ -128,7 +128,7 @@ Table {
         width: 50%;
     }
 
-    .membersList{
+    .requestsList{
         width: 100%;
         display: flex;
         align-items: center;

@@ -99,6 +99,27 @@
 }
 
 
+@media screen and (max-width: 1200px) {
+    .orgName h1 {
+        font-size: 3.5vw;
+        width: 100%;
+        color: #313131;
+    }
+
+    
+    .orgName Button {
+        height: 6vh;
+        margin-right: 5vw;
+        font-size: 14px;
+    }
+
+    
+    .infoElement svg,
+    .infoElement span {
+        font-size: 1.4vw;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .orgName h1 {
         font-size: 5vw;
@@ -107,9 +128,9 @@
     }
 
     .orgName Button {
-        height: 3vh;
+        height: 5vh;
         margin-right: 5vw;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .infoElement svg,
@@ -201,8 +222,8 @@
     }
 
     .orgName Button {
-        height: 5vh;
-        font-size: 16px;
+        height: 6vh;
+        font-size: fit-content;
     }
 
     .orgInfo {
@@ -237,7 +258,7 @@
 
     .orgName Button {
         height: 6vh;
-        font-size: 18px;
+        font-size: fit-content;
     }
 
     .infoElement svg,

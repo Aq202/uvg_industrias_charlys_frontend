@@ -7,15 +7,23 @@ import useToken from '../../../hooks/useToken';
 import Button from '../../../components/Button/Button';
 import InputText from '../../../components/InputText/InputText';
 import Spinner from '../../../components/Spinner/Spinner';
+import Table from '../../../components/Table/Table';
+import TableRow from '../../../components/TableRow/TableRow';
+import NewMemberFormPopUp from '../../../components/NewMemberFormPopUp/NewMemberFormPopUp';
+import DeleteMemberPopUp from '../../../components/DeleteMemberPopUp/DeleteMemberPopUp';
+import usePopUp from '../../../hooks/usePopUp';
 import styles from './Members.module.css';
 
-function Members({ orgName }) {
+function Members({ orgId, orgName }) {
   const {
     callFetch, result, error, loading,
   } = useFetch();
 
   const token = useToken();
   const [search, setSearch] = useState('');
+  const [idToDelete, setIdToDelete] = useState(null);
+  const [isDeleteMemberOpen, openDeleteMember, closeDeleteMember] = usePopUp();
+  const [isMemberFormOpen, openMemberForm, closeMemberForm] = usePopUp();
 
   useEffect(() => {
     callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
@@ -23,38 +31,42 @@ function Members({ orgName }) {
 
   const searchMember = () => {
     callFetch({
-      uri: `${serverHost}/inventory?search=${search}`,
+      uri: `${serverHost}/organization/clients/:${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
 
+  const handleDeleteClick = (e, id) => {
+    e.stopPropagation();
+    setIdToDelete(id);
+    openDeleteMember();
+  };
+
   const renderMembers = () => (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Teléfono</th>
-          <th>Sexo</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {result.map((val) => (
-          <tr>
+    <Table
+      header={['ID', 'Nombre', 'Email', 'Acción']}
+      breakPoint="280px"
+      maxCellWidth="140px"
+      showCheckbox={false}
+    >
+      {
+        result.map((val) => (
+          <TableRow key={val.id}>
             <td>{val.id}</td>
-            <td>{val.color}</td>
-            <td>{val.quantity}</td>
+            <td>
+              {val.name }
+              {val.lastname}
+            </td>
+            <td>{val.email}</td>
             <td>
               <div className={`${styles.icons}`}>
-                <DeleteIcon />
+                <DeleteIcon onClick={(e) => handleDeleteClick(e, val.id)} />
               </div>
             </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </TableRow>
+        ))
+      }
+    </Table>
   );
 
   return (
@@ -62,9 +74,8 @@ function Members({ orgName }) {
       <div className={styles.header}>
         <h1>
           Miembros de la organización
-          {orgName}
         </h1>
-        <Button text="Nuevo" />
+        <Button text="Nuevo" onClick={openMemberForm} />
       </div>
       <div className={styles.membersList}>
         <div className={styles.searchContainer}>
@@ -77,17 +88,31 @@ function Members({ orgName }) {
         </div>
         <div className={styles.content}>
           <div className={`${styles.load}`}>
-            {(error) && 'Ocurrio un error'}
-            {(loading) && <Spinner />}
+            {error && 'Ocurrió un error'}
+            {loading && <Spinner />}
           </div>
-          { result?.length > 0 && renderMembers()}
+          {result?.length > 0 ? renderMembers() : null}
         </div>
       </div>
+      <NewMemberFormPopUp
+        close={closeMemberForm}
+        isOpen={isMemberFormOpen}
+        id={orgId}
+        closeCallback={() => {}}
+      />
+      <DeleteMemberPopUp
+        close={closeDeleteMember}
+        isOpen={isDeleteMemberOpen}
+        id={idToDelete}
+        orgName={orgName}
+        closeCallback={() => {}}
+      />
     </div>
   );
 }
 
 Members.propTypes = {
+  orgId: PropTypes.string.isRequired,
   orgName: PropTypes.string.isRequired,
 };
 

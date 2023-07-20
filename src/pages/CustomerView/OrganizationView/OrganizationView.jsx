@@ -8,9 +8,10 @@ import Button from '../../../components/Button/Button';
 import Members from './Members';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './OrganizationView.module.css';
+import Requests from './Requests';
 
 function OrganizationView({
-  orgName, orgAddress, orgPhone, orgEmail,
+  orgId, orgName, orgAddress, orgPhone, orgEmail,
 }) {
   const [sections, setSections] = useState('Miembros');
   return (
@@ -73,7 +74,8 @@ function OrganizationView({
           className={styles.selectSection}
         />
         <div className={styles.section}>
-          {sections === 'Miembros' && <Members orgName={orgName} /> }
+          {sections === 'Miembros' && <Members orgId={orgId} orgName={orgName} /> }
+          {sections === 'Solicitudes' && <Requests orgId={orgId} orgName={orgName} /> }
         </div>
       </div>
     </div>
@@ -81,6 +83,7 @@ function OrganizationView({
 }
 
 OrganizationView.propTypes = {
+  orgId: PropTypes.string.isRequired,
   orgName: PropTypes.string.isRequired,
   orgAddress: PropTypes.string.isRequired,
   orgPhone: PropTypes.string.isRequired,
