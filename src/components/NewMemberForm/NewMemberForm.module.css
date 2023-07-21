@@ -1,0 +1,59 @@
+.newMemberForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .newMemberForm hr{
+    width: 90%;
+  }
+  
+  .formContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .moreInfoContainer{
+    display: flex;
+    gap: 15px;
+  }
+  
+  .bottomItemsContainer{
+    display: flex;
+    gap: 20px;
+    padding: 15px 0 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media only screen and (max-width:730px){
+    .formContainer{
+      display: flex;
+      flex-direction: column;
+    }
+    .quantityContainer{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .loadingContainer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .spinner{
+    color: white;
+  }

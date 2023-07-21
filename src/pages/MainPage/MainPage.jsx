@@ -3,9 +3,9 @@ import UnloggedMainPage from '@pages/UnloggedView/UnloggedMainPage';
 import LoadingView from '@components/LoadingView';
 import consts from '@helpers/consts';
 import CustomerMainPage from '../CustomerView/CustomerMainPage/CustomerMainPage';
-import AdminMainPage from '../AdminView/AdminMainPage';
 import getTokenPayload from '../../helpers/getTokenPayload';
 import useToken from '../../hooks/useToken';
+import AdminMainPage from '../AdminView/AdminMainPage';
 
 function MainPage() {
   const token = useToken();
