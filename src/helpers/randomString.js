@@ -1,4 +1,4 @@
-export default (length) => {
+const randomString = (length = 10) => {
   let cadena = '';
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -8,3 +8,5 @@ export default (length) => {
 
   return cadena;
 };
+
+export default randomString;
