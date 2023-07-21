@@ -19,12 +19,12 @@ function Requests({ orgId }) {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/clients/${orgId}`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/orderRequest/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = () => {
     callFetch({
-      uri: `${serverHost}/organization/clients/:${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/orderRequest/${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };

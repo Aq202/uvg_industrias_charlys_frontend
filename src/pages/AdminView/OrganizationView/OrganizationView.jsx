@@ -26,15 +26,12 @@ function OrganizationView() {
 
   useEffect(() => {
     if (!orgId) return;
-    console.log(orgId);
     callFetch({
       uri: `${serverHost}/organization/${orgId}`,
       headers: {
         authorization: token,
       },
     });
-    console.log(`${serverHost}/organization/${orgId}`);
-    console.log(result);
   }, []);
 
   return (
