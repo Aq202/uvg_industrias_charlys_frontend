@@ -19,8 +19,6 @@
   color: white;
   font-size: 19px;
   font-weight: bold;
-
-
 }
 
 .checkboxCell{
@@ -50,4 +48,13 @@
 .verticalDesign tbody{
   width: 100%;
   display: block;
+}
+
+.completeRow{
+  padding: 40px 0;
+}
+
+.noResults{
+  font-size: 18px;
+  color: gray;
 }
