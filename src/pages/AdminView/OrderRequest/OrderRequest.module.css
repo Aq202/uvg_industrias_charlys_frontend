@@ -25,15 +25,18 @@
     width: 80vw;
 }
 
-.orderInfo{
+.orderInfoContainer{
     width: 80vw;
     border-radius: 5px;
     border-radius: 5px;
     box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 30vh;
 }
 
-.orderInfoTop{
+.headerContainer{
     display: grid;
     gap: 1em;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -54,7 +57,7 @@
     height: fit-content;
 }
 
-.files, .aditionalDetails {
+.filesContainer, .aditionalDetails {
     margin-top: 50px;
 }
 
@@ -91,3 +94,14 @@
     max-width: 100%;
 }
 
+.noImagesMessage{
+    font-size: 17px;
+    color: rgb(49, 49, 49);
+}
+
+.sectionTitle{
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 2;
+    margin-bottom: 20px;
+}

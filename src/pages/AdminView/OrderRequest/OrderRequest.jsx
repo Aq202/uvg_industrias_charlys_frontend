@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import NavBar from '@components/NavBar/NavBar';
-import Spinner from '@components/Spinner/Spinner';
 import ImageViewer from '@components/ImageViewer/ImageViewer';
 import { serverHost } from '@/config';
 import moment from 'moment';
@@ -9,6 +8,7 @@ import { useParams } from 'react-router';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './OrderRequest.module.css';
 import useToken from '../../../hooks/useToken';
+import SubLoadingView from '../../../components/SubLoadingView/SubLoadingView';
 
 function OrderRequest() {
   const {
@@ -39,33 +39,36 @@ function OrderRequest() {
         </div>
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
-          {loading && <Spinner />}
-          <div className={`${styles.orderInfo}`}>
-            <div className={`${styles.orderInfoTop}`}>
-              <p>
-                <strong>Cliente: </strong>
-                {result?.customerName}
-              </p>
-              <p>
-                <strong>Código: </strong>
-                {result?.id}
-              </p>
-              <p>
-                <strong>Fecha solicitada: </strong>
-                {moment(result?.datePlaced).format('DD-MM-YY')}
-              </p>
+
+          <div className={`${styles.orderInfoContainer}`}>
+            {loading && <SubLoadingView />}
+
+            <div className={`${styles.orderInfoHeader}`}>
+              <h3 className={styles.sectionTitle}>Información General</h3>
+              <div className={styles.headerContainer}>
+                <p>
+                  <strong>Código: </strong>
+                  {result?.id}
+                </p>
+                <p>
+                  <strong>Fecha solicitada: </strong>
+                  {moment(result?.datePlaced).format('DD-MM-YY')}
+                </p>
+              </div>
             </div>
             <div className={`${styles.detalles}`}>
               <strong>Detalles: </strong>
               <p>{result?.description}</p>
             </div>
-            <div className={`${styles.files}`}>
-              <h3>Archivos adjuntos</h3>
+            <div className={`${styles.filesContainer}`}>
+              <h3 className={styles.sectionTitle}>Archivos adjuntos</h3>
               <div className={`${styles.divFile} ${scrollbarGray}`}>
-                {result?.media && (
+                {result?.media ? (
                   <div className={styles.imageViewerContainer}>
                     <ImageViewer images={result?.media} />
                   </div>
+                ) : (
+                  <p className={styles.noImagesMessage}>No hay recursos multimedia adjuntos.</p>
                 )}
               </div>
             </div>
