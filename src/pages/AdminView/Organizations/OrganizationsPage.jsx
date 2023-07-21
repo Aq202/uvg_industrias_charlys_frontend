@@ -26,6 +26,7 @@ function OrganizationsPage() {
   const token = useToken();
   const navigate = useNavigate();
   const [popUpDisable, setPopUpDisable] = useState(null);
+  const [popUpDelete, setPopUpDelete] = useState(null);
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
 
@@ -39,7 +40,7 @@ function OrganizationsPage() {
     });
   };
 
-  const disableOrganization = async () => {
+  const disableOrganization = () => {
     const uri = `${serverHost}/organization/${popUpDisable.id}`;
 
     deleteOrg({
@@ -49,7 +50,19 @@ function OrganizationsPage() {
     });
 
     setPopUpDisable(() => null);
-    await getOrganizations(0);
+    getOrganizations(0);
+  };
+
+  const deleteOrganization = () => {
+    const uri = `${serverHost}/organization/${popUpDelete.id}`;
+    deleteOrg({
+      uri,
+      method: 'DELETE',
+      headers: { Authorization: token },
+    });
+
+    setPopUpDelete(() => null);
+    getOrganizations(0);
   };
 
   const selectOrganization = (orgId) => {
@@ -79,13 +92,13 @@ function OrganizationsPage() {
           <h2 className={styles.bannerTitle}>Organizaciones registradas</h2>
           <Button type="submit" green onClick={() => navigate('/nuevaOrganizacion')} text="Nueva" />
         </div>
+        {loadingOrg && <Spinner />}
         {errorOrg && <p>Ocurrió un error al obtener las organizaciones registradas</p>}
         {resultOrg && (
         <Table
           header={['Nombre', 'Correo electrónico', 'Teléfono', 'Dirección', 'Acción']}
           showCheckbox={false}
           breakPoint="930px"
-          loading={loadingOrg}
         >
           {resultOrg.result.map((org) => (
             <TableRow>
@@ -99,10 +112,10 @@ function OrganizationsPage() {
               <td>{org.phone}</td>
               <td>{org.address}</td>
               <td>
-                {org.enabled && <Button text="Quitar" onClick={() => setPopUpDisable({ id: org.id, name: org.name })} />}
+                {org.enabled && <Button text="Deshabilitar" onClick={() => setPopUpDisable({ id: org.id, name: org.name })} />}
+                {!org.enabled && <Button red text="Eliminar" onClick={() => setPopUpDelete({ id: org.id, name: org.name })} />}
               </td>
             </TableRow>
-
           ))}
         </Table>
         )}
@@ -116,7 +129,21 @@ function OrganizationsPage() {
               {popUpDisable.name}
               ?
             </p>
-            {!loadingDel && <Button text="Quitar" onClick={disableOrganization} />}
+            {!loadingDel && <Button text="Deshabilitar" onClick={disableOrganization} />}
+            {loadingDel && <Spinner />}
+          </div>
+        </PopUp>
+      )}
+      {popUpDelete !== null && (
+        <PopUp close={() => setPopUpDelete(null)} closeWithBackground>
+          <div className={styles.confirmation}>
+            <p className={styles.confirmationText}>
+              ¿Desea borrar la empresa
+              {' '}
+              {popUpDelete.name}
+              ?
+            </p>
+            {!loadingDel && <Button red text="Eliminar" onClick={deleteOrganization} />}
             {loadingDel && <Spinner />}
           </div>
         </PopUp>
@@ -125,7 +152,7 @@ function OrganizationsPage() {
       <SuccessNotificationPopUp
         close={closeSuccess}
         isOpen={isSuccessOpen}
-        text="La empresa se ha removido correctamente."
+        text="La operación ha sido realizada correctamente."
       />
       <ErrorNotificationPopUp
         close={closeError}
