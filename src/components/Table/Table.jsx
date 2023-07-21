@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './Table.module.css';
+import Spinner from '../Spinner/Spinner';
 /**
  * Componente para crear las tablas del proyecto.
  *
@@ -22,7 +23,14 @@ import styles from './Table.module.css';
  *
  */
 function Table({
-  header, children, breakPoint, maxCellWidth, showCheckbox, onSelectedRowsChange, className,
+  header,
+  children,
+  breakPoint,
+  maxCellWidth,
+  showCheckbox,
+  onSelectedRowsChange,
+  className,
+  loading,
 }) {
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [useVerticalStyle, setUseVerticalStyle] = useState(false);
@@ -87,6 +95,22 @@ function Table({
           </tr>
         </thead>
         <tbody>
+          {loading && (
+            <tr>
+              <td className={styles.completeRow} colSpan={(header?.length ?? 0) + 1}>
+                <Spinner />
+              </td>
+            </tr>
+          )}
+
+          {!loading && !children && (
+            <tr>
+              <td className={`${styles.completeRow} ${styles.noResults}`} colSpan={(header?.length ?? 0) + 1}>
+                No hay resultados.
+              </td>
+            </tr>
+          )}
+
           {React.Children.map(children, (child) => React.cloneElement(child, {
             onSelect: handleSelect,
             checked: selectedRowsId.includes(child.props.id),
@@ -112,6 +136,7 @@ Table.propTypes = {
   showCheckbox: PropTypes.bool,
   onSelectedRowsChange: PropTypes.func,
   className: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -121,4 +146,5 @@ Table.defaultProps = {
   showCheckbox: true,
   onSelectedRowsChange: null,
   className: '',
+  loading: false,
 };
