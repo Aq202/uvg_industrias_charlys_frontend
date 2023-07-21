@@ -19,12 +19,12 @@ function Requests({ orgId }) {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orderRequest/${orgId}`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/orderRequests/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = () => {
     callFetch({
-      uri: `${serverHost}/organization/orderRequest/${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/orderRequests/:${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
@@ -38,10 +38,10 @@ function Requests({ orgId }) {
       className={styles.table}
     >
       {
-        result.map((val) => (
+        result.result.map((val) => (
           <TableRow key={val.id}>
             <td>{val.id}</td>
-            <td>{val.description }</td>
+            <td>{val.description}</td>
             <td>{val.date_placed}</td>
           </TableRow>
         ))
@@ -71,7 +71,7 @@ function Requests({ orgId }) {
             {error && 'Ocurrió un error'}
             {loading && <Spinner />}
           </div>
-          {result?.length > 0 ? renderRequests() : null}
+          {result?.result.length > 0 ? renderRequests() : null}
         </div>
       </div>
     </div>
