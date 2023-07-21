@@ -1,4 +1,4 @@
-.members{
+.requests{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@ Button{
     background-color: #36506C;
 }
 
-.membersList{
+.requestsList{
     width: 80%;
     margin: 5px;
     border: 1px solid #7E7E7E;
@@ -55,6 +55,10 @@ Button{
 
 Table {
     margin-top: 3.5vh;
+}
+
+.table{
+    width: 90%;
 }
 
 @media screen and (max-width: 1400px) {
@@ -128,7 +132,7 @@ Table {
         width: 50%;
     }
 
-    .membersList{
+    .requestsList{
         width: 100%;
         display: flex;
         align-items: center;
@@ -150,6 +154,10 @@ Table {
     .searchContainer > div > input {
         height: 6vh;
         font-size: fit-content;
+    }
+
+    .table{
+        width: 80%;
     }
 }
 

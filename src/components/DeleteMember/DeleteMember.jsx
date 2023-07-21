@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './DeleteMember.module.css';
 import Button from '../Button/Button';
@@ -10,7 +10,6 @@ import useToken from '../../hooks/useToken';
 function DeleteMember({
   id, orgName, name, onError, onSuccess, onCancel,
 }) {
-  const [error, setError] = useState({});
   const token = useToken();
 
   const {
@@ -42,8 +41,6 @@ function DeleteMember({
       method,
       headers: { authorization: token },
     });
-
-    setError({});
   };
 
   return (
@@ -62,11 +59,6 @@ function DeleteMember({
         ?
       </p>
       <hr />
-      <div className={styles.errorContainer}>
-        {error && <p>{error}</p>}
-      </div>
-      <hr />
-
       <div className={styles.bottomItemsContainer}>
         {actionLoading && <Spinner />}
         {!actionLoading && !result && (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
@@ -26,12 +27,12 @@ function Members({ orgId, orgName }) {
   const [isMemberFormOpen, openMemberForm, closeMemberForm] = usePopUp();
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/clients/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchMember = () => {
     callFetch({
-      uri: `${serverHost}/organization/clients/:${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/clients/${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
@@ -48,6 +49,7 @@ function Members({ orgId, orgName }) {
       breakPoint="280px"
       maxCellWidth="140px"
       showCheckbox={false}
+      className={styles.table}
     >
       {
         result.map((val) => (

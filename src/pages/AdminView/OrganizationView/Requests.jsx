@@ -19,7 +19,7 @@ function Requests({ orgId }) {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/clients/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = () => {
@@ -31,18 +31,18 @@ function Requests({ orgId }) {
 
   const renderRequests = () => (
     <Table
-      header={['ID', 'Descripción', 'Deadline', 'Costo']}
+      header={['ID', 'Descripción', 'Fecha']}
       breakPoint="280px"
       maxCellWidth="140px"
       showCheckbox={false}
+      className={styles.table}
     >
       {
         result.map((val) => (
           <TableRow key={val.id}>
             <td>{val.id}</td>
             <td>{val.description }</td>
-            <td>{val.deadline}</td>
-            <td>{val.cost}</td>
+            <td>{val.date_placed}</td>
           </TableRow>
         ))
       }

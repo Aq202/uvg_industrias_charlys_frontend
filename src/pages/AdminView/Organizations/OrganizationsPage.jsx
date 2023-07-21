@@ -55,7 +55,6 @@ function OrganizationsPage() {
 
   const deleteOrganization = () => {
     const uri = `${serverHost}/organization/${popUpDelete.id}`;
-    console.log(popUpDelete);
     deleteOrg({
       uri,
       method: 'DELETE',
@@ -66,12 +65,8 @@ function OrganizationsPage() {
     getOrganizations(0);
   };
 
-  const selectOrganization = (name, address, phone, email) => {
-    navigate('/rutaKislin', {
-      state: {
-        name, address, phone, email,
-      },
-    });
+  const selectOrganization = (orgId) => {
+    navigate(`/organizacion/:${orgId}`);
   };
 
   useEffect(() => {
@@ -80,7 +75,6 @@ function OrganizationsPage() {
 
   useEffect(() => {
     if (!resultDel) return;
-    console.log(resultDel);
     openSuccess();
   }, [resultDel]);
 
@@ -110,9 +104,7 @@ function OrganizationsPage() {
             <TableRow>
               <td
                 className={styles.organizationName}
-                onClick={() => selectOrganization({
-                  name: org.name, address: org.address, phone: org.phone, email: org.email,
-                })}
+                onClick={() => selectOrganization(org.id)}
               >
                 {org.name}
               </td>
