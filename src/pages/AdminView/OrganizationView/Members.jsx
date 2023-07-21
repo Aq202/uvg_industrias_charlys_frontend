@@ -52,12 +52,11 @@ function Members({ orgId, orgName }) {
       className={styles.table}
     >
       {
-        result.map((val) => (
+        result.result.map((val) => (
           <TableRow key={val.id}>
             <td>{val.id}</td>
             <td>
-              {val.name }
-              {val.lastname}
+              {`${val.name} ${val.lastname}`}
             </td>
             <td>{val.email}</td>
             <td>
@@ -93,21 +92,21 @@ function Members({ orgId, orgName }) {
             {error && 'Ocurrió un error'}
             {loading && <Spinner />}
           </div>
-          {result?.length > 0 ? renderMembers() : null}
+          {result?.result.length > 0 ? renderMembers() : null}
         </div>
       </div>
       <NewMemberFormPopUp
         close={closeMemberForm}
         isOpen={isMemberFormOpen}
         id={orgId}
-        closeCallback={() => {}}
+        closeCallback={() => { }}
       />
       <DeleteMemberPopUp
         close={closeDeleteMember}
         isOpen={isDeleteMemberOpen}
         id={idToDelete}
         orgName={orgName}
-        closeCallback={() => {}}
+        closeCallback={() => { }}
       />
     </div>
   );
