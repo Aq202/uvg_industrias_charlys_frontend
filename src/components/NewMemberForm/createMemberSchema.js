@@ -4,7 +4,7 @@ export default yup.object().shape({
   name: yup.string().nullable().required('El nombre es obligatorio.'),
   lastName: yup.string().nullable().required('El apellido es obligatorio.'),
   email: yup.string().nullable().required('El correo electrónico es obligatorio.'),
-  phon: yup
+  phone: yup
     .number()
     .typeError('El teléfono debe ser un número.')
     .integer('El teléfono debe ser un número entero.')

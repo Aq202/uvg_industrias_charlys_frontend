@@ -40,11 +40,12 @@ function DeleteMember({
       uri,
       method,
       headers: { authorization: token },
+      parse: false,
     });
   };
 
   return (
-    <form className={styles.newMemberForm} onSubmit={handleSubmit}>
+    <form className={styles.deleteMember} onSubmit={handleSubmit}>
       <h1>Eliminar Miembro</h1>
       <hr />
       <p>

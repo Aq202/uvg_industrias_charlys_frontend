@@ -66,7 +66,7 @@ function OrganizationsPage() {
   };
 
   const selectOrganization = (orgId) => {
-    navigate(`/organizacion/:${orgId}`);
+    navigate(`/organizacion/${orgId}`);
   };
 
   useEffect(() => {

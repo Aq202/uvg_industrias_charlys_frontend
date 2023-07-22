@@ -92,6 +92,7 @@ function NewMemberForm({
       method,
       headers: { authorization: token },
       body: JSON.stringify(formCopy),
+      parse: false,
     });
 
     setError({});
@@ -115,8 +116,8 @@ function NewMemberForm({
           title="Apellido:"
           name="lastName"
           onChange={handleChange}
-          value={form.lastname}
-          error={error.lastname}
+          value={form.lastName}
+          error={error.lastName}
           onBlur={validateField}
           onFocus={clearFieldError}
         />
@@ -147,11 +148,11 @@ function NewMemberForm({
             name="sex"
             options={[{ value: 'M', title: 'M' },
               { value: 'F', title: 'F' }]}
-            error={error.gender}
+            error={error.sex}
             onChange={handleChange}
             onBlur={validateField}
             onFocus={clearFieldError}
-            value={form.gender}
+            value={form.sex}
             placeholder=" "
           />
         </div>

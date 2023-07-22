@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
+import useCount from '../../../hooks/useCount';
 import useToken from '../../../hooks/useToken';
 import Button from '../../../components/Button/Button';
 import InputText from '../../../components/InputText/InputText';
@@ -20,6 +20,7 @@ function Members({ orgId, orgName }) {
     callFetch, result, error, loading,
   } = useFetch();
 
+  const { count, next } = useCount(0);
   const token = useToken();
   const [search, setSearch] = useState('');
   const [idToDelete, setIdToDelete] = useState(null);
@@ -28,7 +29,7 @@ function Members({ orgId, orgName }) {
 
   useEffect(() => {
     callFetch({ uri: `${serverHost}/organization/clients/${orgId}`, headers: { authorization: token } });
-  }, []);
+  }, [count]);
 
   const searchMember = () => {
     callFetch({
@@ -99,14 +100,16 @@ function Members({ orgId, orgName }) {
         close={closeMemberForm}
         isOpen={isMemberFormOpen}
         id={orgId}
-        closeCallback={() => { }}
+        successCallback={next}
+        next
       />
       <DeleteMemberPopUp
         close={closeDeleteMember}
         isOpen={isDeleteMemberOpen}
         id={idToDelete}
         orgName={orgName}
-        closeCallback={() => { }}
+        name={result?.result.find((member) => member.id === idToDelete)?.name}
+        successCallback={next}
       />
     </div>
   );

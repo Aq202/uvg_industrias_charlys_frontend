@@ -19,8 +19,7 @@ function OrganizationView() {
     callFetch, result, error, loading,
   } = useFetch();
 
-  let { orgId } = useParams();
-  orgId = orgId.replace(':', '');
+  const { orgId } = useParams();
   const [sections, setSections] = useState('Miembros');
   const token = useToken();
 

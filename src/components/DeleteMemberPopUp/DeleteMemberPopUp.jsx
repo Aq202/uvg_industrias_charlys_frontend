@@ -7,7 +7,7 @@ import usePopUp from '../../hooks/usePopUp';
 import ErrorNotificationPopUp from '../ErrorNotificationPopUp/ErrorNotificationPopUp';
 
 function DeleteMemberPopUp({
-  id, orgName, close, isOpen, closeCallback, successCallback,
+  id, orgName, close, isOpen, successCallback,
 }) {
   const [message, setMessage] = useState('');
 
@@ -34,7 +34,6 @@ function DeleteMemberPopUp({
           maxWidth={700}
           closeWithBackground
           closeButton={false}
-          callback={closeCallback}
         >
           <DeleteMember
             id={id}
@@ -65,12 +64,10 @@ DeleteMemberPopUp.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   id: PropTypes.string,
   orgName: PropTypes.string.isRequired,
-  closeCallback: PropTypes.func,
   successCallback: PropTypes.func,
 };
 
 DeleteMemberPopUp.defaultProps = {
   id: null,
-  closeCallback: null,
   successCallback: null,
 };

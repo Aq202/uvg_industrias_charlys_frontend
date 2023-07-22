@@ -7,7 +7,7 @@ import usePopUp from '../../hooks/usePopUp';
 import ErrorNotificationPopUp from '../ErrorNotificationPopUp/ErrorNotificationPopUp';
 
 function NewMemberFormPopUp({
-  id, close, isOpen, closeCallback, successCallback,
+  id, close, isOpen, successCallback,
 }) {
   const [message, setMessage] = useState('');
 
@@ -34,7 +34,6 @@ function NewMemberFormPopUp({
           maxWidth={700}
           closeWithBackground
           closeButton={false}
-          callback={closeCallback}
         >
           <NewMemberForm
             id={id}
@@ -63,12 +62,10 @@ NewMemberFormPopUp.propTypes = {
   close: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   id: PropTypes.string,
-  closeCallback: PropTypes.func,
   successCallback: PropTypes.func,
 };
 
 NewMemberFormPopUp.defaultProps = {
   id: null,
-  closeCallback: null,
   successCallback: null,
 };
