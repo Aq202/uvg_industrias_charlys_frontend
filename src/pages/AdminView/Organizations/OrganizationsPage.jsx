@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styles from './OrganizationsPage.module.css';
-import NavBar from '../../../components/NavBar/NavBar';
 import Button from '../../../components/Button/Button';
 import useFetch from '../../../hooks/useFetch';
 import useToken from '../../../hooks/useToken';
@@ -85,7 +84,6 @@ function OrganizationsPage() {
 
   return (
     <div className={styles.organizationsPageContainer}>
-      <NavBar loggedIn />
       <h1 className={styles.mainTitle}>Lista de organizaciones</h1>
       <div className={styles.tableContainer}>
         <div className={styles.tableBanner}>

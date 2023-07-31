@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '@components/NavBar/NavBar';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/LocalPhone';
 import { serverHost } from '@/config';
@@ -35,7 +34,7 @@ function OrganizationView() {
 
   return (
     <div>
-      <NavBar loggedIn />
+
       {error && <span>Ocurrió un error.</span>}
       {loading && <SubLoadingView />}
       {!loading && !error && !result && <span>No se encontró la organización.</span>}

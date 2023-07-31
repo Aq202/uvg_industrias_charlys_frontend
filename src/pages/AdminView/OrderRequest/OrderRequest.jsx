@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import NavBar from '@components/NavBar/NavBar';
 import ImageViewer from '@components/ImageViewer/ImageViewer';
 import { serverHost } from '@/config';
 import moment from 'moment';
@@ -30,9 +29,6 @@ function OrderRequest() {
 
   return (
     <div className={`${styles.OrderRequest}`}>
-      <header>
-        <NavBar loggedIn />
-      </header>
       <main>
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>

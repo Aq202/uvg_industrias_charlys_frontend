@@ -123,7 +123,6 @@ function Inventory() {
 
   return (
     <div className={styles.inventory}>
-      <NavBar loggedIn />
       <h1>Inventario</h1>
       <div className={`${styles.store}`}>
         <h2>Inventario en bodega</h2>

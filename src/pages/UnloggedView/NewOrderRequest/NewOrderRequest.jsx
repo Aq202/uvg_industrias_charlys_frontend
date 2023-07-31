@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from '@components/NavBar';
 import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
 import { useNavigate } from 'react-router-dom';
@@ -145,7 +144,7 @@ function NewOrderRequest() {
 
   return (
     <div className={styles.mainContainer}>
-      <NavBar loggedIn={false} />
+
       <form className={styles.divNuevoPedido} onSubmit={handleSubmit}>
         <h1 className={styles.containerTitle}>Nuevo Pedido</h1>
         <div className={styles.divDatos}>
