@@ -7,6 +7,7 @@ import ImagePickerPage from '../ImagePickerPage/ImagePickerPage';
 import OrderRequest from '../OrderRequest/OrderRequest';
 import OrganizationsPage from '../Organizations/OrganizationsPage';
 import NewOrganizationPage from '../NewOrganization/NewOrganizationPage';
+import OrganizationView from '../OrganizationView/OrganizationView';
 
 function AdminMainPage() {
   return (
@@ -17,6 +18,7 @@ function AdminMainPage() {
       <Route path="/image" element={<ImagePickerPage />} />
       <Route path="/orden/:orderId" element={<OrderRequest />} />
       <Route path="/orden" element={<OrdersList />} />
+      <Route path="organizacion/:orgId" element={<OrganizationView />} />
       <Route path="/organizaciones" element={<OrganizationsPage />} />
       <Route path="/nuevaOrganizacion" element={<NewOrganizationPage />} />
     </Routes>

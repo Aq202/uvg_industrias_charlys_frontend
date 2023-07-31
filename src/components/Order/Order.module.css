@@ -1,36 +1,34 @@
-.order{
+.order {
     background-color: #f0f0f0;
     border: 1px solid #4A8AA4;
     border-radius: 7px;
-    width: 80%;
-    height: 150px;
-    margin-top: 25px;
+    width: 100%;
+    height: fit-content;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 20px;
+    overflow: auto;
 }
 
-.info{
-    margin-left: 25px;
+.infoContainer {
     display: flex;
     flex-direction: column;
+    justify-content: top;
     gap: 7px;
+    height: fit-content;
 }
 
-.text > span:first-child{
+.text>span {
     font-weight: bold;
+    margin-right: 10px;
 }
 
-.text{
-    display: flex;
-    gap: 7px;
-}
-
-.button{
+.button {
     color: #00013E;
-    margin-right: 50px;
 }
 
-.button *{
-    min-height: 200px;
+.arrowIcon {
+    font-size: 1000px;
+    cursor: pointer;
 }
