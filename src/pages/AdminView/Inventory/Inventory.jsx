@@ -127,7 +127,7 @@ function Inventory() {
       <div className={`${styles.store}`}>
         <h2>Inventario en bodega</h2>
         <div className={`${styles.buttons}`}>
-          <Button text="Nuevo" type="button" green onClick={openMaterialForm} />
+          <Button text="Nuevo" name="create-item-button" type="button" green onClick={openMaterialForm} />
         </div>
       </div>
       <div className={`${styles.top}`}>
@@ -150,7 +150,7 @@ function Inventory() {
             name="search"
             value={search}
           />
-          <Button text="Buscar" onClick={searchMaterial} type="primary" />
+          <Button text="Buscar" name="search-button" onClick={searchMaterial} type="primary" />
         </div>
       </div>
       <div className={`${styles.load}`}>

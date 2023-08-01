@@ -21,7 +21,7 @@ function SearchInput({ handleSearch, className, ...props }) {
   return (
     <div className={`${styles.searchInput} ${className}`}>
       <input type="text" placeholder="Buscar..." {...props} onChange={handleChange} onKeyUp={handleKeyUp} />
-      <button type="button" className={styles.searchButton} onClick={() => handleSearch(query)}>
+      <button type="button" name="search-button" className={styles.searchButton} onClick={() => handleSearch(query)}>
         <SearchIcon />
       </button>
     </div>

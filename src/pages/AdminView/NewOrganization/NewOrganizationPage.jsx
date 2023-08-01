@@ -156,7 +156,7 @@ function NewOrganizationPage() {
         </div>
 
         {!loading && (
-        <Button aria-label="Send" type="submit" text="Registrar" />
+        <Button aria-label="Send" type="submit" text="Registrar" name="create-organization-button" />
         )}
         {loading && <Spinner />}
       </form>

@@ -20,7 +20,10 @@ function OrganizationsPage() {
     callFetch, result: resultOrg, error: errorOrg, loading: loadingOrg,
   } = useFetch();
   const {
-    callFetch: deleteOrg, result: resultDel, error: errorDel, loading: loadingDel,
+    callFetch: deleteOrg,
+    result: resultDel,
+    error: errorDel,
+    loading: loadingDel,
   } = useFetch();
   const token = useToken();
   const navigate = useNavigate();
@@ -88,34 +91,50 @@ function OrganizationsPage() {
       <div className={styles.tableContainer}>
         <div className={styles.tableBanner}>
           <h2 className={styles.bannerTitle}>Organizaciones registradas</h2>
-          <Button type="submit" green onClick={() => navigate('/nuevaOrganizacion')} text="Nueva" />
+          <Button
+            type="submit"
+            green
+            onClick={() => navigate('/nuevaOrganizacion')}
+            text="Nueva"
+            name="new-organization-button"
+          />
         </div>
         {loadingOrg && <Spinner />}
         {errorOrg && <p>Ocurrió un error al obtener las organizaciones registradas</p>}
         {resultOrg && (
-        <Table
-          header={['Nombre', 'Correo electrónico', 'Teléfono', 'Dirección', 'Acción']}
-          showCheckbox={false}
-          breakPoint="930px"
-        >
-          {resultOrg.result.map((org) => (
-            <TableRow>
-              <td
-                className={styles.organizationName}
-                onClick={() => selectOrganization(org.id)}
-              >
-                {org.name}
-              </td>
-              <td>{org.email}</td>
-              <td>{org.phone}</td>
-              <td>{org.address}</td>
-              <td>
-                {org.enabled && <Button text="Deshabilitar" onClick={() => setPopUpDisable({ id: org.id, name: org.name })} />}
-                {!org.enabled && <Button red text="Eliminar" onClick={() => setPopUpDelete({ id: org.id, name: org.name })} />}
-              </td>
-            </TableRow>
-          ))}
-        </Table>
+          <Table
+            header={['Nombre', 'Correo electrónico', 'Teléfono', 'Dirección', 'Acción']}
+            showCheckbox={false}
+            breakPoint="930px"
+          >
+            {resultOrg.result.map((org) => (
+              <TableRow>
+                <td className={styles.organizationName} onClick={() => selectOrganization(org.id)}>
+                  {org.name}
+                </td>
+                <td>{org.email}</td>
+                <td>{org.phone}</td>
+                <td>{org.address}</td>
+                <td>
+                  {org.enabled && (
+                    <Button
+                      text="Deshabilitar"
+                      onClick={() => setPopUpDisable({ id: org.id, name: org.name })}
+                      name="disable-org-button"
+                    />
+                  )}
+                  {!org.enabled && (
+                    <Button
+                      red
+                      text="Eliminar"
+                      onClick={() => setPopUpDelete({ id: org.id, name: org.name })}
+                      name="delete-org-button"
+                    />
+                  )}
+                </td>
+              </TableRow>
+            ))}
+          </Table>
         )}
       </div>
       {popUpDisable !== null && (
@@ -152,11 +171,7 @@ function OrganizationsPage() {
         isOpen={isSuccessOpen}
         text="La operación ha sido realizada correctamente."
       />
-      <ErrorNotificationPopUp
-        close={closeError}
-        isOpen={isErrorOpen}
-        text={errorDel?.message}
-      />
+      <ErrorNotificationPopUp close={closeError} isOpen={isErrorOpen} text={errorDel?.message} />
     </div>
   );
 }
