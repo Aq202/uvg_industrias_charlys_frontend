@@ -5,11 +5,15 @@
   line-height: 1.5;
   font-weight: 400;
   
-  --error-color--:#df0303;
   --navBar-height--: 60px;
-  --blue-theme-color--: #00013E;
   --app-text-size--:16px;
+  --h1-title-size--:35px;
+  --h3-title-size--: 20px;
+  
+  --error-color--:#df0303;
+  --blue-theme-color--: #00013E;
   --background-color--: #F3F4F6;
+  --secondary-text-color--:#696969;
 }
 
 html, body{

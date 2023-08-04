@@ -5,7 +5,7 @@ import styles from './ImagePicker.module.css';
 import randomString from '../../helpers/randomString';
 import ImagePickerCard from '../ImagePickerCard/ImagePickerCard';
 
-function ImagePicker({ setImageFiles, maxFiles }) {
+function ImagePicker({ setImageFiles, maxFiles, className }) {
   const [files, setFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -53,13 +53,13 @@ function ImagePicker({ setImageFiles, maxFiles }) {
   };
 
   useEffect(() => {
-    setImageFiles(Object.values(files));
+    if (setImageFiles) setImageFiles(Object.values(files));
   }, [files]);
 
   return (
     <div
-      className={`${styles.imagePicker} ${
-        Object.entries(imagePreviews).length > 0 && styles.galleryStyle
+      className={`${className} ${styles.imagePicker} ${
+        Object.entries(imagePreviews).length > 0 ? styles.galleryStyle : ''
       }`}
     >
       <div className={`${scrollbarGray} ${styles.cardsContainer}`}>
@@ -99,8 +99,10 @@ export default ImagePicker;
 ImagePicker.propTypes = {
   setImageFiles: PropTypes.func.isRequired,
   maxFiles: PropTypes.number,
+  className: PropTypes.string,
 };
 
 ImagePicker.defaultProps = {
   maxFiles: 10,
+  className: '',
 };
