@@ -168,10 +168,17 @@ function NewProductModelPage() {
         <div className={styles.buttonContainer}>
           {productModelLoading && <Spinner />}
           {!productModelLoading && !productModelResult && (
-            <Button text="Crear producto" className={styles.sendButton} type="submit" />
+            <Button
+              text="Crear producto"
+              className={styles.sendButton}
+              type="submit"
+              name="create-product-button"
+            />
           )}
         </div>
-        {(loadingTypes || loadingOrganizations) && <SubLoadingView />}
+        {(loadingTypes || loadingOrganizations) && (
+          <SubLoadingView className={styles.loadingView} />
+        )}
       </form>
 
       <ErrorNotificationPopUp
