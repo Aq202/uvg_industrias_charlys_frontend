@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './LoginForm.css';
 import useLogin from '@hooks/useLogin';
 import InputText from '@components/InputText';
-import { button, aqua } from '@styles/buttons.module.css';
 import Spinner from '@components/Spinner';
 import { useNavigate } from 'react-router';
+import Button from '../Button/Button';
 
 function LoginForm() {
   const [form, setForm] = useState({});
@@ -75,9 +75,7 @@ function LoginForm() {
 
           {error && <div className="error-message">{error?.message ?? 'Ocurrió un error.'}</div> }
           {!loading && !success && (
-            <button type="button" className={`${button} ${aqua}`} onClick={handleSubmit}>
-              Ingresar
-            </button>
+            <Button text="Ingresar" onClick={handleSubmit} name="button-login" />
           )}
 
           {loading && <Spinner />}

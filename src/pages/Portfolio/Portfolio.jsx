@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import NavBar from '@components/NavBar/NavBar';
 import './Portfolio.css';
 import Slider from '@components/Slider/Slider';
 
@@ -8,7 +7,6 @@ function Portfolio() {
   const info = [['ACERCA DE NOSOTROS', 'Somos fabricantes con más de 20 años de experiencia por lo que contamos con todo el equipo y conocimiento necesario para trabajar sus prendas.'], ['MISIÓN', 'Apoyar a nuestros clientes en el proceso de diseño y elaboración de las prendas que representan el valor y la imagen de sus organizaciones, ofreciendo calidad y compromiso para su satisfacción.'], ['VISIÓN', 'Brindar un servicio eficiente y distintivo a nuestros clientes, ampliando nuestro catálogo y mejorando cada día nuestros productos.']];
   return (
     <div className="portfolio">
-      <NavBar />
       <div className="header">
         <h1>Industrias Charly's</h1>
         <h3>- Uniformes escolares y más -</h3>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from '@components/NavBar';
 import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +10,7 @@ import styles from './NewOrderRequest.module.css';
 import ImagePicker from '../../../components/ImagePicker/ImagePicker';
 import TextArea from '../../../components/TextArea/TextArea';
 import usePopUp from '../../../hooks/usePopUp';
+import Button from '../../../components/Button/Button';
 
 function NewOrderRequest() {
   const {
@@ -81,7 +81,10 @@ function NewOrderRequest() {
     const value = form.email;
 
     if (!(value?.length > 0)) {
-      setErrors((lastVal) => ({ ...lastVal, email: 'Se necesita un correo electrónico de contacto' }));
+      setErrors((lastVal) => ({
+        ...lastVal,
+        email: 'Se necesita un correo electrónico de contacto',
+      }));
       return false;
     }
 
@@ -103,7 +106,10 @@ function NewOrderRequest() {
     const value = form.description;
 
     if (!(value?.length > 0)) {
-      setErrors((lastVal) => ({ ...lastVal, description: 'Se necesitan detalles para iniciar el pedido' }));
+      setErrors((lastVal) => ({
+        ...lastVal,
+        description: 'Se necesitan detalles para iniciar el pedido',
+      }));
       return false;
     }
 
@@ -145,7 +151,6 @@ function NewOrderRequest() {
 
   return (
     <div className={styles.mainContainer}>
-      <NavBar loggedIn={false} />
       <form className={styles.divNuevoPedido} onSubmit={handleSubmit}>
         <h1 className={styles.containerTitle}>Nuevo Pedido</h1>
         <div className={styles.divDatos}>
@@ -212,9 +217,13 @@ function NewOrderRequest() {
         </div>
 
         {!loading && (
-          <button className={styles.buttonEnviarPedido} aria-label="Send" type="submit">
-            Enviar pedido
-          </button>
+          <Button
+            className={styles.buttonEnviarPedido}
+            aria-label="Send"
+            type="submit"
+            name="send-form-button"
+            text="Enviar pedido"
+          />
         )}
         {loading && <Spinner />}
       </form>
@@ -225,11 +234,7 @@ function NewOrderRequest() {
         callback={redirectAfterSubmit}
         text="La solicitud de compra ha sido enviada correctamente. Pronto nos pondremos en contacto contigo para concretar el pedido."
       />
-      <ErrorNotificationPopUp
-        close={closeError}
-        isOpen={isErrorOpen}
-        text={error?.message}
-      />
+      <ErrorNotificationPopUp close={closeError} isOpen={isErrorOpen} text={error?.message} />
     </div>
   );
 }

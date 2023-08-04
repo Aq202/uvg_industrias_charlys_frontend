@@ -43,14 +43,3 @@
 .searchButton:hover {
   opacity: 0.9;
 }
-
-.searchIcon {
-  display: block;
-  background-image: url(@assets/searchIcon.svg);
-  width: 20px;
-  aspect-ratio: 1/1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  cursor: pointer;
-}

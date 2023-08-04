@@ -1,16 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import NavBar from '../../../components/NavBar/NavBar';
 import UnderConstruccionPage from '../../UnderConstruccionPage/UnderConstruccionPage';
+import PageContainer from '../../PageContainer/PageContainer';
 
 function CustomerMainPage() {
   return (
-    <>
-      <NavBar loggedIn />
+    <PageContainer>
       <Routes>
         <Route path="*" element={<UnderConstruccionPage />} />
       </Routes>
-    </>
+    </PageContainer>
   );
 }
 
