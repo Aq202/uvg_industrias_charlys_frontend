@@ -24,7 +24,7 @@
     width: 100%;
 }
 
-.inputTextContainer.error input{
+.inputTextContainer.error select{
     border-color: var(--error-color--);
 }
 
