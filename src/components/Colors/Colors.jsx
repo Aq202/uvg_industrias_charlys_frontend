@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import useFetch from '@hooks/useFetch';
 import { serverHost } from '@/config';
 import styles from './Colors.module.css';
@@ -7,7 +8,7 @@ import SubLoadingView from '../SubLoadingView/SubLoadingView';
 import SearchInput from '../SearchInput/SearchInput';
 import Color from './Color/Color';
 
-function Colors() {
+function Colors({ callBack }) {
   const [query, setQuery] = useState(null);
   const token = useToken();
   const [colors, setColors] = useState([]);
@@ -32,6 +33,9 @@ function Colors() {
 
       return updatedColors;
     });
+    const selected = colors.map((color) => callBack(color.id));
+    console.log(selected);
+    callBack(selected);
   };
 
   useEffect(() => {
@@ -93,5 +97,9 @@ function Colors() {
     </div>
   );
 }
+
+Colors.propTypes = {
+  callBack: PropTypes.func.isRequired,
+};
 
 export default Colors;
