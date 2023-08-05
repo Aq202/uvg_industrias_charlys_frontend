@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Color.module.css';
 
 function Color({
-  id, name, r, g, b, check, onClick,
+  id, name, r, g, b, checked, onClick,
 }) {
-  const [checked, setChecked] = useState(check);
-
   const handleClick = () => {
-    setChecked(!checked);
-    onClick(id, checked);
+    onClick(id, !checked);
   };
 
   const rgbToHex = () => {
@@ -44,7 +41,7 @@ Color.propTypes = {
   r: PropTypes.string.isRequired,
   g: PropTypes.string.isRequired,
   b: PropTypes.string.isRequired,
-  check: PropTypes.bool.isRequired,
+  checked: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

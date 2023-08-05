@@ -25,7 +25,7 @@ function Colors() {
     setColors((prevColors) => {
       const updatedColors = prevColors.map((color) => {
         if (color.id === colorId) {
-          return { ...color, check: !checkedValue };
+          return { ...color, check: checkedValue };
         }
         return color;
       });
@@ -84,7 +84,7 @@ function Colors() {
                 r={color.red}
                 g={color.green}
                 b={color.blue}
-                checked={color.checked}
+                checked={color.check}
                 onClick={handleSelection}
               />
             ))}
