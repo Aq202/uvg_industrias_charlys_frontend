@@ -8,12 +8,16 @@
   --navBar-height--: 60px;
   --app-text-size--:16px;
   --h1-title-size--:35px;
+  --h2-title-size--: 25px;
   --h3-title-size--: 20px;
+  --h4-title-size--: 17px;
   
   --error-color--:#df0303;
   --blue-theme-color--: #00013E;
   --background-color--: #F3F4F6;
   --secondary-text-color--:#696969;
+
+  --container--box-shadow--:0 0 2px 0.5px rgba(0,0,0,.2);
 }
 
 html, body{
