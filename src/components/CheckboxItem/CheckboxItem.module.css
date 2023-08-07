@@ -1,0 +1,7 @@
+.checkboxItem{
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}

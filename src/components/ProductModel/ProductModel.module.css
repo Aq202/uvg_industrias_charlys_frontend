@@ -1,5 +1,7 @@
 .linkContainer{
   text-decoration: none;
+  width: fit-content;
+  height: fit-content;
 }
 .productModel {
   overflow: hidden;

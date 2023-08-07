@@ -1,23 +1,34 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styles from './ProductModel.module.css';
+import randomString from '../../helpers/randomString';
 
-function ProductModel() {
+function ProductModel({
+  url, name, imageUrl, type, organization, colors,
+}) {
   return (
-    <NavLink className={styles.linkContainer}>
+    <NavLink to={url} className={styles.linkContainer}>
       <div className={styles.productModel}>
         <div className={styles.imageContainer}>
-          <img src="https://srv.latostadora.com/designall.dll/don_bosco_is_alive_-_hombre_manga_corta_blanco_calidad_extra--i:13562335307080135623201709265;c:3530708;s:H_A5;w:700;h:520;k:15351957c8bdf84568c723cb9965a1c0.jpg" alt="" />
+          <img
+            src={imageUrl}
+            alt="Imagen descriptiva del producto"
+          />
         </div>
         <div className={styles.infoContainer}>
-          <h3 className={styles.productName}>Camisas de diario asdfasdf</h3>
-          <p className={styles.productType}>Camisa formal</p>
-          <p className={styles.organization}>Colegio Don Bosco</p>
+          <h3 className={styles.productName}>{name}</h3>
+          <p className={styles.productType}>{type}</p>
+          <p className={styles.organization}>{organization}</p>
           <div className={styles.colorsContainer}>
-            <span className={styles.color} />
-            <span className={styles.color} />
-            <span className={styles.color} />
+            {colors?.map((color) => (
+              <span
+                key={randomString()}
+                className={styles.color}
+                style={{ backgroundColor: `rgb(${color.r}, ${color.g}), ${color.b}` }}
+                title={color.name}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -28,9 +39,23 @@ function ProductModel() {
 export default ProductModel;
 
 ProductModel.propTypes = {
-
+  url: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  organization: PropTypes.string.isRequired,
+  colors: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      r: PropTypes.number.isRequired,
+      g: PropTypes.number.isRequired,
+      b: PropTypes.number.isRequired,
+    }),
+  ),
 };
 
 ProductModel.defaultProps = {
-
+  url: '',
+  imageUrl: null,
+  colors: null,
 };
