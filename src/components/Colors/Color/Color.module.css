@@ -25,12 +25,23 @@
 }
 
 .checkBox {
-    height: 100%;
-    width: 100%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #36506C;
+    border-radius: 3px;
+    margin-right: 10px;
     background-image: url('../../../assets/check.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 10px;
+    background-color: #fff;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.checkBox:checked {
+    background-color: #36506C;
 }
 
 .colorCircle {
