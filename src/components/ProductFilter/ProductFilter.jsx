@@ -12,7 +12,7 @@ import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import CheckboxColorItem from '../CheckboxColorItem/CheckboxColorItem';
 
-function ProductFilter({ idOrganization, onChange }) {
+function ProductFilter({ idOrganization, onChange, className }) {
   const [showTypeFilter, toogleTypeFilter] = useToogle(true);
   const [showColorFilter, toogleColorFilter] = useToogle(true);
 
@@ -55,60 +55,62 @@ function ProductFilter({ idOrganization, onChange }) {
     else setColorFilter((prev) => prev.filter((val) => val !== value));
   };
   return (
-    <div className={styles.productFilter}>
+    <div className={className}>
       <div className={styles.productFilterContainer}>
         <h3 className={styles.generalTitle}>Filtros</h3>
         <SearchInput className={styles.searchBar} handleSearch={(val) => setQuery(val)} />
-        <div className={styles.filterSection}>
-          <div
-            className={styles.sectionHeader}
-            onClick={toogleTypeFilter}
-            onKeyUp={toogleTypeFilter}
-            role="button"
-            tabIndex="0"
-          >
-            <h4>Tipo</h4>
-            <DownArrow className={`${styles.sectionArrow} ${!showTypeFilter ? styles.up : ''}`} />
+        <div className={styles.sectionsContainer}>
+          <div className={styles.filterSection}>
+            <div
+              className={styles.sectionHeader}
+              onClick={toogleTypeFilter}
+              onKeyUp={toogleTypeFilter}
+              role="button"
+              tabIndex="0"
+            >
+              <h4>Tipo</h4>
+              <DownArrow className={`${styles.sectionArrow} ${!showTypeFilter ? styles.up : ''}`} />
+            </div>
+            <AnimateHeight height={showTypeFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
+              {types?.map((item) => (
+                <CheckboxItem
+                  key={item.id}
+                  onChange={handleTypeOptionChange}
+                  value={item.id}
+                  checked={typeFilter.includes(item.id)}
+                >
+                  {item.name}
+                </CheckboxItem>
+              ))}
+            </AnimateHeight>
           </div>
-          <AnimateHeight height={showTypeFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
-            {types?.map((item) => (
-              <CheckboxItem
-                key={item.id}
-                onChange={handleTypeOptionChange}
-                value={item.id}
-                checked={typeFilter.includes(item.id)}
-              >
-                {item.name}
-              </CheckboxItem>
-            ))}
-          </AnimateHeight>
-        </div>
-        <div className={styles.filterSection}>
-          <div
-            className={styles.sectionHeader}
-            onClick={toogleColorFilter}
-            onKeyUp={toogleColorFilter}
-            role="button"
-            tabIndex="0"
-          >
-            <h4>Color</h4>
-            <DownArrow className={`${styles.sectionArrow} ${!showColorFilter ? styles.up : ''}`} />
-          </div>
-          <AnimateHeight height={showColorFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
-            {colors?.map((item) => (
-              <CheckboxColorItem
-                key={item.id}
-                onChange={handleColorOptionChange}
-                value={item.id}
-                checked={colorFilter.includes(item.id)}
-                colorName={item.name}
-                red={item.red}
-                green={item.green}
-                blue={item.blue}
-              />
-            ))}
+          <div className={styles.filterSection}>
+            <div
+              className={styles.sectionHeader}
+              onClick={toogleColorFilter}
+              onKeyUp={toogleColorFilter}
+              role="button"
+              tabIndex="0"
+            >
+              <h4>Color</h4>
+              <DownArrow className={`${styles.sectionArrow} ${!showColorFilter ? styles.up : ''}`} />
+            </div>
+            <AnimateHeight height={showColorFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
+              {colors?.map((item) => (
+                <CheckboxColorItem
+                  key={item.id}
+                  onChange={handleColorOptionChange}
+                  value={item.id}
+                  checked={colorFilter.includes(item.id)}
+                  colorName={item.name}
+                  red={item.red}
+                  green={item.green}
+                  blue={item.blue}
+                />
+              ))}
 
-          </AnimateHeight>
+            </AnimateHeight>
+          </div>
         </div>
       </div>
     </div>
@@ -120,8 +122,10 @@ export default ProductFilter;
 ProductFilter.propTypes = {
   idOrganization: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  className: PropTypes.string,
 };
 
 ProductFilter.defaultProps = {
   onChange: null,
+  className: '',
 };

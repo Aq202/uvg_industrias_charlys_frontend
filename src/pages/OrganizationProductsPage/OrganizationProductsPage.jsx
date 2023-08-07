@@ -15,7 +15,7 @@ function OrganizationProductsPage() {
           <Button text="Nuevo producto" name="new-product" />
         </NavLink>
       </header>
-      <ProductFilter idOrganization="ORG000000000003" onChange={() => {}} />
+      <ProductFilter className={styles.productFilter} idOrganization="ORG000000000003" onChange={() => {}} />
       <div className={styles.productsContainer}>
         <ProductModel
           url="/hey"
