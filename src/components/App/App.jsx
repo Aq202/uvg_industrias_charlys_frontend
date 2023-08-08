@@ -1,6 +1,6 @@
 import React from 'react';
-import { SessionProvider } from '@context/SessionContext';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { SessionProvider } from '@context/SessionContext';
 import MainPage from '@pages/MainPage';
 
 function App() {

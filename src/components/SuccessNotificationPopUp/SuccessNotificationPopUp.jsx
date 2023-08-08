@@ -1,6 +1,6 @@
 import React from 'react';
-import successImage from '@assets/success.svg';
 import PropTypes from 'prop-types';
+import successImage from '@assets/success.svg';
 import NotificationPopUp from '@components/NotificationPopUp';
 
 function SuccessNotificationPopUp({

@@ -1,3 +1,3 @@
-import InputDate from './InputDate.jsx';
+import InputDate from './InputDate';
 
 export default InputDate;

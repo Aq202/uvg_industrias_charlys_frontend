@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import Order from '@components/Order/Order';
 import NavBar from '@components/NavBar/NavBar';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
-import moment from 'moment';
 import styles from './OrdersList.module.css';
 import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';

@@ -1,6 +1,6 @@
 import React from 'react';
-import failureImage from '@assets/failure.svg';
 import PropTypes from 'prop-types';
+import failureImage from '@assets/failure.svg';
 import NotificationPopUp from '@components/NotificationPopUp';
 
 function ErrorNotificationPopUp({

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '@components/NavBar';
 import { serverHost } from '@/config';
 import Spinner from '@components/Spinner';
-import { useNavigate } from 'react-router-dom';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import InputText from '../../../components/InputText/InputText';

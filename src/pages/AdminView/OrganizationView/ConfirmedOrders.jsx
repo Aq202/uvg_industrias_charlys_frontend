@@ -8,9 +8,9 @@ import InputText from '../../../components/InputText/InputText';
 import Spinner from '../../../components/Spinner/Spinner';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
-import styles from './Requests.module.css';
+import styles from './ConfirmedOrders.module.css';
 
-function Requests({ orgId }) {
+function ConfirmedOrders({ orgId }) {
   const {
     callFetch, result, error, loading,
   } = useFetch();
@@ -19,17 +19,17 @@ function Requests({ orgId }) {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orderRequests/${orgId}`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/orderConfirmedOrders/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = () => {
     callFetch({
-      uri: `${serverHost}/organization/orderRequests/:${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/orderConfirmedOrders/:${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
 
-  const renderRequests = () => (
+  const renderConfirmedOrders = () => (
     <Table
       header={['ID', 'Descripción', 'Fecha']}
       breakPoint="280px"
@@ -50,14 +50,14 @@ function Requests({ orgId }) {
   );
 
   return (
-    <div className={styles.requests}>
+    <div className={styles.ConfirmedOrders}>
       <div className={styles.header}>
         <h1>
-          Solicitudes
+          Pedidos confirmados
         </h1>
         <Button text="Nuevo" />
       </div>
-      <div className={styles.requestsList}>
+      <div className={styles.ConfirmedOrdersList}>
         <div className={styles.searchContainer}>
           <InputText
             onChange={(e) => setSearch(e.target.value)}
@@ -71,15 +71,15 @@ function Requests({ orgId }) {
             {error && 'Ocurrió un error'}
             {loading && <Spinner />}
           </div>
-          {result?.result.length > 0 ? renderRequests() : null}
+          {result?.result.length > 0 ? renderConfirmedOrders() : null}
         </div>
       </div>
     </div>
   );
 }
 
-Requests.propTypes = {
+ConfirmedOrders.propTypes = {
   orgId: PropTypes.string.isRequired,
 };
 
-export default Requests;
+export default ConfirmedOrders;

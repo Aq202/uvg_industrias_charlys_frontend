@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '@components/NavBar/NavBar';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/LocalPhone';
-import { serverHost } from '@/config';
 import AddressIcon from '@mui/icons-material/LocationOn';
 import { useParams } from 'react-router';
+import NavBar from '@components/NavBar/NavBar';
+import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import Button from '../../../components/Button/Button';
 import Members from './Members';
@@ -13,6 +13,7 @@ import styles from './OrganizationView.module.css';
 import useToken from '../../../hooks/useToken';
 import Requests from './Requests';
 import SubLoadingView from '../../../components/SubLoadingView/SubLoadingView';
+import ConfirmedOrders from './ConfirmedOrders';
 
 function OrganizationView() {
   const {
@@ -98,6 +99,7 @@ function OrganizationView() {
           <div className={styles.section}>
             {sections === 'Miembros' && <Members orgId={orgId} orgName={result.name} />}
             {sections === 'Solicitudes' && <Requests orgId={orgId} orgName={result.name} />}
+            {sections === 'Pedidos' && <ConfirmedOrders orgId={orgId} orgName={result.name} />}
           </div>
         </div>
       </div>
