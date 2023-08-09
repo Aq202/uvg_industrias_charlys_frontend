@@ -5,7 +5,7 @@
 }
 
 .OrdersList main{
-    padding: 0 5vw;
+    padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
     width: 100%;
 }
 
@@ -13,13 +13,12 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-top: 100px;
     gap: 25px;
     max-width: 2000px;
 }
 
 .title{
-    font-size: 32px;
+    font-size: var(--h1-title-size--);
     font-weight: 600;
 }
 

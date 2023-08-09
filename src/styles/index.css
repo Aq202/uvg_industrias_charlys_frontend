@@ -18,6 +18,9 @@
   --secondary-text-color--:#696969;
 
   --container--box-shadow--:0 0 2px 0.5px rgba(0,0,0,.2);
+
+  --page-horizontal-padding--: 50px;
+  --page-vertical-padding--: 50px;
 }
 
 html, body{
