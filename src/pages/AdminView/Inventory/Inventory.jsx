@@ -5,6 +5,7 @@ import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
 import UpdateIcon from '@mui/icons-material/Update';
+import NewColorFormPopUp from '../../../components/NewColorFormPopUp/NewColorFormPopUp';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './Inventory.module.css';
 import useToken from '../../../hooks/useToken';
