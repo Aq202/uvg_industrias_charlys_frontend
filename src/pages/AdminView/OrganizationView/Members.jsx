@@ -74,9 +74,9 @@ function Members({ orgId, orgName }) {
   return (
     <div className={styles.members}>
       <div className={styles.header}>
-        <h1>
+        <h2>
           Miembros de la organización
-        </h1>
+        </h2>
         <Button text="Nuevo" onClick={openMemberForm} />
       </div>
       <div className={styles.membersList}>

@@ -1,24 +1,25 @@
 .thumbnails{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
     width: 100%;
-    max-width: 1200px;
     padding: 0 1rem;
     border-radius: 1rem;
-    background-color: #ffff00; 
+    background-color: #D8DADF;
 }
 
 .delete{
     display: flex;
-    justify-content: end;
+    justify-content: center;
+    align-items: center;
     color: #fff;
     border: none;
     border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
+    width: 5%;
+    height: 10%;
+    margin-bottom: 5%;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
@@ -29,13 +30,18 @@
 }
 
 .delete svg{
-    font-size: 50px;
+    font-size: 25px;
 }
 
 .image{
+    margin: 5% 10%;
     width: 100%;
-    height: 100%;
-    margin: 2rem 2rem;
-    border-radius: 1rem;
+    border-radius: 15px 15px 0 0;
     overflow: hidden;
+}
+
+.image img{
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
 }

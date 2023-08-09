@@ -52,9 +52,9 @@ function Requests({ orgId }) {
   return (
     <div className={styles.requests}>
       <div className={styles.header}>
-        <h1>
+        <h2>
           Solicitudes
-        </h1>
+        </h2>
         <Button text="Nuevo" />
       </div>
       <div className={styles.requestsList}>

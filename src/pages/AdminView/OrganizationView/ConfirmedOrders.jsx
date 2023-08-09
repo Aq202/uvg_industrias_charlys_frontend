@@ -19,12 +19,12 @@ function ConfirmedOrders({ orgId }) {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orderConfirmedOrders/${orgId}`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/orders/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = () => {
     callFetch({
-      uri: `${serverHost}/organization/orderConfirmedOrders/:${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/orders/:${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
@@ -52,9 +52,9 @@ function ConfirmedOrders({ orgId }) {
   return (
     <div className={styles.ConfirmedOrders}>
       <div className={styles.header}>
-        <h1>
+        <h2>
           Pedidos confirmados
-        </h1>
+        </h2>
         <Button text="Nuevo" />
       </div>
       <div className={styles.ConfirmedOrdersList}>
