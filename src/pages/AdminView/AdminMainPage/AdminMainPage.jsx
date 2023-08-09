@@ -26,7 +26,7 @@ function AdminMainPage() {
         <Route path="/organizaciones" element={<OrganizationsPage />} />
         <Route path="/nuevaOrganizacion" element={<NewOrganizationPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />
-        <Route path="/productos" element={<OrganizationProductsPage />} />
+        <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
       </Routes>
     </PageContainer>
   );
