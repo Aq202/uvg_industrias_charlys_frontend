@@ -1,0 +1,14 @@
+.underConstruccionPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner{
+  width: 30vw;
+}
+
+.title{
+  font-size: 40px;
+}

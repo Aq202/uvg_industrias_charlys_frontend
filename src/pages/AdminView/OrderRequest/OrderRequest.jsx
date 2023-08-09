@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import { useParams } from 'react-router';
-import NavBar from '@components/NavBar/NavBar';
 import ImageViewer from '@components/ImageViewer/ImageViewer';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
@@ -30,9 +29,6 @@ function OrderRequest() {
 
   return (
     <div className={`${styles.OrderRequest}`}>
-      <header>
-        <NavBar loggedIn />
-      </header>
       <main>
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>

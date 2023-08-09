@@ -14,6 +14,7 @@ function Button({
   darkBlue,
   green,
   className,
+  name,
 }) {
   return (
     <button
@@ -27,6 +28,7 @@ function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      name={name}
     >
       <span>{text}</span>
     </button>
@@ -35,7 +37,7 @@ function Button({
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.isRequired,
+  onClick: PropTypes.func,
   type: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string,
@@ -44,6 +46,7 @@ Button.propTypes = {
   emptyRed: PropTypes.bool,
   darkBlue: PropTypes.bool,
   green: PropTypes.bool,
+  name: PropTypes.string.isRequired,
 };
 
 Button.defaultProps = {
@@ -55,5 +58,6 @@ Button.defaultProps = {
   green: false,
   type: 'button',
   disabled: false,
+  onClick: null,
 };
 export default Button;

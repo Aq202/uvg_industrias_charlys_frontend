@@ -1,0 +1,78 @@
+.linkContainer{
+  text-decoration: none;
+  width: fit-content;
+  height: fit-content;
+}
+.productModel {
+  overflow: hidden;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--container--box-shadow--);
+  border-radius: 10px;
+  max-width: 400px;
+}
+
+.imageContainer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+.infoContainer {
+  height: fit-content;
+  background-color: white;
+  padding: 15px;
+}
+
+.productName {
+  font-size: var(--h3-title-size--);
+  -webkit-line-clamp: 2;
+  display: box;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  color: black;
+
+}
+
+.productType, .organization {
+  margin: 0;
+  color: var(--secondary-text-color--);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  width: 95%;
+  overflow: hidden;
+}
+
+.colorsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: rgb(255, 0, 0);
+  box-shadow: 0 0 1px 1px #0000003c;
+}
+
+.color:nth-child(2) {
+  background-color: rgb(3, 126, 34);
+}
+
+.color:nth-child(3) {
+  background-color: rgb(79, 3, 160);
+}

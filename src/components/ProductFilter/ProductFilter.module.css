@@ -1,0 +1,61 @@
+.productFilterContainer{
+  width: 100%;
+  background-color: white;
+  max-height: 100%;
+  box-shadow:var(--container--box-shadow--);
+  border-radius: 7px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.generalTitle{
+  font-size: var(--h3-title-size--);
+}
+
+.searchBar{
+  flex-shrink: 0;
+}
+
+.sectionsContainer{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filterSection{
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  overflow: hidden;
+  max-height: 50vh;
+  flex: 1;
+  min-width: 150px;
+}
+
+.itemContainer{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sectionHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.sectionHeader > h4{
+  font-size: var(--h4-title-size--);
+}
+
+
+.sectionArrow{
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform .4s ease;
+}
+
+.sectionArrow.up{
+  transform: rotate(-180deg);
+}

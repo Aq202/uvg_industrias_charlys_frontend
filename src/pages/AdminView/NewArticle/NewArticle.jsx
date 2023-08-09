@@ -175,9 +175,6 @@ function NewArticle() {
 
   return (
     <div className={`${styles.newArticle}`}>
-      <header>
-        <NavBar loggedIn />
-      </header>
 
       {loading && <Spinner />}
       {

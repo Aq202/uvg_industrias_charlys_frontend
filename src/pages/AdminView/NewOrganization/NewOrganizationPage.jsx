@@ -4,7 +4,6 @@ import { serverHost } from '@/config';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import styles from './NewOrganizationPage.module.css';
-import NavBar from '../../../components/NavBar/NavBar';
 import useFetch from '../../../hooks/useFetch';
 import usePopUp from '../../../hooks/usePopUp';
 import useToken from '../../../hooks/useToken';
@@ -111,7 +110,7 @@ function NewOrganizationPage() {
 
   return (
     <div className={styles.NewOrganizationPageContainer}>
-      <NavBar loggedIn />
+
       <h1 className={styles.mainTitle}>Registrar organización</h1>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
 
@@ -157,7 +156,7 @@ function NewOrganizationPage() {
         </div>
 
         {!loading && (
-        <Button aria-label="Send" type="submit" text="Registrar" />
+        <Button aria-label="Send" type="submit" text="Registrar" name="create-organization-button" />
         )}
         {loading && <Spinner />}
       </form>

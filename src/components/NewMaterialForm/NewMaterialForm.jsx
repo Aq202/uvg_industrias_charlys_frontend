@@ -209,8 +209,8 @@ function NewMaterialForm({
         {actionLoading && <Spinner />}
         {!actionLoading && !result && (
           <>
-            <Button text="Enviar" type="submit" />
-            <Button text="Cancelar" emptyRed type="button" onClick={onCancel} />
+            <Button text="Enviar" type="submit" name="send-form-button" />
+            <Button text="Cancelar" emptyRed type="button" onClick={onCancel} name="cancel-form-button" />
           </>
         )}
       </div>

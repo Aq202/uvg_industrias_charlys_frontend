@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import Order from '@components/Order/Order';
-import NavBar from '@components/NavBar/NavBar';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import styles from './OrdersList.module.css';
@@ -35,9 +34,6 @@ function OrdersList() {
 
   return (
     <div className={`${styles.OrdersList}`}>
-      <header>
-        <NavBar loggedIn />
-      </header>
       <main>
         <div className={`${styles.topHeader}`}>
           <span className={`${styles.title}`}>Lista de solicitudes de pedidos</span>

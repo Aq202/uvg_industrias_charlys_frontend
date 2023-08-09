@@ -36,7 +36,7 @@ function OrganizationView() {
 
   return (
     <div>
-      <NavBar loggedIn />
+
       {error && <span>Ocurrió un error.</span>}
       {loading && <SubLoadingView />}
       {!loading && !error && !result && <span>No se encontró la organización.</span>}
