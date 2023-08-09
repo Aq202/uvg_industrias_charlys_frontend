@@ -3,7 +3,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/LocalPhone';
 import AddressIcon from '@mui/icons-material/LocationOn';
 import { useParams } from 'react-router';
-import NavBar from '@components/NavBar/NavBar';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import Button from '../../../components/Button/Button';
