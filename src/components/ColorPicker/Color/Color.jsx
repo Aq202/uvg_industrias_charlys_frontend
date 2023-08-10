@@ -23,12 +23,16 @@ function Color({
   };
 
   return (
-    <li name={id} className={`${styles.color}`} role="presentation" onClick={handleClick} onKeyDown={handleClick}>
-      <input className={`${styles.checkBox}`} type="checkbox" checked={checked} />
-      <span className={`${styles.colorCircle}`} style={{ backgroundColor: `${rgbToHex()}` }} />
-      <span className={`${styles.colorText}`}>
-        {name}
-      </span>
+    <li className={`${styles.color}`}>
+      <label
+        name={id}
+        role="presentation"
+        htmlFor={id}
+      >
+        <input id={id} className={`${styles.checkBox}`} type="checkbox" checked={checked} onChange={handleClick} />
+        <span className={`${styles.colorCircle}`} style={{ backgroundColor: `${rgbToHex()}` }} />
+        <span className={`${styles.colorText}`}>{name}</span>
+      </label>
     </li>
   );
 }
@@ -36,9 +40,9 @@ function Color({
 Color.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  r: PropTypes.string.isRequired,
-  g: PropTypes.string.isRequired,
-  b: PropTypes.string.isRequired,
+  r: PropTypes.number.isRequired,
+  g: PropTypes.number.isRequired,
+  b: PropTypes.number.isRequired,
   checked: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

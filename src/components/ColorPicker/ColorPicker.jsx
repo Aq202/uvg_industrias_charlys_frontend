@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '@hooks/useFetch';
 import { serverHost } from '@/config';
+import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './ColorPicker.module.css';
 import useToken from '../../hooks/useToken';
 import SubLoadingView from '../SubLoadingView/SubLoadingView';
@@ -33,9 +34,12 @@ function ColorPicker({ callBack }) {
 
       return updatedColors;
     });
+  };
+
+  useEffect(() => {
     const selected = colors.filter((color) => color.check);
     callBack(selected);
-  };
+  }, [colors]);
 
   useEffect(() => {
     let uri = `${serverHost}/color`;
@@ -76,10 +80,11 @@ function ColorPicker({ callBack }) {
         <div className={`${styles.searchContainer}`}>
           <SearchInput className={`${styles.searchInput}`} handleSearch={handleSearch} />
         </div>
-        <ul className={`${styles.colorsList}`}>
-          {error && <div className="error-message">{error?.message ?? 'Ocurrió un error.'}</div> }
-          {loading && <SubLoadingView />}
-          {colors?.length > 0 && !error
+        <div className={`${styles.colorsListContainer} ${scrollbarGray}`}>
+          <ul className={`${styles.colorsList}`}>
+            {error && <div className="error-message">{error?.message ?? 'Ocurrió un error.'}</div> }
+            {loading && <SubLoadingView />}
+            {colors?.length > 0 && !error
             && colors.map((color) => (
               <Color
                 id={color.id}
@@ -89,9 +94,11 @@ function ColorPicker({ callBack }) {
                 b={color.blue}
                 checked={color.check}
                 onClick={handleSelection}
+                key={color.id}
               />
             ))}
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,8 @@
     color:gray;
 }
 
+
+
 .colorsContainer {
     display: flex;
     flex-direction: column;
@@ -13,13 +15,23 @@
     width: 100%;
     border: 1px solid #D2D7D9;
     border-radius: 7px;
-    padding: 20px 20px;
     overflow: auto;
     color: black;
+    padding-top: 20px;
+}
+
+.colorsListContainer{
+    max-height: 60vh;
+    padding: 15px 20px 20px 40px;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .colorsList {
-    margin-top: 10px;
-    margin-left: 10%;
+    width: fit-content;
 }
 
+.searchInput{
+    margin: 0 20px;
+}
