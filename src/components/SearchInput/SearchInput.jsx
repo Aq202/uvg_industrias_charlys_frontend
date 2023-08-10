@@ -16,12 +16,33 @@ function SearchInput({ handleSearch, className, ...props }) {
   const handleKeyUp = (e) => {
     const { value } = e.target;
 
-    if (e.key === 'Enter') handleSearch(value);
+    if (e.key === 'Enter') {
+      handleSearch(value);
+    }
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className={`${styles.searchInput} ${className}`}>
-      <input type="text" placeholder="Buscar..." {...props} onChange={handleChange} onKeyUp={handleKeyUp} />
-      <button type="button" name="search-button" className={styles.searchButton} onClick={() => handleSearch(query)}>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        {...props}
+        onChange={handleChange}
+        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
+      />
+      <button
+        type="button"
+        name="search-button"
+        className={styles.searchButton}
+        onClick={() => handleSearch(query)}
+      >
         <SearchIcon />
       </button>
     </div>

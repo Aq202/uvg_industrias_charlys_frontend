@@ -17,6 +17,7 @@ import SubLoadingView from '../../components/SubLoadingView/SubLoadingView';
 import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
+import ColorPicker from '../../components/ColorPicker/ColorPicker';
 
 function NewProductModelPage() {
   const {
@@ -70,6 +71,8 @@ function NewProductModelPage() {
 
   const saveImages = (files) => setData('images', files);
 
+  const handleColorsChange = (colors) => setData('color', colors.map((color) => color.id));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,13 +85,15 @@ function NewProductModelPage() {
 
     // guardar información en un formdata
     const {
-      name, idClientOrganization, type, details, images,
+      name, idClientOrganization, type, details, images, color,
     } = form;
     data.append('name', name);
     data.append('idClientOrganization', idClientOrganization);
     data.append('type', type);
+
     if (details?.trim().length > 0) data.append('details', details);
 
+    color?.forEach((colorId) => data.append('color[]', colorId));
     images?.forEach((file) => data.append('images[]', file, file.name));
 
     // enviar información
@@ -149,6 +154,7 @@ function NewProductModelPage() {
           options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
           disabled={!productTypes}
         />
+        <ColorPicker callBack={handleColorsChange} />
         <TextArea
           className={styles.aditionalDetails}
           title="Detalles adicionales:"
