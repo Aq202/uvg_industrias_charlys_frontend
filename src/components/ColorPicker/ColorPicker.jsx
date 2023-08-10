@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '@hooks/useFetch';
 import { serverHost } from '@/config';
-import styles from './Colors.module.css';
+import styles from './ColorPicker.module.css';
 import useToken from '../../hooks/useToken';
 import SubLoadingView from '../SubLoadingView/SubLoadingView';
 import SearchInput from '../SearchInput/SearchInput';
 import Color from './Color/Color';
 
-function Colors({ callBack }) {
+function ColorPicker({ callBack }) {
   const [query, setQuery] = useState(null);
   const token = useToken();
   const [colors, setColors] = useState([]);
@@ -97,8 +97,8 @@ function Colors({ callBack }) {
   );
 }
 
-Colors.propTypes = {
+ColorPicker.propTypes = {
   callBack: PropTypes.func.isRequired,
 };
 
-export default Colors;
+export default ColorPicker;
