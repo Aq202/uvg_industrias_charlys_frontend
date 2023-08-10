@@ -23,10 +23,8 @@ function Color({
   };
 
   return (
-    <li className={`${styles.color}`} role="presentation" onClick={handleClick} onKeyDown={handleClick}>
-      <span className={`${styles.checkBoxContainer}`}>
-        <span className={`${styles.checkBox}`} style={{ display: checked ? 'block' : 'none' }} />
-      </span>
+    <li name={id} className={`${styles.color}`} role="presentation" onClick={handleClick} onKeyDown={handleClick}>
+      <input className={`${styles.checkBox}`} type="checkbox" checked={checked} />
       <span className={`${styles.colorCircle}`} style={{ backgroundColor: `${rgbToHex()}` }} />
       <span className={`${styles.colorText}`}>
         {name}

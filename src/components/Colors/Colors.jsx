@@ -33,8 +33,7 @@ function Colors({ callBack }) {
 
       return updatedColors;
     });
-    const selected = colors.map((color) => callBack(color.id));
-    console.log(selected);
+    const selected = colors.filter((color) => color.check);
     callBack(selected);
   };
 
@@ -78,9 +77,9 @@ function Colors({ callBack }) {
           <SearchInput className={`${styles.searchInput}`} handleSearch={handleSearch} />
         </div>
         <ul className={`${styles.colorsList}`}>
-          {error && 'Ocurrió un error.'}
+          {error && <div className="error-message">{error?.message ?? 'Ocurrió un error.'}</div> }
           {loading && <SubLoadingView />}
-          {colors?.length > 0
+          {colors?.length > 0 && !error
             && colors.map((color) => (
               <Color
                 id={color.id}
