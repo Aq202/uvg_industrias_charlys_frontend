@@ -69,7 +69,6 @@ function NewColorForm({
       blue: parseInt(form.color[3], 16),
     };
 
-    console.log(body);
     callFetch({
       uri,
       method: 'POST',

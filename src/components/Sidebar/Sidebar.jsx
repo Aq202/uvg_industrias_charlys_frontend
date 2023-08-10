@@ -37,6 +37,9 @@ function Sidebar({ displayMenu }) {
           <SidebarItem path="#" iconUrl={logoutIcon} text="Salir" onClick={handleLogout} />
         </>
         )}
+        {role === consts.role.client && (
+          <SidebarItem path="/newOrderRequest" iconUrl={logoutIcon} text="Nuevo pedido" />
+        )}
       </div>
     </nav>
   );
