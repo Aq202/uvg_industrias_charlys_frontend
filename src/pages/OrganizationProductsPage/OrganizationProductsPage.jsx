@@ -81,7 +81,7 @@ function OrganizationProductsPage() {
       </header>
       <ProductFilter
         className={styles.productFilter}
-        idOrganization="ORG000000000003"
+        idOrganization={orgId}
         onChange={(val) => setFilters(val)}
       />
       <div className={styles.productsContainer}>

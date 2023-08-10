@@ -65,16 +65,7 @@
   width: 20px;
   height: 20px;
   border-radius: 10px;
-  background-color: rgb(255, 0, 0);
   box-shadow: 0 0 1px 1px #0000003c;
-}
-
-.color:nth-child(2) {
-  background-color: rgb(3, 126, 34);
-}
-
-.color:nth-child(3) {
-  background-color: rgb(79, 3, 160);
 }
 
 .defaultImageContainer{
