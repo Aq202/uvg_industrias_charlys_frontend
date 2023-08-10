@@ -74,7 +74,7 @@ function OrganizationProductsPage() {
   return (
     <div className={styles.organizationProductsPage}>
       <header className={styles.pageHeader}>
-        <h1>Productos</h1>
+        <h2>Productos</h2>
         <NavLink to="/producto/nuevo">
           <Button text="Nuevo producto" name="new-product" />
         </NavLink>

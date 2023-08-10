@@ -12,7 +12,7 @@ import styles from './OrganizationView.module.css';
 import useToken from '../../../hooks/useToken';
 import Requests from './Requests';
 import SubLoadingView from '../../../components/SubLoadingView/SubLoadingView';
-import ConfirmedOrders from './ConfirmedOrders';
+import OrganizationProductsPage from '../../OrganizationProductsPage/OrganizationProductsPage';
 
 function OrganizationView() {
   const {
@@ -78,8 +78,8 @@ function OrganizationView() {
               {sections === 'Solicitudes' && (<hr className={styles.sectionSelect} />)}
             </div>
             <div>
-              <Button text="Pedidos confirmados" onClick={() => setSections('Pedidos')} />
-              {sections === 'Pedidos' && (<hr className={styles.sectionSelect} />)}
+              <Button text="Productos" onClick={() => setSections('Productos')} />
+              {sections === 'Productos' && (<hr className={styles.sectionSelect} />)}
             </div>
           </div>
 
@@ -88,7 +88,7 @@ function OrganizationView() {
             options={[
               { value: 'Miembros', title: 'Miembros' },
               { value: 'Solicitudes', title: 'Solicitudes' },
-              { value: 'Pedidos', title: 'Pedidos confirmados ' },
+              { value: 'Productos', title: 'Productos' },
             ]}
             placeholder="Seleccionar sección"
             value={sections}
@@ -98,7 +98,7 @@ function OrganizationView() {
           <div className={styles.section}>
             {sections === 'Miembros' && <Members orgId={orgId} orgName={result.name} />}
             {sections === 'Solicitudes' && <Requests orgId={orgId} orgName={result.name} />}
-            {sections === 'Pedidos' && <ConfirmedOrders orgId={orgId} orgName={result.name} />}
+            {sections === 'Productos' && <OrganizationProductsPage />}
           </div>
         </div>
       </div>
