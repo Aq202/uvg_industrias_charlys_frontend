@@ -20,7 +20,7 @@
 }
 
 .orgName h1 {
-    font-size: 35px;
+    font-size: var(--h1-title-size--);
     width: 100%;
     color: #313131;
     padding: 0;
@@ -93,8 +93,6 @@
     margin-top: 2vh;
     width: 100%;
     border-radius: 10px;
-    border: 1px solid #7E7E7E;
-    box-shadow:  0 2px 0.5px rgba(0,0,0,.2);
     padding: 30px;
 }
 

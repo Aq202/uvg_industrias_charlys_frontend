@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
-// import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import styles from './UpdateProductModelPage.module.css';
 import InputSelect from '../../components/InputSelect/InputSelect';
 import InputText from '../../components/InputText/InputText';
@@ -20,6 +20,7 @@ import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/Erro
 import Thumbanils from '../../components/Thumbnails/Thumbanils';
 
 function UpdateProductModelPage() {
+  const { productId } = useParams();
   const {
     form, error, setData, validateField, clearFieldError, validateForm,
   } = useForm({
@@ -46,6 +47,21 @@ function UpdateProductModelPage() {
     loading: productModelLoading,
     error: productModelError,
   } = useFetch();
+
+  const {
+    callFetch: deleteImage,
+    result: deleteImageResult,
+    loading: deleteImageLoading,
+    error: deleteImageError,
+  } = useFetch();
+
+  const {
+    callFetch: updateProductModel,
+    result: updateProductModelResult,
+    loading: updateProductModelLoading,
+    error: updateProductModelError,
+  } = useFetch();
+
   const token = useToken();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
@@ -57,10 +73,23 @@ function UpdateProductModelPage() {
     // Obtener opciones del formulario
     getTypesFetch({ uri: `${serverHost}/product/type`, headers: { authorization: token } });
     getOrganizationsFetch({ uri: `${serverHost}/organization`, headers: { authorization: token } });
+    updateProductModel({ uri: `${serverHost}/product/model/${productId}`, headers: { authorization: token } });
   }, []);
 
   useEffect(() => {
-    if (!organizationsError && !typesError) return;
+    if (!updateProductModelResult) return;
+    const {
+      name, idClientOrganization, type, details, images,
+    } = updateProductModelResult;
+    setData('name', name);
+    setData('idClientOrganization', idClientOrganization);
+    setData('type', type);
+    setData('details', details);
+    setData('images', images);
+  }, [updateProductModelResult]);
+
+  useEffect(() => {
+    if (!organizationsError && !typesError && !updateProductModelError) return;
     openError();
   }, [organizationsError, typesError]);
 
@@ -180,14 +209,14 @@ function UpdateProductModelPage() {
           {productModelLoading && <Spinner />}
           {!productModelLoading && !productModelResult && (
             <Button
-              text="Crear producto"
+              text="Actualizar producto"
               className={styles.sendButton}
               type="submit"
               name="create-product-button"
             />
           )}
         </div>
-        {(loadingTypes || loadingOrganizations) && (
+        {(loadingTypes || loadingOrganizations || updateProductModelLoading) && (
           <SubLoadingView className={styles.loadingView} />
         )}
       </form>
