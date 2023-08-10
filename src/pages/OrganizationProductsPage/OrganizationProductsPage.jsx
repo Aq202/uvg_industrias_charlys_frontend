@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import { NavLink, useParams } from 'react-router-dom';
+import searchBanner from '@assets/banner/search-banner.svg';
 import styles from './OrganizationProductsPage.module.css';
 import ProductFilter from '../../components/ProductFilter/ProductFilter';
 import ProductModel from '../../components/ProductModel/ProductModel';
@@ -9,15 +10,19 @@ import { serverHost } from '../../config';
 import useFetch from '../../hooks/useFetch';
 import useToken from '../../hooks/useToken';
 import useApiMultipleImages from '../../hooks/useApiMultipleImages';
+import Spinner from '../../components/Spinner/Spinner';
 
 function OrganizationProductsPage() {
   const { orgId } = useParams();
   const [filters, setFilters] = useState(null);
-  const { callFetch: getProductsFetch, result: products } = useFetch();
-  const token = useToken();
   const {
-    getMultipleApiImages, result: productImages,
-  } = useApiMultipleImages();
+    callFetch: getProductsFetch,
+    result: products,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useFetch();
+  const token = useToken();
+  const { getMultipleApiImages, result: productImages } = useApiMultipleImages();
 
   useEffect(() => {
     if (!orgId || !token) return;
@@ -70,7 +75,7 @@ function OrganizationProductsPage() {
     <div className={styles.organizationProductsPage}>
       <header className={styles.pageHeader}>
         <h1>Productos</h1>
-        <NavLink to="/hey">
+        <NavLink to="/producto/nuevo">
           <Button text="Nuevo producto" name="new-product" />
         </NavLink>
       </header>
@@ -84,7 +89,7 @@ function OrganizationProductsPage() {
           <ProductModel
             url="/hey"
             name={data.description}
-            imageUrl={productImages?.[data.id]}
+            imageUrl={productImages?.[data.id] ?? null}
             type={data.type}
             organization="Colegio Don Bosco"
             colors={data?.colors?.map((color) => ({
@@ -94,8 +99,22 @@ function OrganizationProductsPage() {
               g: color.green,
             }))}
             key={data.id}
+            loadingImage={!productImages?.[data.id] && data.media.length > 0}
           />
         ))}
+
+        {loadingProducts && (
+          <div className={styles.loadingContainer}>
+            <Spinner />
+          </div>
+        )}
+
+        { errorProducts && (
+          <div className={styles.noResultContainer}>
+            <img src={searchBanner} alt="Imágen de búsqueda" />
+            <p>No se encontraron resultados</p>
+          </div>
+        )}
       </div>
     </div>
   );

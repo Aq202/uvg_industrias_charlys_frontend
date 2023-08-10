@@ -1,20 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { BsCardImage as ImageIcon } from 'react-icons/bs';
 import styles from './ProductModel.module.css';
 import randomString from '../../helpers/randomString';
 
 function ProductModel({
-  url, name, imageUrl, type, organization, colors,
+  url, name, imageUrl, type, organization, colors, loadingImage,
 }) {
+  const [showDefaultImg, setShowDefaultImg] = useState(false);
+
+  useEffect(() => {
+    setShowDefaultImg(!imageUrl && !loadingImage);
+  }, [imageUrl, loadingImage]);
+
+  const handleImageError = () => {
+    setShowDefaultImg(true);
+  };
+
   return (
     <NavLink to={url} className={styles.linkContainer}>
       <div className={styles.productModel}>
         <div className={styles.imageContainer}>
+          {!loadingImage && !showDefaultImg && (
           <img
-            src={imageUrl}
+            src={`${imageUrl}`}
             alt="Imagen descriptiva del producto"
+            loading="lazy"
+            onError={handleImageError}
           />
+          )}
+          {
+            showDefaultImg && (
+            <div className={styles.defaultImageContainer}>
+              <ImageIcon className={styles.defaultImage} />
+            </div>
+            )
+          }
         </div>
         <div className={styles.infoContainer}>
           <h3 className={styles.productName}>{name}</h3>
@@ -52,10 +74,12 @@ ProductModel.propTypes = {
       b: PropTypes.number.isRequired,
     }),
   ),
+  loadingImage: PropTypes.bool,
 };
 
 ProductModel.defaultProps = {
   url: '',
   imageUrl: null,
   colors: null,
+  loadingImage: false,
 };
