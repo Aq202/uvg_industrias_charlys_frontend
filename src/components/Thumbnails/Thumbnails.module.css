@@ -1,0 +1,48 @@
+.thumbnails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    background-color: transparent;
+    box-shadow: var(--container--box-shadow--);;
+}
+
+.delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #D8DADF;
+    border: none;
+    border-radius: 50%;
+    width: 5%;
+    height: 10%;
+    margin-bottom: 5%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete:hover{
+    background-color: transparent;
+    color: #ff0000;
+}
+
+.delete svg{
+    font-size: 25px;
+}
+
+.image{
+    margin: 5% 10%;
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+}
+
+.image img{
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+}

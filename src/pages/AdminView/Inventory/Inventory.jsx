@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import UpdateIcon from '@mui/icons-material/Update';
 import { serverHost } from '@/config';
 import NavBar from '@components/NavBar/NavBar';
 import useFetch from '@hooks/useFetch';
-import UpdateIcon from '@mui/icons-material/Update';
 import NewColorFormPopUp from '../../../components/NewColorFormPopUp/NewColorFormPopUp';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import styles from './Inventory.module.css';

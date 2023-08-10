@@ -7,9 +7,9 @@ import Button from '../../../components/Button/Button';
 import SearchInput from '../../../components/SearchInput/SearchInput';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
-import styles from './Requests.module.css';
+import styles from './ConfirmedOrders.module.css';
 
-function Requests({ orgId }) {
+function ConfirmedOrders({ orgId }) {
   const {
     callFetch, result, loading,
   } = useFetch();
@@ -17,25 +17,25 @@ function Requests({ orgId }) {
   const token = useToken();
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orderRequests/${orgId}`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/organization/orders/${orgId}`, headers: { authorization: token } });
   }, []);
 
   const searchRequest = (search) => {
     callFetch({
-      uri: `${serverHost}/organization/orderRequests/:${orgId}?search=${search}`,
+      uri: `${serverHost}/organization/orders/:${orgId}?search=${search}`,
       headers: { authorization: token },
     });
   };
 
   return (
-    <div className={styles.requests}>
+    <div className={styles.ConfirmedOrders}>
       <div className={styles.header}>
         <h2>
-          Solicitudes
+          Pedidos confirmados
         </h2>
         <Button text="Nuevo" />
       </div>
-      <div className={styles.requestsList}>
+      <div className={styles.ConfirmedOrdersList}>
         <div className={styles.searchContainer}>
           <SearchInput handleSearch={searchRequest} />
         </div>
@@ -64,8 +64,8 @@ function Requests({ orgId }) {
   );
 }
 
-Requests.propTypes = {
+ConfirmedOrders.propTypes = {
   orgId: PropTypes.string.isRequired,
 };
 
-export default Requests;
+export default ConfirmedOrders;

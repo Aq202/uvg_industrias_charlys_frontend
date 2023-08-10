@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './LoginForm.css';
+import { useNavigate } from 'react-router';
 import useLogin from '@hooks/useLogin';
 import InputText from '@components/InputText';
 import Spinner from '@components/Spinner';
-import { useNavigate } from 'react-router';
 import Button from '../Button/Button';
 
 function LoginForm() {

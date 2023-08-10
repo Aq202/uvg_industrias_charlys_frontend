@@ -1,2 +1,3 @@
-import InputRadio from './InputRadio.jsx'
-export default InputRadio
+import InputRadio from './InputRadio';
+
+export default InputRadio;

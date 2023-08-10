@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import logo from '@assets/logo.png';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import logo from '@assets/logo.png';
 import InputText from '@components/InputText/InputText';
 import Button from '@components/Button/Button';
 // import PropTypes from 'prop-types';

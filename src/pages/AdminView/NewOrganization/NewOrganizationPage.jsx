@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { serverHost } from '@/config';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
-import { useNavigate } from 'react-router';
 import styles from './NewOrganizationPage.module.css';
 import useFetch from '../../../hooks/useFetch';
 import usePopUp from '../../../hooks/usePopUp';

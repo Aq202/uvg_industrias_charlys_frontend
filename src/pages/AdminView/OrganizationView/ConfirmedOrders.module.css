@@ -1,4 +1,4 @@
-.requests{
+.ConfirmedOrders{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ Button{
     background-color: #36506C;
 }
 
-.requestsList{
+.ConfirmedOrdersList{
     width: 100%;
     margin: 5px;
     border-radius: 5px;
@@ -107,7 +107,7 @@ Table {
         width: 50%;
     }
 
-    .requestsList{
+    .CList{
         width: 100%;
         display: flex;
         align-items: center;
