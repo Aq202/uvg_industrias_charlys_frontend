@@ -148,6 +148,7 @@ function FinishRegistrationPage() {
               error={error?.password}
               onFocus={handleClearFieldError}
               onBlur={handleValidateField}
+              type="password"
             />
             <InputText
               title="Repetir contraseña."
@@ -157,6 +158,7 @@ function FinishRegistrationPage() {
               error={error?.repeatPassword}
               onFocus={handleClearFieldError}
               onBlur={handleValidateField}
+              type="password"
             />
             {fetchError && !loading && <p className={styles.globalError}>{fetchError.message}</p>}
             {!loading && !result
