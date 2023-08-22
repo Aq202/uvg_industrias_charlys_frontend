@@ -34,7 +34,6 @@ function Sidebar({ displayMenu }) {
           <SidebarItem path="/orden" iconUrl={logoutIcon} text="Pedidos recibidos" />
           <SidebarItem path="/inventario" iconUrl={logoutIcon} text="Inventario" />
           <SidebarItem path="/organizaciones" iconUrl={logoutIcon} text="Organizaciones" />
-          <SidebarItem path="#" iconUrl={logoutIcon} text="Salir" onClick={handleLogout} />
         </>
         )}
         {role === consts.role.client && (
@@ -43,6 +42,7 @@ function Sidebar({ displayMenu }) {
             <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" />
           </>
         )}
+        <SidebarItem path="#" iconUrl={logoutIcon} text="Salir" onClick={handleLogout} />
       </div>
     </nav>
   );

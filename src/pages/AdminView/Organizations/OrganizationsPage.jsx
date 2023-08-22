@@ -14,6 +14,8 @@ import TableRow from '../../../components/TableRow/TableRow';
 import PopUp from '../../../components/PopUp/PopUp';
 import SuccessNotificationPopUp from '../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
+import NewOrganizationFormPopUp from '../../../components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
+import garbage from '../../../assets/garbage.svg';
 
 function OrganizationsPage() {
   const {
@@ -31,6 +33,7 @@ function OrganizationsPage() {
   const [popUpDelete, setPopUpDelete] = useState(null);
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
+  const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
 
   const getOrganizations = (page) => {
     const uri = `${serverHost}/organization/?page=${page}`;
@@ -87,55 +90,53 @@ function OrganizationsPage() {
 
   return (
     <div className={styles.organizationsPageContainer}>
-      <h1 className={styles.mainTitle}>Lista de organizaciones</h1>
+      <div className={styles.tableBanner}>
+        <h1 className={styles.mainTitle}>Lista de organizaciones</h1>
+        <Button
+          type="submit"
+          green
+          onClick={openNewOrg}
+          text="Nueva"
+          name="new-organization-button"
+        />
+      </div>
       <div className={styles.tableContainer}>
-        <div className={styles.tableBanner}>
-          <h2 className={styles.bannerTitle}>Organizaciones registradas</h2>
-          <Button
-            type="submit"
-            green
-            onClick={() => navigate('/nuevaOrganizacion')}
-            text="Nueva"
-            name="new-organization-button"
-          />
-        </div>
-        {loadingOrg && <Spinner />}
         {errorOrg && <p>Ocurrió un error al obtener las organizaciones registradas</p>}
-        {resultOrg && (
-          <Table
-            header={['Nombre', 'Correo electrónico', 'Teléfono', 'Dirección', 'Acción']}
-            showCheckbox={false}
-            breakPoint="930px"
-          >
-            {resultOrg.result.map((org) => (
-              <TableRow>
-                <td className={styles.organizationName} onClick={() => selectOrganization(org.id)}>
-                  {org.name}
-                </td>
-                <td>{org.email}</td>
-                <td>{org.phone}</td>
-                <td>{org.address}</td>
-                <td>
-                  {org.enabled && (
-                    <Button
-                      text="Deshabilitar"
-                      onClick={() => setPopUpDisable({ id: org.id, name: org.name })}
-                      name="disable-org-button"
-                    />
-                  )}
-                  {!org.enabled && (
-                    <Button
-                      red
-                      text="Eliminar"
-                      onClick={() => setPopUpDelete({ id: org.id, name: org.name })}
-                      name="delete-org-button"
-                    />
-                  )}
-                </td>
-              </TableRow>
-            ))}
-          </Table>
-        )}
+        <Table
+          loading={loadingOrg}
+          header={['Nombre', 'Correo electrónico', 'Teléfono', '']}
+          showCheckbox={false}
+          breakPoint="930px"
+        >
+          {resultOrg && resultOrg.result.map((org) => (
+            <TableRow>
+              <td className={styles.organizationName} onClick={() => selectOrganization(org.id)}>
+                {org.name}
+              </td>
+              <td>{org.email}</td>
+              <td>{org.phone}</td>
+              <td>
+                {org.enabled && (
+                <img
+                  src={garbage}
+                  alt="Deshabilitar"
+                  onClick={() => setPopUpDisable({ id: org.id, name: org.name })}
+                  name="disable-org-button"
+                  className={styles.garbageIcon}
+                />
+                )}
+                {!org.enabled && (
+                <Button
+                  red
+                  text="Eliminar"
+                  onClick={() => setPopUpDelete({ id: org.id, name: org.name })}
+                  name="delete-org-button"
+                />
+                )}
+              </td>
+            </TableRow>
+          ))}
+        </Table>
       </div>
       {popUpDisable !== null && (
         <PopUp close={() => setPopUpDisable(null)} closeWithBackground>
@@ -172,6 +173,10 @@ function OrganizationsPage() {
         text="La operación ha sido realizada correctamente."
       />
       <ErrorNotificationPopUp close={closeError} isOpen={isErrorOpen} text={errorDel?.message} />
+      <NewOrganizationFormPopUp
+        close={closeNewOrg}
+        isOpen={isNewOrgOpen}
+      />
     </div>
   );
 }
