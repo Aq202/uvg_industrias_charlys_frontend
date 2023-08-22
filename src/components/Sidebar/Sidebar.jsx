@@ -38,7 +38,10 @@ function Sidebar({ displayMenu }) {
         </>
         )}
         {role === consts.role.client && (
-          <SidebarItem path="/newOrderRequest" iconUrl={logoutIcon} text="Nuevo pedido" />
+          <>
+            <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Nuevo pedido" />
+            <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" />
+          </>
         )}
       </div>
     </nav>

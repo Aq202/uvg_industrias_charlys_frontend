@@ -26,7 +26,7 @@ function ProductFilter({ idOrganization, onChange, className }) {
   const { callFetch: getColorsFetch, result: colors } = useFetch();
 
   useEffect(() => {
-    if (!token) return;
+    if (!token && !idOrganization) return;
 
     getTypesFetch({
       uri: `${serverHost}/product/type/by-organization/${idOrganization}`,
@@ -36,7 +36,7 @@ function ProductFilter({ idOrganization, onChange, className }) {
       uri: `${serverHost}/color/by-organization/${idOrganization}`,
       headers: { authorization: token },
     });
-  }, [token]);
+  }, [token, idOrganization]);
 
   useEffect(() => {
     if (onChange) onChange({ types: typeFilter, colors: colorFilter, query });
