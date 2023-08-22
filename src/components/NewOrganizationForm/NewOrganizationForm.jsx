@@ -28,7 +28,6 @@ function NewOrganizationForm(
 
   useEffect(() => {
     if (!result) return;
-    console.log('Función: ', onSuccess);
     onSuccess();
   }, [result]);
 
