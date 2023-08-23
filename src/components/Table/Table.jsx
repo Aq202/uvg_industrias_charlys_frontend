@@ -111,14 +111,19 @@ function Table({
             </tr>
           )}
 
-          {React.Children.map(children, (child) => React.cloneElement(child, {
-            onSelect: handleSelect,
-            checked: selectedRowsId.includes(child.props.id),
-            header,
-            useVerticalStyle,
-            maxCellWidth: child.props.maxCellWidth ?? maxCellWidth,
-            showCheckbox,
-          }))}
+          {React.Children.map(children, (child) => {
+            if (child) {
+              return React.cloneElement(child, {
+                onSelect: handleSelect,
+                checked: selectedRowsId.includes(child?.props.id),
+                header,
+                useVerticalStyle,
+                maxCellWidth: child?.props.maxCellWidth ?? maxCellWidth,
+                showCheckbox,
+              });
+            }
+            return null;
+          })}
         </tbody>
         <tfoot />
       </table>

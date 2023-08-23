@@ -1,41 +1,69 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  .inventory h1{
-    text-align: center;
-    margin-top: 5vh;
-    font-size: 2.7vw;
-    width: 100%;
-  }
-
-  body {
-    background-color: #FFF;
-  }
-  
-  .top{
-    width: 80%;
-    display: flex;
-    justify-content: end;
-    margin-top: 5vh;
-  }
-
-  .store{
-    background-color: #495164;
-    color: #FFF;
-    width: 80%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 20px;
-    margin-top: 5vh;
-  }
-
-.buttons{
+.inventory{
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
   display: flex;
-  gap: 5%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  
+.store{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 3%;
+  justify-content: space-between;
+}
+
+.store h1{
+  font-size: var(--h1-title-size--);
+  width: 100%;
+  color: #313131;
+  padding: 0;
+  margin-left: 5vw;
+}
+
+.store Button {
+  height: 6vh;
+  margin-right: 5vw;
+  font-size: 15px;
+}
+
+.info{
+  width: 90%;
+  margin: 30px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  box-shadow: var(--container--box-shadow--);
+  padding: 35px;
+}
+
+.head{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.content{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+Table {
+  margin-top: 3.5vh;
+}
+
+.table{
+  width: 100%;
 }
 
 .icons{
@@ -44,160 +72,62 @@
   justify-content: center;
 }
 
-  .inventory {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  .load{
-    margin-top: 5vh;
-  }
-  
-  .searchContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-left: 5%;
-  }
-
-  .searchContainer > input{
-    width: 100%;
-  }
-
-
-  .table tbody tr:not(.total-row):nth-child(2n - 1) {
-    background-color: #f5f5f5;
+.iconButton{
+  background: none;
+  outline: none;
+  border: 0;
+  cursor: pointer;
 }
 
-.table tbody tr:not(.total-row):nth-child(2n) {
-    background-color: #dadcde;
-}
-  
-  
-  @media screen and (max-width: 700px) {
-    .inventory h1{
-      margin-top: 5vh;
-      font-size: 8vw;
-    }
 
-    .top{
-      width: 50%;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .searchContainer {
-      flex-direction: column;
-      margin-left: 0;
-    }
-
-    .buttons button{
-      width: fit-content;
-      font-size: 0.8em;
-    }
-    
-    .select {
-      width: 240px;
-    }
-  
-    .searchContainer button {
-      height: 100px;
-    }
-
-    .inventory{
-      justify-content: center;
-      overflow-x: auto;
-    }
-  }
-
-  @media screen and (max-width: 600px){
-    .store{
-      width: 55%;
-      height: 90px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .store h2{
-      font-size: 3.5vw;
-    }
-  }
-
-  @media screen and (max-width: 500px){
-    .store{
-      width: 45%;
-      height: 90px;
-      flex-wrap: wrap;
-      justify-content: center;
-      background-color: #FFF;
-    }
-
-    .store h2{
-      display: none;
-    }
-
-    .buttons{
+@media  screen and (max-width: 700px) {
+  .store{
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
-    }
+      gap: 10px;
+  }
 
-    .buttons button{
-      height: 50%;
-      font-size: 0.8em;
-    }
+  .store h1{
+      text-align: center;
   }
-  
 
-  
+  .store Button{
+      width: 100%;
+  }
 
-  .searchContainer button {
-    margin-top: 20px;
-    height: 45px;
+  .head{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
   }
-  
-  .table {
-    width: 80%;
-    margin-top: 5vh;
-    border-collapse: collapse;
+
+  .content{
+      width: 100vw;
+      margin: -1% 0 2% 0;
+      display: flex;
+      justify-content: center;
   }
-  
-  .table thead {
-    background-color: #00013E;
-    color: #FFF;
+
+  .table{
+      width: 80%;
   }
-  
-  .table th,
-  .table td {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .material,
-  .fabric {
-    margin-top: 1vh;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .material span,
-  .fabric span {
+}
+
+@media screen and (max-width: 600px) {
+  .head{
     width: 100%;
     display: flex;
-    justify-content: center;
-    padding: 5px 10px;
-    font-size: 13px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;  
   }
-  
 
-  .iconButton{
-    background: none;
-    outline: none;
-    border: 0;
-    cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+  .store Button{
+      width: 90%;
   }
+}
