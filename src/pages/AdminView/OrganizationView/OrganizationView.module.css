@@ -1,5 +1,5 @@
 .organizationView {
-    width: 100vw;
+    width: 100%;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -81,7 +81,6 @@
 }
 
 .sections > hr {
-    z-index: 10;
     width: 100%;
 }
 
