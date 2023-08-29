@@ -11,6 +11,7 @@ import OrganizationView from '../OrganizationView/OrganizationView';
 import NewProductModelPage from '../../NewProductModelPage/NewProductModelPage';
 import OrganizationProductsPage from '../../OrganizationProductsPage/OrganizationProductsPage';
 import UpdateProductModelPage from '../../UpdateProductModelPage';
+import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
 
 function AdminMainPage() {
   return (
@@ -27,6 +28,7 @@ function AdminMainPage() {
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />
         <Route path="/producto/actualizar" element={<UpdateProductModelPage />} />
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
+        <Route path="/producto/:id" element={<ProductDetailsPage model />} />
       </Routes>
     </PageContainer>
   );

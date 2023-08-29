@@ -10,7 +10,7 @@ import randomString from '../../helpers/randomString';
 import useCount from '../../hooks/useCount';
 import usePopUp from '../../hooks/usePopUp';
 
-function ImageViewer({ images }) {
+function ImageViewer({ images, className }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { getMultipleApiImages, result, loading } = useApiMultipleImages();
   const {
@@ -42,7 +42,7 @@ function ImageViewer({ images }) {
   };
 
   return (
-    <div className={styles.imageViewer}>
+    <div className={`${styles.imageViewer} ${className}`}>
       <div className={`${styles.viewerContainer}`}>
         <div className={`${styles.imagesList}`}>
           <div
@@ -129,4 +129,9 @@ export default ImageViewer;
 
 ImageViewer.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  className: PropTypes.string,
+};
+
+ImageViewer.defaultProps = {
+  className: '',
 };
