@@ -9,7 +9,6 @@ import getTokenPayload from '../../helpers/getTokenPayload';
 import consts from '../../helpers/consts';
 
 function NavBar({ onMenuChange }) {
-  const [displayMenu, setDisplayMenu] = useState(false);
   const token = useToken();
   const [userData, setUserData] = useState();
 
@@ -31,10 +30,6 @@ function NavBar({ onMenuChange }) {
     setUserData(tokenUserData);
   }, [token]);
 
-  useEffect(() => {
-    if (onMenuChange) onMenuChange(displayMenu);
-  }, [displayMenu]);
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.container}>
@@ -43,7 +38,7 @@ function NavBar({ onMenuChange }) {
             <button
               className={styles.hamburgerButton}
               type="button"
-              onClick={() => setDisplayMenu(!displayMenu)}
+              onClick={() => onMenuChange()}
             >
               <img className={styles.hamburgerMenu} src={hamburgerMenu} alt="menu" />
             </button>

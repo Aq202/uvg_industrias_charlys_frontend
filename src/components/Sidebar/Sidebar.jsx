@@ -8,7 +8,7 @@ import useToken from '../../hooks/useToken';
 import consts from '../../helpers/consts';
 import useLogout from '../../hooks/useLogout';
 
-function Sidebar({ displayMenu }) {
+function Sidebar({ displayMenu, menuRef }) {
   const token = useToken();
 
   const [role, setRole] = useState(null);
@@ -26,7 +26,7 @@ function Sidebar({ displayMenu }) {
     logout();
   };
   return (
-    <nav className={`${styles.sideMenu} ${!displayMenu ? styles.hideMenu : ''}`}>
+    <nav className={`${styles.sideMenu} ${!displayMenu ? styles.hideMenu : ''}`} ref={menuRef}>
       <p className={styles.menuTitle}>Menú</p>
       <div className={styles.optionsContainer}>
         {role === consts.role.admin && (
@@ -52,8 +52,11 @@ export default Sidebar;
 
 Sidebar.propTypes = {
   displayMenu: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  menuRef: PropTypes.any,
 };
 
 Sidebar.defaultProps = {
   displayMenu: false,
+  menuRef: null,
 };
