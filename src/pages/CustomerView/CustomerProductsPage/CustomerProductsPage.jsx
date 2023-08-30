@@ -90,7 +90,7 @@ function CustomerProductsPage() {
       <div className={styles.productsContainer}>
         {products?.map((data) => (
           <ProductModel
-            url="/hey"
+            url={`/producto/${data.id}`}
             name={data.description}
             imageUrl={productImages?.[data.id] ?? null}
             type={data.type}
