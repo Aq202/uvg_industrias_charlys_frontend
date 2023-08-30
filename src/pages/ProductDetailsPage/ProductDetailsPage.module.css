@@ -58,6 +58,20 @@
   text-align: center;
 }
 
+@media only screen and (max-width: 550px){
+
+  .pageContainer{
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+
+  }
+
+  .productDetailsPage{
+    background-color: white;
+    padding: var(--min-page-vertical-padding--) var(--min-page-horizontal-padding--);
+  }
+}
 
 
 @media only screen and (max-width: 1000px){
