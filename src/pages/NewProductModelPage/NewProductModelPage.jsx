@@ -58,8 +58,8 @@ function NewProductModelPage({ clientView }) {
     if (!clientView && !token) return;
 
     // agregar id de la organización del cliente, en clientView
-    const { organization } = getTokenPayload(token);
-    setData('idClientOrganization', organization);
+    const { clientOrganizationId } = getTokenPayload(token);
+    setData('idClientOrganization', clientOrganizationId);
   }, [token]);
 
   useEffect(() => {
