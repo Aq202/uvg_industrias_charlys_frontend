@@ -23,7 +23,11 @@ function PageContainer({ children }) {
   return (
     <div className={styles.pageContainer} onClick={handlePageClick}>
       <NavBar onMenuChange={onMenuChange} />
-      <Sidebar displayMenu={displayMenu} menuRef={menuRef} />
+      <Sidebar
+        displayMenu={displayMenu}
+        menuRef={menuRef}
+        closeMenu={() => setDisplayMenu(false)}
+      />
       {children}
     </div>
   );
@@ -35,6 +39,4 @@ PageContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-PageContainer.defaultProps = {
-
-};
+PageContainer.defaultProps = {};

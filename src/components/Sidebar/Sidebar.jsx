@@ -7,11 +7,13 @@ import SidebarItem from '../SidebarItem/SidebarItem';
 import useToken from '../../hooks/useToken';
 import consts from '../../helpers/consts';
 import useLogout from '../../hooks/useLogout';
+import LoadingView from '../LoadingView/LoadingView';
 
-function Sidebar({ displayMenu, menuRef }) {
+function Sidebar({ displayMenu, menuRef, closeMenu }) {
   const token = useToken();
 
   const [role, setRole] = useState(null);
+  const [showLoading, setShowLoading] = useState(false);
 
   const logout = useLogout();
 
@@ -23,7 +25,9 @@ function Sidebar({ displayMenu, menuRef }) {
   }, [token]);
 
   const handleLogout = () => {
+    if (closeMenu) closeMenu();
     logout();
+    setShowLoading(true);
   };
   return (
     <nav className={`${styles.sideMenu} ${!displayMenu ? styles.hideMenu : ''}`} ref={menuRef}>
@@ -31,19 +35,20 @@ function Sidebar({ displayMenu, menuRef }) {
       <div className={styles.optionsContainer}>
         {role === consts.role.admin && (
         <>
-          <SidebarItem path="/orden" iconUrl={logoutIcon} text="Pedidos recibidos" />
-          <SidebarItem path="/inventario" iconUrl={logoutIcon} text="Inventario" />
-          <SidebarItem path="/organizaciones" iconUrl={logoutIcon} text="Organizaciones" />
+          <SidebarItem path="/orden" iconUrl={logoutIcon} text="Pedidos recibidos" onClick={closeMenu} />
+          <SidebarItem path="/inventario" iconUrl={logoutIcon} text="Inventario" onClick={closeMenu} />
+          <SidebarItem path="/organizaciones" iconUrl={logoutIcon} text="Organizaciones" onClick={closeMenu} />
         </>
         )}
         {role === consts.role.client && (
           <>
-            <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Nuevo pedido" />
-            <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" />
+            <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Nuevo pedido" onClick={closeMenu} />
+            <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" onClick={closeMenu} />
           </>
         )}
         <SidebarItem path="#" iconUrl={logoutIcon} text="Salir" onClick={handleLogout} />
       </div>
+      {showLoading && <LoadingView />}
     </nav>
   );
 }
@@ -54,6 +59,7 @@ Sidebar.propTypes = {
   displayMenu: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
   menuRef: PropTypes.any,
+  closeMenu: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
