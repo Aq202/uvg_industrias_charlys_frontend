@@ -18,6 +18,7 @@ import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import Thumbanils from '../../components/Thumbnails/Thumbanils';
+import useApiMultipleImages from '../../hooks/useApiMultipleImages';
 
 function UpdateProductModelPage() {
   const { productId } = useParams();
@@ -44,8 +45,8 @@ function UpdateProductModelPage() {
   const {
     callFetch: postProductModel,
     result: productModelResult,
-    loading: productModelLoading,
-    error: productModelError,
+    loading: postproductModelLoading,
+    error: postproductModelError,
   } = useFetch();
 
   const {
@@ -62,11 +63,20 @@ function UpdateProductModelPage() {
     error: updateProductModelError,
   } = useFetch();
 
+  const {
+    callFetch: getProductModel,
+    result: productModel,
+    loading: productModelLoading,
+    error: productModelError,
+  } = useFetch();
+
   const token = useToken();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
-
+  const {
+    getMultipleApiImages, result: imagesResult, error: imagesError, loading,
+  } = useApiMultipleImages();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,7 +84,22 @@ function UpdateProductModelPage() {
     getTypesFetch({ uri: `${serverHost}/product/type`, headers: { authorization: token } });
     getOrganizationsFetch({ uri: `${serverHost}/organization`, headers: { authorization: token } });
     updateProductModel({ uri: `${serverHost}/product/model/${productId}`, headers: { authorization: token } });
+    getProductModel({ uri: `${serverHost}/product/model/${productId}`, headers: { authorization: token } });
   }, []);
+
+  useEffect(() => {
+    // escuchar resultado de data de producto
+    if (!productModel) return;
+    const {
+      name, idClientOrganization, type, details, images,
+    } = productModel;
+    setData('name', name);
+    setData('idClientOrganization', idClientOrganization);
+    setData('type', type);
+    setData('details', details);
+    setData('images', images);
+    getMultipleApiImages(images.map((val, index) => ({ id: index, uri: val })));
+  }, [productModel]);
 
   useEffect(() => {
     if (!updateProductModelResult) return;
@@ -196,8 +221,16 @@ function UpdateProductModelPage() {
           Estas son las imágenes que se encuentran guardadas actualmente.
         </p>
         <div className={styles.imageContainer}>
-          <Thumbanils img="https://img.freepik.com/vector-premium/imagen-dibujos-animados-hongo-palabra-hongo_587001-200.jpg?w=2000" />
-          <Thumbanils img="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen-1200x675.jpg" />
+          {
+            imagesResult
+            && (
+            <Thumbanils
+              images={imagesResult}
+              deleteImage={deleteImage}
+              deleteImageLoading={deleteImageLoading}
+            />
+            )
+         }
         </div>
         <h3 className={styles.formSectionTitle}>Imágenes de referencia</h3>
         <p className={styles.formSectionDesc}>
