@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useToken from '@hooks/useToken';
+import useApiMultipleImages from '@hooks/useApiMultipleImages';
 import SubLoadingView from '@components/SubLoadingView/SubLoadingView';
 import ProductModel from '@components/ProductModel/ProductModel';
 import styles from './Product.module.css';
@@ -15,9 +16,14 @@ function Product({ id, size, quantity }) {
     loading: loadingProduct,
   } = useFetch();
 
+  const {
+    getMultipleApiImages, result: resultImages,
+  } = useApiMultipleImages();
+
   const tallas = ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'];
   const header = ['Talla', 'Cantidad'];
   const [totalCantidad, setTotalCantidad] = useState(0);
+  const [productImages, setProductImages] = useState({});
 
   const token = useToken();
 
@@ -30,6 +36,22 @@ function Product({ id, size, quantity }) {
       },
     });
   }, [token]);
+
+  const getProductImages = async () => {
+    const images = [];
+    images.push({ id: resultProduct.id, uri: resultProduct.media[0] });
+    getMultipleApiImages(images);
+  };
+
+  useEffect(() => {
+    if (!resultImages) return;
+    setProductImages(() => resultImages);
+  }, [resultImages]);
+
+  useEffect(() => {
+    if (!resultProduct) return;
+    getProductImages();
+  }, [resultProduct]);
 
   useEffect(() => {
     const newTotalCantidad = tallas.reduce((total, talla) => (
@@ -46,12 +68,12 @@ function Product({ id, size, quantity }) {
           {errorProduct && 'Ocurrió un error al cargar el producto.'}
           {loadingProduct && <SubLoadingView />}
           <ProductModel
-            key={resultProduct?.id}
-            name={resultProduct?.details}
-            imageUrl={resultProduct?.media}
-            type={resultProduct?.description}
-            organization={resultProduct?.client}
-            colors={resultProduct?.colors}
+            key={resultProduct.id}
+            name={resultProduct.details}
+            imageUrl={productImages[id]}
+            type={resultProduct.description}
+            organization={resultProduct.client}
+            colors={resultProduct.colors}
           />
           <div className={`${styles.tableContainer}`}>
             <table className={`${styles.tableProduct}`}>
