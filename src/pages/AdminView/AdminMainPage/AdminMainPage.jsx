@@ -11,12 +11,15 @@ import OrganizationView from '../OrganizationView/OrganizationView';
 import NewProductModelPage from '../../NewProductModelPage/NewProductModelPage';
 import OrganizationProductsPage from '../../OrganizationProductsPage/OrganizationProductsPage';
 import UpdateProductModelPage from '../../UpdateProductModelPage';
+import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
+import NotFoundPage from '../../NotFoundPage/NotFoundPage';
 
 function AdminMainPage() {
   return (
     <PageContainer>
       <Routes>
-        <Route path="*" element={<OrdersList />} />
+        <Route path="/" element={<OrdersList />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route path="/inventario" element={<Inventory />} />
         <Route path="/inventario/nuevo" element={<NewArticle />} />
         <Route path="/image" element={<ImagePickerPage />} />
@@ -27,6 +30,7 @@ function AdminMainPage() {
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />
         <Route path="/producto/actualizar" element={<UpdateProductModelPage />} />
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
+        <Route path="/producto/:id" element={<ProductDetailsPage model />} />
       </Routes>
     </PageContainer>
   );

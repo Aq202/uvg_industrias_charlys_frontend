@@ -61,10 +61,11 @@
 
 .catalogGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     margin: 20px 0 20px 0;
     gap: 30px;
     padding: 50px;
+    max-width: 100%;
 }
 
 .productContainer{
@@ -114,7 +115,19 @@
 .sizesTable{
     display: grid;
     grid-column: 2/-1;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-items: center;
+    font-weight: bold;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.tableHeader{
+    grid-column: 1/-1;
+    color: var(--secondary-text-color--);
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 @media only screen and (max-width: 800px){
@@ -147,4 +160,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+@media only screen and (max-width: 450px) {
+    .formContainer{
+        background-color: #FDFDFD;
+        box-shadow: none;
+        border-radius: 20px;
+        width: 100%;
+        padding: 0;
+    }
+
+    .newCustomerOrderRequest{
+        background-color: #FDFDFD;
+    }
+
+    .pageTitle{
+        align-self: center;
+    }
 }

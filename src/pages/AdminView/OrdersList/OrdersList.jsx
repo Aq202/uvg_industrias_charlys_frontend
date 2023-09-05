@@ -3,6 +3,7 @@ import moment from 'moment';
 import Order from '@components/Order/Order';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
+import searchBanner from '@assets/banner/search-banner.svg';
 import styles from './OrdersList.module.css';
 import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
@@ -40,7 +41,12 @@ function OrdersList() {
           <SearchInput className={`${styles.searchInput}`} handleSearch={handleSearch} />
         </div>
         <div className={`${styles.orders}`}>
-          {error && 'Ocurrió un error.'}
+          {error && (
+          <div className={styles.noResultContainer}>
+            <img src={searchBanner} alt="Imágen de búsqueda" />
+            <p>No se encontraron resultados</p>
+          </div>
+          )}
           {loading && <Spinner />}
           {result?.length > 0
             && result.map((val) => (
