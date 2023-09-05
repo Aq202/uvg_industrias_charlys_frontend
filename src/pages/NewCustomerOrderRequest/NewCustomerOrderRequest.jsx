@@ -9,6 +9,7 @@ import usePopUp from '../../hooks/usePopUp';
 import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import useToken from '../../hooks/useToken';
+import getTokenPayload from '../../helpers/getTokenPayload';
 import useApiMultipleImages from '../../hooks/useApiMultipleImages';
 import Spinner from '../../components/Spinner/Spinner';
 import TextArea from '../../components/TextArea/TextArea';
@@ -27,6 +28,9 @@ function NewCustomerOrderRequest() {
   const {
     callFetch: getSizes, result: resultSizes, error: errorSizes, loading: loadingSizes,
   } = useFetch();
+  const {
+    callFetch: postRequest, result: resultPost, error: errorPost, loading: loadingPost,
+  } = useFetch();
   const [sizes, setSizes] = useState([]);
   const [previousProducts, setPreviousProducts] = useState([]);
   const [productImages, setProductImages] = useState({});
@@ -34,6 +38,7 @@ function NewCustomerOrderRequest() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const [quantities, setQuantities] = useState({});
+  const [orgId, setOrgId] = useState('');
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -55,7 +60,7 @@ function NewCustomerOrderRequest() {
 
   const getPreviousProducts = async () => {
     getCatalog({
-      uri: `${serverHost}/product/model/by-organization/ORG000000000005`,
+      uri: `${serverHost}/product/model/by-organization/${orgId}`,
       headers: { authorization: token },
       method: 'POST',
     });
@@ -93,10 +98,28 @@ function NewCustomerOrderRequest() {
   const handleQuantities = (e, id, size) => {
     e.preventDefault();
     const quantity = e.target.value;
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: { ...prevQuantities[id], [size]: quantity },
-    }));
+
+    // Create a copy of the current quantities state
+    const newQuantities = { ...quantities };
+
+    // Update the quantity for the specified product and size
+    newQuantities[id] = {
+      ...(newQuantities[id] || {}), // Ensure there's an object for the product
+      [size]: quantity,
+    };
+
+    // Check if the quantity is 0 and remove the size if it is
+    if (quantity === '0' || quantity === '') {
+      delete newQuantities[id][size];
+    }
+
+    // Check if there are no sizes left for the product and remove the product if needed
+    if (Object.keys(newQuantities[id]).length === 0) {
+      delete newQuantities[id];
+    }
+
+    // Update the state with the new quantities
+    setQuantities(newQuantities);
   };
 
   const clearError = (e) => {
@@ -105,13 +128,60 @@ function NewCustomerOrderRequest() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Pendiente: POST
+
+    if (!validateDescription()) return;
+
+    const descriptionValue = form.description;
+    if (!(descriptionValue?.length > 0)) form.description = 'Productos ordenados previamente';
+
+    form.idClientOrganization = orgId;
+
+    const uri = `${serverHost}/orderRequest/client`;
+
+    const products = [];
+    Object.keys(quantities).forEach((product) => {
+      Object.keys(quantities[product]).forEach((size) => {
+        products.push({ idProductModel: product, size, quantity: quantities[product][size] });
+      });
+    });
+
+    // guardar en formdata
+    const formData = new FormData();
+
+    // guardar imagenes
+    form.files?.forEach((file) => formData.append('files[]', file, file.name));
+    delete form.files;
+
+    // guardar otras props
+    Object.entries(form).forEach((item) => formData.append(item[0], item[1]));
+
+    // products.forEach((product) => formData.append('products[]', product));
+
+    formData.append('products', JSON.stringify(products));
+
+    console.log(formData.getAll('products'));
+
+    postRequest({
+      uri,
+      method: 'POST',
+      headers: { authorization: token },
+      body: formData,
+      removeContentType: true,
+    });
   };
 
   useEffect(() => {
+    if (!orgId) return;
     getPreviousProducts();
     getAllSizes();
-  }, []);
+  }, [orgId]);
+
+  useEffect(() => {
+    if (!token) return;
+    console.log('Aquí obtiene el payload');
+    const tokenPayload = getTokenPayload(token);
+    setOrgId(() => tokenPayload.clientOrganizationId);
+  }, [token]);
 
   useEffect(() => {
     if (!resultCatalog) return;
@@ -140,6 +210,16 @@ function NewCustomerOrderRequest() {
     console.log(quantities);
   }, [quantities]);
 
+  useEffect(() => {
+    if (!errorPost) return;
+    console.log(errorPost);
+  }, [errorPost]);
+
+  useEffect(() => {
+    if (!resultPost) return;
+    console.log(resultPost);
+  }, [resultPost]);
+
   return (
     <div className={styles.newCustomerOrderRequest}>
       {isCatalogOpen
@@ -148,6 +228,7 @@ function NewCustomerOrderRequest() {
         closeButton
         closeWithBackground
         close={closeCatalog}
+        maxWidth={1200}
       >
         <div className={styles.catalogForm}>
           <h2>Productos de pedidos anteriores</h2>
@@ -213,6 +294,8 @@ function NewCustomerOrderRequest() {
                       <InputNumber
                         value={quantities[key]?.[element.size]}
                         onChange={(e) => handleQuantities(e, key, element.size)}
+                        step="1"
+                        min="0"
                       />
                     </div>
                   ))}
@@ -252,7 +335,8 @@ function NewCustomerOrderRequest() {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button type="submit" name="send-request" text="Enviar solicitud" onClick={handleSubmit} />
+          {!loadingPost && <Button type="submit" name="send-request" text="Enviar solicitud" onClick={handleSubmit} />}
+          {loadingPost && <Spinner />}
         </div>
       </div>
     </div>
