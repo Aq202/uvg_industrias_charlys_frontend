@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from './NewCustomerOrderRequest.module.css';
 import ProductModel from '../../components/ProductModel/ProductModel';
 import Button from '../../components/Button/Button';
@@ -15,13 +16,18 @@ import Spinner from '../../components/Spinner/Spinner';
 import TextArea from '../../components/TextArea/TextArea';
 import InputNumber from '../../components/InputNumber/InputNumber';
 import ImagePicker from '../../components/ImagePicker/ImagePicker';
+import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
+import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 
 function NewCustomerOrderRequest() {
   const token = useToken();
+  const navigate = useNavigate();
   const {
     getMultipleApiImages, result: resultImages,
   } = useApiMultipleImages();
   const [isCatalogOpen, openCatalog, closeCatalog] = usePopUp();
+  const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
+  const [isErrorOpen, openError, closeError] = usePopUp();
   const {
     callFetch: getCatalog, result: resultCatalog, error: errorCatalog, loading: loadingCatalog,
   } = useFetch();
@@ -39,6 +45,8 @@ function NewCustomerOrderRequest() {
   const [errors, setErrors] = useState({});
   const [quantities, setQuantities] = useState({});
   const [orgId, setOrgId] = useState('');
+
+  const redirectAfterSubmit = () => navigate('/');
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -159,8 +167,6 @@ function NewCustomerOrderRequest() {
 
     formData.append('products', JSON.stringify(products));
 
-    console.log(formData.getAll('products'));
-
     postRequest({
       uri,
       method: 'POST',
@@ -178,7 +184,6 @@ function NewCustomerOrderRequest() {
 
   useEffect(() => {
     if (!token) return;
-    console.log('Aquí obtiene el payload');
     const tokenPayload = getTokenPayload(token);
     setOrgId(() => tokenPayload.clientOrganizationId);
   }, [token]);
@@ -195,29 +200,21 @@ function NewCustomerOrderRequest() {
   }, [resultImages]);
 
   useEffect(() => {
-    console.log(selectedProducts);
   }, [selectedProducts]);
 
   useEffect(() => {
-    console.log(resultSizes);
     if (!resultSizes) return;
-    console.log(sizes);
     setSizes(() => resultSizes);
   }, [resultSizes]);
 
   useEffect(() => {
-    if (!quantities) return;
-    console.log(quantities);
-  }, [quantities]);
-
-  useEffect(() => {
     if (!errorPost) return;
-    console.log(errorPost);
+    openError();
   }, [errorPost]);
 
   useEffect(() => {
     if (!resultPost) return;
-    console.log(resultPost);
+    openSuccess();
   }, [resultPost]);
 
   return (
@@ -276,21 +273,12 @@ function NewCustomerOrderRequest() {
               {resultSizes
               && (
               <div className={styles.sizesTable}>
-                <div className={styles.tableRow}>
-                  <h3 className={styles.tableItem}>Talla</h3>
-                  <h3 className={styles.tableItem}>Cantidad</h3>
-                </div>
-                <div className={styles.tableRow}>
-                  <h3 className={styles.tableItem}>Talla</h3>
-                  <h3 className={styles.tableItem}>Cantidad</h3>
-                </div>
-                <div className={styles.tableRow}>
-                  <h3 className={styles.tableItem}>Talla</h3>
-                  <h3 className={styles.tableItem}>Cantidad</h3>
-                </div>
+                <p className={styles.tableHeader}>
+                  Ingrese la cantidad a solicitar de cada talla:
+                </p>
                   {sizes?.length > 0 && sizes.map((element) => (
                     <div className={styles.tableRow}>
-                      <p className={styles.tableItem}>{element.size}</p>
+                      <p className={styles.tableItem}>{`${element.size}:`}</p>
                       <InputNumber
                         value={quantities[key]?.[element.size]}
                         onChange={(e) => handleQuantities(e, key, element.size)}
@@ -339,6 +327,19 @@ function NewCustomerOrderRequest() {
           {loadingPost && <Spinner />}
         </div>
       </div>
+      <SuccessNotificationPopUp
+        title="Listo"
+        text="La solicitud de pedido fue realizada correctamente"
+        close={closeSuccess}
+        isOpen={isSuccessOpen}
+        callback={redirectAfterSubmit}
+      />
+      <ErrorNotificationPopUp
+        title="Error"
+        text="Ocurrió un error al realizar la solicitud de pedido"
+        close={closeError}
+        isOpen={isErrorOpen}
+      />
     </div>
   );
 }
