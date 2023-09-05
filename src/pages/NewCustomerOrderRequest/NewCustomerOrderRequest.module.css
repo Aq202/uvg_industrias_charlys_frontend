@@ -61,10 +61,11 @@
 
 .catalogGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     margin: 20px 0 20px 0;
     gap: 30px;
     padding: 50px;
+    max-width: 100%;
 }
 
 .productContainer{
