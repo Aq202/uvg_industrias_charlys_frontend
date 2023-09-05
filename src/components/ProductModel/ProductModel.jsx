@@ -47,7 +47,7 @@ function ProductModel({
               <span
                 key={randomString()}
                 className={styles.color}
-                style={{ backgroundColor: `rgb(${color.r}, ${color.g}, ${color.b})` }}
+                style={{ backgroundColor: `rgb(${color.red}, ${color.green}, ${color.blue})` }}
                 title={color.name}
               />
             ))}

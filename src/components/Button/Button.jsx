@@ -15,6 +15,7 @@ function Button({
   green,
   className,
   name,
+  secondary,
 }) {
   return (
     <button
@@ -24,7 +25,8 @@ function Button({
       ${darkBlue ? styles.darkBlue : ''}
       ${red ? styles.red : ''}
       ${green ? styles.green : ''}
-      ${className}`}
+      ${className}
+      ${secondary ? styles.secondary : ''}`}
       type={type}
       onClick={onClick}
       disabled={disabled}
@@ -47,6 +49,7 @@ Button.propTypes = {
   darkBlue: PropTypes.bool,
   green: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  secondary: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -59,5 +62,6 @@ Button.defaultProps = {
   type: 'button',
   disabled: false,
   onClick: null,
+  secondary: false,
 };
 export default Button;

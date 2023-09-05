@@ -18,6 +18,13 @@
     margin-left: 5vw;
 }
 
+.sectionTitle{
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
 .details{
     justify-content: center;
     margin-top: 50px;
@@ -77,12 +84,82 @@
     margin: auto;
 }
 
+.noImagesMessage{
+    font-size: 17px;
+    color: rgb(49, 49, 49);
+}
 
-.bottomForm {
+.clientInfoContainer {
+    display: grid;
+    gap: 1em;
+    align-items: center;
+    grid-template-columns: minmax(50px, 0fr) minmax(150px, 0fr);
+}
+
+.createOrganitationBannerContainer {
+    width: 100%;
+    margin: 20px 0;
+    padding: 10px 5px;
+    border-radius: 5px;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: space-around;
+    background-color: #E2E3E5;
+    text-align: center;
+}
+
+.createOrgButton {
+    background-color: red;
+}
+
+.alertDialog {
+    width: 40px;
+    height: 40px;
+}
+
+.aditionalDetailsContainer, .productsContainer {
+    margin-top: 20px;
+}
+
+.productsContainerHeader {
+    display: grid;
+    gap: 1em;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.addProduct {
+    width: fit-content;
+    grid-column: 3;
+    align-items: center;
+    justify-self: end;
+}
+
+.noProductsMessage {
+    font-size: 17px;
+    color: rgb(49, 49, 49);
+    padding: 20px;
+    background-color: #f3f3f5;
+    border-radius: 4px;
+    border: 1px solid #4A8AA4;
+    overflow-x: auto;
+}
+
+.deliveryInfoContainer {
+    margin: 50px 0;
+}
+
+.bottomForm, .deliveryInfoContainer {
     display: grid;
     gap: 1em;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     max-width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .bottom {
@@ -94,14 +171,8 @@
     max-width: 100%;
 }
 
-.noImagesMessage{
-    font-size: 17px;
-    color: rgb(49, 49, 49);
-}
-
-.sectionTitle{
-    font-weight: 700;
-    font-size: 19px;
-    line-height: 2;
-    margin-bottom: 20px;
+.denyOrderButton, .aceptOrderButton {
+    width: 80%;
+    min-width: fit-content;
+    justify-self: center;
 }
