@@ -68,7 +68,15 @@ function OrderRequest() {
         </div>
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
-
+          {result?.temporaryClient
+            && (
+              <div className={styles.createOrganitationBannerContainer}>
+                <div className={styles.createOrganitationBanner}>
+                  <img className={styles.alertDialog} src={alertDialog} alt="alert_dialog" />
+                  Este pedido fue realizado por un cliente provisional.
+                </div>
+              </div>
+            )}
           <div className={`${styles.orderInfoContainer}`}>
             {loading && <SubLoadingView />}
 
@@ -76,16 +84,16 @@ function OrderRequest() {
               <h3 className={styles.sectionTitle}>Información General</h3>
               <div className={styles.clientInfoContainer}>
                 <strong>Cliente: </strong>
-                <DropdownMenu selected={result?.clientOrganization ?? result?.temporaryClient} />
+                {result?.clientOrganization
+                  ? result?.clientOrganization
+                  : (
+                    <div className={styles.selectOrg}>
+                      <DropdownMenu />
+                      {' o '}
+                      <Button className={styles.createOrgButton} type="submit" text="Crear organizacion" name="createOrg" secondary onClick={handleSubmit} />
+                    </div>
+                  )}
               </div>
-              {result?.temporaryClient
-              && (
-                <div className={styles.createOrganitationBannerContainer}>
-                  <img className={styles.alertDialog} src={alertDialog} alt="alert_dialog" />
-                  Este pedido fue realizado por un cliente provisional.
-                  <Button className={styles.createOrgButton} type="submit" text="Crear organizacion" name="createOrg" secondary onClick={handleSubmit} />
-                </div>
-              )}
               <div className={styles.headerContainer}>
                 <p>
                   <strong>Código: </strong>
