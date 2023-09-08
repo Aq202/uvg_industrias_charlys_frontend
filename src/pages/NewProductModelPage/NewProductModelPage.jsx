@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 import styles from './NewProductModelPage.module.css';
 import InputSelect from '../../components/InputSelect/InputSelect';
@@ -18,8 +18,9 @@ import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
+import getTokenPayload from '../../helpers/getTokenPayload';
 
-function NewProductModelPage() {
+function NewProductModelPage({ clientView }) {
   const {
     form, error, setData, validateField, clearFieldError, validateForm,
   } = useForm({
@@ -54,9 +55,17 @@ function NewProductModelPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!clientView && !token) return;
+
+    // agregar id de la organización del cliente, en clientView
+    const { clientOrganizationId } = getTokenPayload(token);
+    setData('idClientOrganization', clientOrganizationId);
+  }, [token]);
+
+  useEffect(() => {
     // Obtener opciones del formulario
     getTypesFetch({ uri: `${serverHost}/product/type`, headers: { authorization: token } });
-    getOrganizationsFetch({ uri: `${serverHost}/organization`, headers: { authorization: token } });
+    if (!clientView) getOrganizationsFetch({ uri: `${serverHost}/organization`, headers: { authorization: token } });
   }, []);
 
   useEffect(() => {
@@ -118,19 +127,24 @@ function NewProductModelPage() {
       <h1 className={styles.pageTitle}>Nuevo producto</h1>
 
       <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <h3 className={styles.formSectionTitle}>Organización Cliente</h3>
-        <p className={styles.formSectionDesc}>La Organización podrá ver el producto creado.</p>
-        <InputSelect
-          title="Organización cliente:"
-          name="idClientOrganization"
-          value={form.idClientOrganization}
-          error={error?.idClientOrganization}
-          onChange={onChange}
-          onFocus={(e) => clearFieldError(e.target.name)}
-          onBlur={(e) => validateField(e.target.name)}
-          options={organizations?.result?.map((val) => ({ title: val.name, value: val.id }))}
-          disabled={!organizations}
-        />
+
+        {!clientView && (
+          <>
+            <h3 className={styles.formSectionTitle}>Organización Cliente</h3>
+            <p className={styles.formSectionDesc}>La Organización podrá ver el producto creado.</p>
+            <InputSelect
+              title="Organización cliente:"
+              name="idClientOrganization"
+              value={form.idClientOrganization}
+              error={error?.idClientOrganization}
+              onChange={onChange}
+              onFocus={(e) => clearFieldError(e.target.name)}
+              onBlur={(e) => validateField(e.target.name)}
+              options={organizations?.result?.map((val) => ({ title: val.name, value: val.id }))}
+              disabled={!organizations}
+            />
+          </>
+        )}
         <h3 className={styles.formSectionTitle}>Datos del producto</h3>
         <p className={styles.formSectionDesc}>Procura ser lo más detallado posible.</p>
         <InputText
@@ -154,7 +168,9 @@ function NewProductModelPage() {
           options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
           disabled={!productTypes}
         />
-        <ColorPicker callBack={handleColorsChange} />
+        {!clientView
+        && <ColorPicker callBack={handleColorsChange} />}
+
         <TextArea
           className={styles.aditionalDetails}
           title="Detalles adicionales:"
@@ -213,6 +229,10 @@ function NewProductModelPage() {
 
 export default NewProductModelPage;
 
-NewProductModelPage.propTypes = {};
+NewProductModelPage.propTypes = {
+  clientView: PropTypes.bool,
+};
 
-NewProductModelPage.defaultProps = {};
+NewProductModelPage.defaultProps = {
+  clientView: false,
+};

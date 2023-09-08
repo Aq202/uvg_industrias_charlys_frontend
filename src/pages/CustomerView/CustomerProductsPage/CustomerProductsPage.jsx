@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import searchBanner from '@assets/banner/search-banner.svg';
-import styles from './OrganizationProductsPage.module.css';
-import ProductFilter from '../../components/ProductFilter/ProductFilter';
-import ProductModel from '../../components/ProductModel/ProductModel';
-import Button from '../../components/Button/Button';
-import { serverHost } from '../../config';
-import useFetch from '../../hooks/useFetch';
-import useToken from '../../hooks/useToken';
-import useApiMultipleImages from '../../hooks/useApiMultipleImages';
-import Spinner from '../../components/Spinner/Spinner';
+import ProductFilter from '@components/ProductFilter/ProductFilter';
+import ProductModel from '@components/ProductModel/ProductModel';
+import Button from '@components/Button/Button';
+import { serverHost } from '@/config';
+import useFetch from '@hooks/useFetch';
+import useToken from '@hooks/useToken';
+import useApiMultipleImages from '@hooks/useApiMultipleImages';
+import Spinner from '@components/Spinner/Spinner';
+import styles from './CustomerProductsPage.module.css';
+import getTokenPayload from '../../../helpers/getTokenPayload';
 
-function OrganizationProductsPage() {
-  const { orgId } = useParams();
+function CustomerProductsPage() {
   const [filters, setFilters] = useState(null);
+  const [organization, setOrganization] = useState();
   const {
     callFetch: getProductsFetch,
     result: products,
@@ -25,7 +26,9 @@ function OrganizationProductsPage() {
   const { getMultipleApiImages, result: productImages } = useApiMultipleImages();
 
   useEffect(() => {
-    if (!orgId || !token) return;
+    if (!token) return;
+    const { organization: orgId } = getTokenPayload(token);
+    setOrganization(orgId);
     const uri = `${serverHost}/product/model/by-organization/${orgId}`;
 
     getProductsFetch({
@@ -33,7 +36,7 @@ function OrganizationProductsPage() {
       method: 'POST',
       headers: { authorization: token },
     });
-  }, [orgId, token]);
+  }, [token]);
 
   useEffect(() => {
     if (!filters) return;
@@ -45,7 +48,7 @@ function OrganizationProductsPage() {
       searchParams = new URLSearchParams({ search: query });
     }
 
-    const uri = `${serverHost}/product/model/by-organization/${orgId}${
+    const uri = `${serverHost}/product/model/by-organization/${organization}${
       searchParams ? `?${searchParams.toString()}` : ''
     }`;
 
@@ -81,7 +84,7 @@ function OrganizationProductsPage() {
       </header>
       <ProductFilter
         className={styles.productFilter}
-        idOrganization={orgId}
+        idOrganization={organization}
         onChange={(val) => setFilters(val)}
       />
       <div className={styles.productsContainer}>
@@ -120,8 +123,8 @@ function OrganizationProductsPage() {
   );
 }
 
-export default OrganizationProductsPage;
+export default CustomerProductsPage;
 
-OrganizationProductsPage.propTypes = {};
+CustomerProductsPage.propTypes = {};
 
-OrganizationProductsPage.defaultProps = {};
+CustomerProductsPage.defaultProps = {};

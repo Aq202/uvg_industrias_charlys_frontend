@@ -80,7 +80,7 @@ function Inventory() {
           </div>
         </div>
         <Table
-          header={['ID', 'Nombre', 'Color', 'Cantidad', 'Acción']}
+          header={['ID', 'Nombre', 'Tipo', 'Cantidad', 'Acción']}
           breakPoint="400px"
           maxCellWidth="140px"
           showCheckbox={false}
@@ -92,7 +92,7 @@ function Inventory() {
             <TableRow key={val.id} onClick={() => setSelectedItemId(val.id)}>
               <td>{val.id}</td>
               <td>{val.materialName}</td>
-              <td>{val.color}</td>
+              <td>{val.materialType}</td>
               <td>{val.quantity}</td>
               <td>
                 <div className={`${styles.icons}`}>
