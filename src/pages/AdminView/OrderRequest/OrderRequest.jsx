@@ -13,6 +13,7 @@ import TextArea from '@components/TextArea/TextArea';
 import Button from '@components/Button/Button';
 import InputDate from '@components/InputDate';
 import InputNumber from '@components/InputNumber';
+import NewOrganizationFormPopUp from '@components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import PopUp from '../../../components/PopUp/PopUp';
@@ -60,6 +61,8 @@ function OrderRequest() {
   const [isCatalogOpen, openCatalog, closeCatalog] = usePopUp();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
+  const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
+  const [selectedOrg, setSelectedOrg] = useState('');
 
   const getPreviousProducts = async () => {
     getCatalog({
@@ -207,6 +210,10 @@ function OrderRequest() {
     openSuccess();
   }, [resultPost]);
 
+  const handleOrgSelection = (selectedValue) => {
+    setSelectedOrg(selectedValue);
+  };
+
   return (
     <div className={`${styles.OrderRequest}`}>
       <main>
@@ -270,11 +277,17 @@ function OrderRequest() {
                   ? result?.clientOrganization
                   : (
                     <div className={styles.selectOrg}>
-                      <DropdownMenu />
-                      {' o '}
-                      <Button className={styles.createOrgButton} type="submit" text="Crear organizacion" name="createOrg" secondary onClick={handleSubmit} />
+                      <DropdownMenu onSelect={handleOrgSelection} id={selectedOrg} />
+                      {!selectedOrg
+                        && (
+                          <>
+                            {' o '}
+                            <Button className={styles.createOrgButton} type="submit" text="Crear organizacion" name="createOrg" secondary onClick={openNewOrg} />
+                          </>
+                        )}
                     </div>
                   )}
+
               </div>
               <div className={styles.headerContainer}>
                 <p>
@@ -398,6 +411,11 @@ function OrderRequest() {
           </div>
         </div>
       </main>
+      <NewOrganizationFormPopUp
+        close={closeNewOrg}
+        isOpen={isNewOrgOpen}
+        newOrgId={(newId) => setSelectedOrg(newId)}
+      />
       <SuccessNotificationPopUp
         title="Listo"
         text="La solicitud de pedido fue realizada correctamente"
