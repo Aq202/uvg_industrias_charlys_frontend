@@ -1,30 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
-import useToken from '../../../hooks/useToken';
-import Button from '../../../components/Button/Button';
-import SearchInput from '../../../components/SearchInput/SearchInput';
-import Table from '../../../components/Table/Table';
-import TableRow from '../../../components/TableRow/TableRow';
+import useToken from '@hooks/useToken';
+import SearchInput from '@components/SearchInput/SearchInput';
+import Table from '@components/Table/Table';
+import TableRow from '@components/TableRow/TableRow';
+import DateSearch from '@components/DateSearch/DateSearch';
+import DropdownMenuProductType from '@components/DropdownMenuMultProductType/DropdownMenuProducType';
 import styles from './ConfirmedOrders.module.css';
 
 function ConfirmedOrders({ orgId }) {
   const {
-    callFetch, result, loading,
+    callFetch, result, error, loading,
   } = useFetch();
 
   const token = useToken();
+  const [query, setQuery] = useState(null);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [types, setTypes] = useState([]);
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orders/${orgId}`, headers: { authorization: token } });
-  }, []);
+    let uri = `${serverHost}/organization/orders/${orgId}`;
 
-  const searchRequest = (search) => {
-    callFetch({
-      uri: `${serverHost}/organization/orders/:${orgId}?search=${search}`,
-      headers: { authorization: token },
-    });
+    if (query) {
+      const params = new URLSearchParams({ search: query });
+      uri += `?${params.toString()}`;
+    }
+
+    callFetch({ uri, headers: { authorization: token } });
+  }, [query, startDate, endDate, types]);
+
+  const searchText = (search) => {
+    if (search?.trim().length > 0) setQuery(search);
+    else setQuery(null);
+  };
+
+  const searchDate = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const handleTypeSelection = (typesSelected) => {
+    setTypes(typesSelected);
   };
 
   return (
@@ -33,13 +53,20 @@ function ConfirmedOrders({ orgId }) {
         <h2>
           Pedidos confirmados
         </h2>
-        <Button text="Nuevo" />
       </div>
       <div className={styles.ConfirmedOrdersList}>
         <div className={styles.searchContainer}>
-          <SearchInput handleSearch={searchRequest} />
+          <SearchInput handleSearch={searchText} />
+          <DateSearch
+            onSearch={searchDate}
+          />
+          <DropdownMenuProductType
+            orgId={orgId}
+            onChange={handleTypeSelection}
+          />
         </div>
         <div className={styles.content}>
+          {error && 'Ocurrió un error.'}
           <Table
             header={['ID', 'Descripción', 'Fecha']}
             breakPoint="280px"
@@ -48,15 +75,13 @@ function ConfirmedOrders({ orgId }) {
             className={styles.table}
             loading={loading}
           >
-            {
-              result?.result.map((val) => (
-                <TableRow key={val.id}>
-                  <td>{val.id}</td>
-                  <td>{val.description}</td>
-                  <td>{val.date_placed}</td>
-                </TableRow>
-              ))
-            }
+            {result?.result.map((val) => (
+              <TableRow key={val.id}>
+                <td>{val.id}</td>
+                <td>{val.description}</td>
+                <td>{val.deadline ? moment(val.deadline).format('DD-MM-YYYY') : 'Null'}</td>
+              </TableRow>
+            ))}
           </Table>
         </div>
       </div>
