@@ -22,7 +22,7 @@ function DropdownMenu({ onSelect, id }) {
         authorization: token,
       },
     });
-  }, [token]);
+  }, [token, id]);
 
   useEffect(() => {
     setSelectedValue(id);
