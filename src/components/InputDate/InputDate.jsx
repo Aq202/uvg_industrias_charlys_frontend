@@ -4,11 +4,11 @@ import randomId from '@helpers/randomString';
 import styles from './InputDate.module.css';
 
 function InputDate({
-  title, error, value, onChange, name, ...props
+  title, error, value, onChange, name, className, ...props
 }) {
   const id = randomId(15);
   return (
-    <div className={`${styles.inputContainer} ${error ? styles.error : ''}`}>
+    <div className={`${styles.inputContainer} ${error ? styles.error : ''} ${className}`}>
       <label htmlFor={id}>
         {title}
       </label>
@@ -24,12 +24,14 @@ InputDate.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   name: PropTypes.string,
+  className: PropTypes.string,
 };
 
 InputDate.defaultProps = {
   error: null,
   value: '',
   name: randomId(15),
+  className: '',
 };
 
 export default InputDate;
