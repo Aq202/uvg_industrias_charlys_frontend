@@ -6,6 +6,7 @@ import NewCustomerOrderRequest from '../../NewCustomerOrderRequest/NewCustomerOr
 import CustomerProductsPage from '../CustomerProductsPage';
 import NewProductModelPage from '../../NewProductModelPage/NewProductModelPage';
 import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
+import ConfirmedOrdersPage from '../../ConfirmedOrders/ConfirmedOrdersPage';
 
 function CustomerMainPage() {
   return (
@@ -17,6 +18,8 @@ function CustomerMainPage() {
         <Route path="/producto/nuevo" element={<NewProductModelPage clientView />} />
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
 
+        <Route path="/newOrderRequest" element={<NewCustomerOrderRequest />} />
+        <Route path="/confirmedOrders" element={<ConfirmedOrdersPage />} />
       </Routes>
     </PageContainer>
   );
