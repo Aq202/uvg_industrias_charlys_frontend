@@ -8,12 +8,11 @@ import useFetch from '@hooks/useFetch';
 import useToken from '@hooks//useToken';
 import ImageViewer from '@components/ImageViewer/ImageViewer';
 import SubLoadingView from '@components/SubLoadingView/SubLoadingView';
-import DropdownMenu from '@components/DropdownMenuOrg/DropdownMenu';
+import ProvisionalClient from '@components/ProvisionalClient/ProvisionalClient';
 import TextArea from '@components/TextArea/TextArea';
 import Button from '@components/Button/Button';
 import InputDate from '@components/InputDate';
 import InputNumber from '@components/InputNumber';
-import NewOrganizationFormPopUp from '@components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import PopUp from '../../../components/PopUp/PopUp';
@@ -21,18 +20,11 @@ import ProductModel from '../../../components/ProductModel/ProductModel';
 import Spinner from '../../../components/Spinner/Spinner';
 import usePopUp from '../../../hooks/usePopUp';
 import useApiMultipleImages from '../../../hooks/useApiMultipleImages';
-import alertDialog from '../../../assets/alert_dialog.svg';
 import styles from './OrderRequest.module.css';
 import SuccessNotificationPopUp from '../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 
 function OrderRequest() {
-  // FALTA
-  // Agregar el PopUp para la creación de la organización
-  // Realizar el post para envíar el pedido confirmado
-  // Agregar el PopUp para poder agregar productos
-  // SUGERENCIA: Cambiar los valores de la tabla de la cantidad de prendas por talla a un
-  // input number, para poder cambiar esos valores
   const {
     callFetch, result, error, loading,
   } = useFetch();
@@ -61,7 +53,6 @@ function OrderRequest() {
   const [isCatalogOpen, openCatalog, closeCatalog] = usePopUp();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
-  const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
   const [selectedOrg, setSelectedOrg] = useState('');
 
   const getPreviousProducts = async () => {
@@ -165,6 +156,7 @@ function OrderRequest() {
     if (!result) return;
     getPreviousProducts();
     getAllSizes();
+    setSelectedOrg(result?.clientOrganization);
   }, [result]);
 
   useEffect(() => {
@@ -255,40 +247,24 @@ function OrderRequest() {
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>
         </div>
+        {result?.clientOrganization.slice(0, 2) === 'TC'
+            && (
+              <ProvisionalClient onSelect={handleOrgSelection} />
+            )}
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
-          {result?.temporaryClient
-            && (
-              <div className={styles.createOrganitationBannerContainer}>
-                <div className={styles.createOrganitationBanner}>
-                  <img className={styles.alertDialog} src={alertDialog} alt="alert_dialog" />
-                  Este pedido fue realizado por un cliente provisional.
-                </div>
-              </div>
-            )}
           <div className={`${styles.orderInfoContainer}`}>
             {loading && <SubLoadingView />}
 
             <div className={`${styles.orderInfoHeader}`}>
               <h3 className={styles.sectionTitle}>Información General</h3>
-              <div className={styles.clientInfoContainer}>
-                <strong>Cliente: </strong>
-                {result?.clientOrganization
-                  ? result?.clientOrganization
-                  : (
-                    <div className={styles.selectOrg}>
-                      <DropdownMenu onSelect={handleOrgSelection} id={selectedOrg} />
-                      {!selectedOrg
-                        && (
-                          <>
-                            {' o '}
-                            <Button className={styles.createOrgButton} type="submit" text="Crear organizacion" name="createOrg" secondary onClick={openNewOrg} />
-                          </>
-                        )}
-                    </div>
-                  )}
-
-              </div>
+              {selectedOrg
+                && (
+                  <div className={styles.clientInfoContainer}>
+                    <strong>Cliente: </strong>
+                    {selectedOrg}
+                  </div>
+                )}
               <div className={styles.headerContainer}>
                 <p>
                   <strong>Código: </strong>
@@ -411,11 +387,6 @@ function OrderRequest() {
           </div>
         </div>
       </main>
-      <NewOrganizationFormPopUp
-        close={closeNewOrg}
-        isOpen={isNewOrgOpen}
-        newOrgId={(newId) => setSelectedOrg(newId)}
-      />
       <SuccessNotificationPopUp
         title="Listo"
         text="La solicitud de pedido fue realizada correctamente"

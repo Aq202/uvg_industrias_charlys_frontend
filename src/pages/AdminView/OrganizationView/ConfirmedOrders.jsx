@@ -13,7 +13,7 @@ import styles from './ConfirmedOrders.module.css';
 
 function ConfirmedOrders({ orgId }) {
   const {
-    callFetch, result, error, loading,
+    callFetch, result, loading,
   } = useFetch();
 
   const token = useToken();
@@ -66,7 +66,6 @@ function ConfirmedOrders({ orgId }) {
           />
         </div>
         <div className={styles.content}>
-          {error && 'Ocurrió un error.'}
           <Table
             header={['ID', 'Descripción', 'Fecha']}
             breakPoint="280px"

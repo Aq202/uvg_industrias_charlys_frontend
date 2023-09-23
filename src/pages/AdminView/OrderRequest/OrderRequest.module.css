@@ -34,7 +34,6 @@
 .orderInfoContainer{
     width: 80vw;
     border-radius: 5px;
-    border-radius: 5px;
     box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
     padding: 20px;
     position: relative;
@@ -104,29 +103,6 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 0fr));
     align-items: center;
     justify-items: center;
-}
-
-.createOrganitationBannerContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.createOrganitationBanner {
-    width: 80%;
-    margin: 20px 0;
-    padding: 10px 5px;
-    border-radius: 5px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: #E2E3E5;
-    text-align: center;
-}
-
-.alertDialog {
-    width: 40px;
-    height: 40px;
 }
 
 .aditionalDetailsContainer, .productsContainer {
