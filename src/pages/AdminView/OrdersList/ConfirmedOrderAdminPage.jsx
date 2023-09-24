@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import styles from './ConfirmedOrderCustomerPage.module.css';
-import ProductModel from '../../components/ProductModel/ProductModel';
-import useFetch from '../../hooks/useFetch';
-import { serverHost } from '../../config';
-import useToken from '../../hooks/useToken';
-import useApiMultipleImages from '../../hooks/useApiMultipleImages';
-import Spinner from '../../components/Spinner/Spinner';
-import TextArea from '../../components/TextArea/TextArea';
-import InputNumber from '../../components/InputNumber/InputNumber';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import styles from './ConfirmedOrderAdminPage.module.css';
+import ProductModel from '../../../components/ProductModel/ProductModel';
+import useFetch from '../../../hooks/useFetch';
+import { serverHost } from '../../../config';
+import useToken from '../../../hooks/useToken';
+import useApiMultipleImages from '../../../hooks/useApiMultipleImages';
+import Spinner from '../../../components/Spinner/Spinner';
+import TextArea from '../../../components/TextArea/TextArea';
+import NotFoundPage from '../../NotFoundPage/NotFoundPage';
+import InputNumber from '../../../components/InputNumber/InputNumber';
 
-function ConfirmedOrderCustomerPage() {
+function ConfirmedOrderAdminPage() {
   const { idOrder } = useParams();
   const token = useToken();
   const {
@@ -83,7 +83,7 @@ function ConfirmedOrderCustomerPage() {
   }, [resultImages]);
 
   return (
-    <div className={styles.confirmedOrderCustomerPage}>
+    <div className={styles.confirmedOrderAdminPage}>
       {errorOrder && <NotFoundPage />}
       {!errorOrder && loadingOrder && <Spinner />}
       {!errorOrder && !loadingOrder && resultOrder && (
@@ -135,4 +135,4 @@ function ConfirmedOrderCustomerPage() {
   );
 }
 
-export default ConfirmedOrderCustomerPage;
+export default ConfirmedOrderAdminPage;
