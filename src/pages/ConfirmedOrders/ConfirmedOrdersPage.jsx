@@ -5,12 +5,11 @@ import styles from './ConfirmedOrdersPage.module.css';
 import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import useToken from '../../hooks/useToken';
-import getTokenPayload from '../../helpers/getTokenPayload';
 import LoadingView from '../../components/LoadingView/LoadingView';
 import SearchInput from '../../components/SearchInput/SearchInput';
+import ConfirmedOrder from '../../components/ConfirmedOrder/ConfirmedOrder';
 
 function ConfirmedOrdersPage() {
-  const [orgId, setOrgId] = useState('');
   // const [confirmedOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [filter, setFilter] = useState({});
@@ -31,33 +30,26 @@ function ConfirmedOrdersPage() {
   };
 
   const getConfirmedOrders = () => {
-    const { date, product } = filter;
+    const { startdeadline, enddeadline, product } = filter;
     const paramsObj = { page: currentPage };
 
-    if (date !== undefined && date !== '') paramsObj.date = date;
-    if (product !== undefined && product !== '') paramsObj.product = product;
+    if (startdeadline !== undefined && startdeadline !== '') paramsObj.startDeadline = startdeadline;
+    if (enddeadline !== undefined && enddeadline !== '') paramsObj.endDeadline = enddeadline;
+    if (product !== undefined && product !== '') paramsObj.idProduct = product;
 
     const searchParams = new URLSearchParams(paramsObj);
     getOrders({
-      uri: `${serverHost}/order?${searchParams.toString()}`,
+      uri: `${serverHost}/organization/orders?${searchParams.toString()}`,
       headers: { authorization: token },
     });
   };
 
   useEffect(() => {
-    if (!token) return;
-    const tokenPayload = getTokenPayload(token);
-    setOrgId(() => tokenPayload.clientOrganizationId);
-  }, [token]);
-
-  useEffect(() => {
-    if (orgId === '') return;
-    getConfirmedOrders();
-  }, [orgId]);
-
-  useEffect(() => {
     getConfirmedOrders();
   }, [currentPage, filter]);
+
+  useEffect(() => {
+  }, [resultOrders]);
 
   return (
     <div className={styles.confirmedOrdersPage}>
@@ -68,15 +60,23 @@ function ConfirmedOrdersPage() {
           <div className={styles.filtersContainer}>
             <InputDate
               className={styles.inputDate}
-              value={filter.date}
-              name="date"
-              title=""
-              onChange={(e) => handleChange('date', e.target.value)}
+              value={filter.startdeadline}
+              name="startdeadline"
+              title="Fecha límite desde:"
+              onChange={(e) => handleChange('startdeadline', e.target.value)}
+            />
+            <InputDate
+              className={styles.inputDate}
+              value={filter.enddeadline}
+              name="enddeadline"
+              title="Fecha límite hasta:"
+              onChange={(e) => handleChange('enddeadline', e.target.value)}
             />
             <SearchInput
               className={styles.inputSearch}
               handleSearch={(val) => handleChange('search', val)}
               name="search"
+              placeholder="Buscar por ID de producto"
             />
           </div>
         )}
@@ -87,12 +87,18 @@ function ConfirmedOrdersPage() {
         )}
         {!loadingOrders && resultOrders && (
         <div className={styles.ordersList}>
-          Hola
+          {resultOrders.result.map((order) => (
+            <ConfirmedOrder
+              id={order.id}
+              deadline={order.deadline}
+              description={order.description}
+            />
+          ))}
         </div>
         )}
-        {!errorOrders && (
+        {!errorOrders && resultOrders && (
           <Pagination
-            count={3}
+            count={resultOrders.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currentPage + 1}
