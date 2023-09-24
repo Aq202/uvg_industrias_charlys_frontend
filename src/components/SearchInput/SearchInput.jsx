@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { FaSearch as SearchIcon } from 'react-icons/fa';
 import styles from './SearchInput.module.css';
 
-function SearchInput({ handleSearch, className, ...props }) {
+function SearchInput({
+  handleSearch, className, placeholder, ...props
+}) {
   const [query, setQuery] = useState('');
   const handleChange = (e) => {
     const { value } = e.target;
@@ -31,7 +33,7 @@ function SearchInput({ handleSearch, className, ...props }) {
     <div className={`${styles.searchInput} ${className}`}>
       <input
         type="text"
-        placeholder="Buscar..."
+        placeholder={placeholder}
         {...props}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
@@ -54,8 +56,10 @@ export default SearchInput;
 SearchInput.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   className: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 SearchInput.defaultProps = {
   className: '',
+  placeholder: 'Buscar...',
 };
