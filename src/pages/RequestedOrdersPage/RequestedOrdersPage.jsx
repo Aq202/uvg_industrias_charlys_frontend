@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination } from '@mui/material';
 import InputDate from '../../components/InputDate/InputDate';
-import styles from './ConfirmedOrdersPage.module.css';
+import styles from './RequestedOrdersPage.module.css';
 import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import useToken from '../../hooks/useToken';
-import getTokenPayload from '../../helpers/getTokenPayload';
 import LoadingView from '../../components/LoadingView/LoadingView';
 import SearchInput from '../../components/SearchInput/SearchInput';
+import RequestedOrder from '../../components/RequestedOrder/RequestedOrder';
 
-function ConfirmedOrdersPage() {
-  const [orgId, setOrgId] = useState('');
-  // const [confirmedOrders] = useState([]);
+function RequestedOrdersPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [filter, setFilter] = useState({});
   const {
@@ -31,52 +29,53 @@ function ConfirmedOrdersPage() {
   };
 
   const getConfirmedOrders = () => {
-    const { date, product } = filter;
+    const { startdateplaced, enddateplaced, product } = filter;
     const paramsObj = { page: currentPage };
 
-    if (date !== undefined && date !== '') paramsObj.date = date;
-    if (product !== undefined && product !== '') paramsObj.product = product;
+    if (startdateplaced !== undefined && startdateplaced !== '') paramsObj.startDatePlaced = startdateplaced;
+    if (enddateplaced !== undefined && enddateplaced !== '') paramsObj.endDatePlaced = enddateplaced;
+    if (product !== undefined && product !== '') paramsObj.idProduct = product;
 
     const searchParams = new URLSearchParams(paramsObj);
     getOrders({
-      uri: `${serverHost}/order?${searchParams.toString()}`,
+      uri: `${serverHost}/organization/orderRequests?${searchParams.toString()}`,
       headers: { authorization: token },
     });
   };
 
   useEffect(() => {
-    if (!token) return;
-    const tokenPayload = getTokenPayload(token);
-    setOrgId(() => tokenPayload.clientOrganizationId);
-  }, [token]);
-
-  useEffect(() => {
-    if (orgId === '') return;
-    getConfirmedOrders();
-  }, [orgId]);
-
-  useEffect(() => {
     getConfirmedOrders();
   }, [currentPage, filter]);
+
+  useEffect(() => {
+  }, [resultOrders]);
 
   return (
     <div className={styles.confirmedOrdersPage}>
       {loadingOrders && <LoadingView />}
-      <h1 className={styles.pageTitle}>Órdenes confirmadas</h1>
+      <h1 className={styles.pageTitle}>Solicitudes de órdenes realizadas</h1>
       <div className={styles.listContainer}>
         {true && (
           <div className={styles.filtersContainer}>
             <InputDate
               className={styles.inputDate}
-              value={filter.date}
-              name="date"
-              title=""
-              onChange={(e) => handleChange('date', e.target.value)}
+              value={filter.startdateplaced}
+              name="startdateplaced"
+              title="Fecha de solicitud desde:"
+              onChange={(e) => handleChange('startdateplaced', e.target.value)}
+            />
+            <InputDate
+              className={styles.inputDate}
+              value={filter.enddateplaced}
+              name="enddateplaced"
+              title="Fecha de solicitud hasta:"
+              onChange={(e) => handleChange('enddateplaced', e.target.value)}
             />
             <SearchInput
               className={styles.inputSearch}
-              handleSearch={(val) => handleChange('search', val)}
-              name="search"
+              handleSearch={(val) => handleChange('product', val)}
+              name="product"
+              placeholder="Buscar por ID de producto"
             />
           </div>
         )}
@@ -87,12 +86,19 @@ function ConfirmedOrdersPage() {
         )}
         {!loadingOrders && resultOrders && (
         <div className={styles.ordersList}>
-          Hola
+          {resultOrders.result.map((order) => (
+            <RequestedOrder
+              key={order.id}
+              id={order.id}
+              datePlaced={order.date_placed}
+              description={order.description}
+            />
+          ))}
         </div>
         )}
-        {!errorOrders && (
+        {!errorOrders && resultOrders && (
           <Pagination
-            count={3}
+            count={+resultOrders.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currentPage + 1}
@@ -103,4 +109,4 @@ function ConfirmedOrdersPage() {
   );
 }
 
-export default ConfirmedOrdersPage;
+export default RequestedOrdersPage;

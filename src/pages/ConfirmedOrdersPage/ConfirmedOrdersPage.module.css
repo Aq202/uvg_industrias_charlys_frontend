@@ -25,6 +25,7 @@
 
 .filtersContainer{
     align-self: flex-end;
+    align-items: center;
     display: flex;
     column-gap: 15px;
     row-gap: 10px;
@@ -71,4 +72,11 @@
 
 .pagination{
     margin-top: 30px;
+}
+
+.ordersList{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
 }

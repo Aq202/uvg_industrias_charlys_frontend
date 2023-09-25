@@ -6,7 +6,7 @@ import styles from './ProductModel.module.css';
 import randomString from '../../helpers/randomString';
 
 function ProductModel({
-  url, name, imageUrl, type, organization, colors, loadingImage,
+  url, name, imageUrl, type, organization, colors, loadingImage, className, itemRef, onClick,
 }) {
   const [showDefaultImg, setShowDefaultImg] = useState(false);
 
@@ -19,7 +19,7 @@ function ProductModel({
   };
 
   return (
-    <NavLink to={url} className={styles.linkContainer}>
+    <NavLink to={url} className={`${styles.linkContainer} ${className}`} ref={itemRef} onClick={onClick}>
       <div className={styles.productModel}>
         <div className={styles.imageContainer}>
           {!loadingImage && !showDefaultImg && (
@@ -47,7 +47,7 @@ function ProductModel({
               <span
                 key={randomString()}
                 className={styles.color}
-                style={{ backgroundColor: `rgb(${color.red}, ${color.green}, ${color.blue})` }}
+                style={{ backgroundColor: `rgb(${color.r}, ${color.g}, ${color.b})` }}
                 title={color.name}
               />
             ))}
@@ -75,6 +75,10 @@ ProductModel.propTypes = {
     }),
   ),
   loadingImage: PropTypes.bool,
+  className: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  itemRef: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 ProductModel.defaultProps = {
@@ -82,4 +86,7 @@ ProductModel.defaultProps = {
   imageUrl: null,
   colors: null,
   loadingImage: false,
+  className: '',
+  itemRef: null,
+  onClick: null,
 };
