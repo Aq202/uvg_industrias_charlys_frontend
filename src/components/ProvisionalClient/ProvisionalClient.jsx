@@ -1,12 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useToken from '@hooks//useToken';
 import usePopUp from '@hooks/usePopUp';
-// import getTokenPayLoad from '@helpers/getTokenPayload';
-import SubLoadingView from '@components/SubLoadingView/SubLoadingView';
 import InputSelect from '@components/InputSelect';
 import Button from '@components/Button/Button';
 import NewOrganizationFormPopUp from '@components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
@@ -16,19 +13,24 @@ import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNoti
 import alertDialog from '../../assets/alert_dialog.svg';
 import styles from './ProvisionalClient.module.css';
 
-function ProvisionalClient({ onSelect }) {
+function ProvisionalClient({ orderId, clientInfo, onSelect }) {
   const {
     callFetch: callFetchOrgs, result: resultOrgs, error: errorOrgs,
   } = useFetch();
 
+  const {
+    callFetch: patchOrg, result: patchResultSetOrg, error: patchErrorSetOrg,
+  } = useFetch();
+
   const token = useToken();
-  const [selectedValue, setSelectedValue] = useState('');
+
+  const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
+
   const [newOrg, setNewOrg] = useState(false);
   const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
-
-  // const [form, setForm] = useState({});
 
   useEffect(() => {
     if (!token) return;
@@ -42,16 +44,63 @@ function ProvisionalClient({ onSelect }) {
 
   const handleSelectChange = (e) => {
     const { value, name } = e.target;
-    // setForm((prev) => ({ ...prev, [name]: value }));
-    setSelectedValue(value);
+    setForm((lastValue) => ({ ...lastValue, [name]: value }));
     onSelect(value);
   };
 
   const handleNewOrg = (newId) => {
     setNewOrg(true);
-    setSelectedValue(newId);
+    setForm((lastValue) => ({ ...lastValue, orgMenu: newId }));
     onSelect(newId);
   };
+
+  const clearError = (e) => {
+    setErrors((lastVal) => ({ ...lastVal, [e.target.name]: null }));
+  };
+
+  const validateSelectedOrg = () => {
+    const value = form.orgMenu;
+
+    if (!(value?.includes('ORG'))) {
+      setErrors((lastVal) => ({
+        ...lastVal,
+        description: 'Se requiere una organización',
+      }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const handlePatchOrg = (e) => {
+    e.preventDefault();
+
+    if (!validateSelectedOrg()) return;
+
+    const uri = `${serverHost}/orderRequest/${orderId}/temporaryClient/confirm`;
+
+    const body = {};
+    const selectedOrg = form.orgMenu;
+
+    body.organizationId = selectedOrg;
+
+    patchOrg({
+      uri,
+      method: 'PATCH',
+      headers: { authorization: token },
+      body: JSON.stringify(body),
+    });
+  };
+
+  useEffect(() => {
+    if (!patchErrorSetOrg) return;
+    openError();
+  }, [patchErrorSetOrg]);
+
+  useEffect(() => {
+    if (!patchResultSetOrg === 'El cliente temporal fue confirmado como organización.') return;
+    openSuccess();
+  }, [patchResultSetOrg]);
 
   return (
     <div className={`${styles.mainContainer}`}>
@@ -64,19 +113,19 @@ function ProvisionalClient({ onSelect }) {
       <div className={styles.clientInfoContainer}>
         <p>
           <strong>Nombre: </strong>
-          Liceo
+          {clientInfo.name}
         </p>
         <p>
           <strong>Email: </strong>
-          liceo@gmail.com
+          {clientInfo.email}
         </p>
         <p>
           <strong>Teléfono: </strong>
-          1234-5678
+          {clientInfo.phone}
         </p>
         <p>
           <strong>Dirección: </strong>
-          4.ta Calle, Guatemala
+          {clientInfo.address}
         </p>
       </div>
       <div className={styles.mesage}>
@@ -88,17 +137,19 @@ function ProvisionalClient({ onSelect }) {
           Cuando termines, presiona el botón de asignar organización.
         </p>
       </div>
+      {errorOrgs && 'Ocurrió un error al cargar las organizaciones registradas'}
       {resultOrgs && (
         <div className={styles.selectOrgContainer}>
           <InputSelect
             title="Organización"
-            error={errorOrgs}
             options={resultOrgs.result.map((org) => ({ value: org.id, title: org.name }))}
             className={`${styles.menu}`}
             onChange={handleSelectChange}
             name="orgMenu"
             placeholder="Selecciona una organización"
-            value={selectedValue}
+            value={form.orgMenu}
+            error={errors.description}
+            onFocus={clearError}
           />
           <Button
             className={styles.createOrgButton}
@@ -116,6 +167,7 @@ function ProvisionalClient({ onSelect }) {
           type="submit"
           text="Asignar organización"
           name="assignOrg"
+          onClick={handlePatchOrg}
         />
       </div>
       <NewOrganizationFormPopUp
@@ -142,5 +194,13 @@ function ProvisionalClient({ onSelect }) {
 export default ProvisionalClient;
 
 ProvisionalClient.propTypes = {
+  orderId: PropTypes.string.isRequired,
+  clientInfo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  }).isRequired,
   onSelect: PropTypes.func.isRequired,
 };

@@ -53,6 +53,7 @@ function OrderRequest() {
   const [isCatalogOpen, openCatalog, closeCatalog] = usePopUp();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
+  // eslint-disable-next-line no-unused-vars
   const [selectedOrg, setSelectedOrg] = useState('');
 
   const getPreviousProducts = async () => {
@@ -156,7 +157,7 @@ function OrderRequest() {
     if (!result) return;
     getPreviousProducts();
     getAllSizes();
-    setSelectedOrg(result?.clientOrganization);
+    // setSelectedOrg(result?.clientOrganization.name);
   }, [result]);
 
   useEffect(() => {
@@ -247,9 +248,13 @@ function OrderRequest() {
         <div className={`${styles.top}`}>
           <span className={`${styles.title}`}>Solicitud de pedido</span>
         </div>
-        {result?.clientOrganization.slice(0, 2) === 'TC'
+        {result?.temporaryClient
             && (
-              <ProvisionalClient onSelect={handleOrgSelection} />
+              <ProvisionalClient
+                orderId={orderId}
+                clientInfo={result?.temporaryClient}
+                onSelect={handleOrgSelection}
+              />
             )}
         <div className={`${styles.details}`}>
           {error && 'Ocurrió un error.'}
@@ -258,11 +263,11 @@ function OrderRequest() {
 
             <div className={`${styles.orderInfoHeader}`}>
               <h3 className={styles.sectionTitle}>Información General</h3>
-              {selectedOrg
+              {result?.clientOrganization
                 && (
                   <div className={styles.clientInfoContainer}>
                     <strong>Cliente: </strong>
-                    {selectedOrg}
+                    {result?.clientOrganization.name}
                   </div>
                 )}
               <div className={styles.headerContainer}>
