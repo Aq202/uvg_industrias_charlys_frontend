@@ -49,6 +49,7 @@ function ProductsSlider({ products, onChange }) {
         <div className={`${styles.slider} ${scrollbarGray}`} ref={sliderRef}>
           {products?.map((product, index) => (
             <ProductModel
+              key={product.id}
               itemRef={(ref) => {
                 productItemsRef.current[index] = ref;
               }}
