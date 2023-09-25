@@ -1,0 +1,86 @@
+.container{
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 15px;
+}
+.orderProgressBar{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 80px;
+  gap: 10px;
+  min-width: 400px;
+}
+
+.orderProgressBar.clickable .circle{
+  cursor: pointer;
+}
+
+.circle{
+  width: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 50px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border: 7px solid black;
+  transition-delay: 0s;
+  transition: all 500ms ease;
+  position: relative;
+}
+
+.circle.active{
+  transition-delay: 200ms;
+  border-color: #03bf03;
+}
+
+.circle svg{
+  width: 50%;
+  height: 50%;
+}
+
+.circle.active svg{
+  fill: #03bf03;
+  transition: all 500ms ease;
+}
+
+.stageName{
+  position: absolute;
+  top: calc(100% + 10px);
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+}
+
+.stageName.current{
+  font-weight: bold;
+  color: black;
+}
+.progressBarContainer{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 99%;
+  height: 100%;
+}
+
+.progressBar{
+  width: 100%;
+  height: 7px;
+  background-color: black;
+}
+
+.indicator{
+  width: 99%;
+  height: 100%;
+  background-color: #03bf03;
+  transition: all 600ms ease;
+}
