@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useToken from '@hooks//useToken';
 import usePopUp from '@hooks/usePopUp';
 import InputSelect from '@components/InputSelect';
 import Button from '@components/Button/Button';
+import Spinner from '@components/Spinner/Spinner';
 import NewOrganizationFormPopUp from '@components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
@@ -19,10 +21,14 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
   } = useFetch();
 
   const {
-    callFetch: patchOrg, result: patchResultSetOrg, error: patchErrorSetOrg,
+    callFetch: patchOrg,
+    result: patchResultSetOrg,
+    error: patchErrorSetOrg,
+    loading: patchLoadingSetOrg,
   } = useFetch();
 
   const token = useToken();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
@@ -72,6 +78,8 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
     return true;
   };
 
+  const successCallback = () => navigate(0);
+
   const handlePatchOrg = (e) => {
     e.preventDefault();
 
@@ -89,6 +97,7 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
       method: 'PATCH',
       headers: { authorization: token },
       body: JSON.stringify(body),
+      parse: false,
     });
   };
 
@@ -98,7 +107,7 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
   }, [patchErrorSetOrg]);
 
   useEffect(() => {
-    if (!patchResultSetOrg === 'El cliente temporal fue confirmado como organización.') return;
+    if (!patchResultSetOrg) return;
     openSuccess();
   }, [patchResultSetOrg]);
 
@@ -162,13 +171,17 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
         </div>
       )}
       <div className={styles.assignOrgContainer}>
-        <Button
-          className={styles.assignOrgButton}
-          type="submit"
-          text="Asignar organización"
-          name="assignOrg"
-          onClick={handlePatchOrg}
-        />
+        {!patchLoadingSetOrg
+        && (
+          <Button
+            className={styles.assignOrgButton}
+            type="submit"
+            text="Asignar organización"
+            name="assignOrg"
+            onClick={handlePatchOrg}
+          />
+        )}
+        {patchLoadingSetOrg && <Spinner />}
       </div>
       <NewOrganizationFormPopUp
         close={closeNewOrg}
@@ -180,10 +193,11 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
         text="La organización se ha asignado correctamente"
         close={closeSuccess}
         isOpen={isSuccessOpen}
+        callback={successCallback}
       />
       <ErrorNotificationPopUp
         title="Error"
-        text="Ocurrió un error al asignar la organización a la solicitud de pedido"
+        text={patchErrorSetOrg}
         close={closeError}
         isOpen={isErrorOpen}
       />
