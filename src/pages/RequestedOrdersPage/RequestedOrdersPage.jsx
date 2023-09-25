@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination } from '@mui/material';
 import InputDate from '../../components/InputDate/InputDate';
-import styles from './ConfirmedOrdersPage.module.css';
+import styles from './RequestedOrdersPage.module.css';
 import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import useToken from '../../hooks/useToken';
 import LoadingView from '../../components/LoadingView/LoadingView';
 import SearchInput from '../../components/SearchInput/SearchInput';
-import ConfirmedOrder from '../../components/ConfirmedOrder/ConfirmedOrder';
+import RequestedOrder from '../../components/RequestedOrder/RequestedOrder';
 
-function ConfirmedOrdersPage() {
-  // const [confirmedOrders] = useState([]);
+function RequestedOrdersPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [filter, setFilter] = useState({});
   const {
@@ -30,16 +29,16 @@ function ConfirmedOrdersPage() {
   };
 
   const getConfirmedOrders = () => {
-    const { startdeadline, enddeadline, product } = filter;
+    const { startdateplaced, enddateplaced, product } = filter;
     const paramsObj = { page: currentPage };
 
-    if (startdeadline !== undefined && startdeadline !== '') paramsObj.startDeadline = startdeadline;
-    if (enddeadline !== undefined && enddeadline !== '') paramsObj.endDeadline = enddeadline;
+    if (startdateplaced !== undefined && startdateplaced !== '') paramsObj.startDatePlaced = startdateplaced;
+    if (enddateplaced !== undefined && enddateplaced !== '') paramsObj.endDatePlaced = enddateplaced;
     if (product !== undefined && product !== '') paramsObj.idProduct = product;
 
     const searchParams = new URLSearchParams(paramsObj);
     getOrders({
-      uri: `${serverHost}/organization/orders?${searchParams.toString()}`,
+      uri: `${serverHost}/organization/orderRequests?${searchParams.toString()}`,
       headers: { authorization: token },
     });
   };
@@ -54,28 +53,28 @@ function ConfirmedOrdersPage() {
   return (
     <div className={styles.confirmedOrdersPage}>
       {loadingOrders && <LoadingView />}
-      <h1 className={styles.pageTitle}>Órdenes confirmadas</h1>
+      <h1 className={styles.pageTitle}>Solicitudes de órdenes realizadas</h1>
       <div className={styles.listContainer}>
         {true && (
           <div className={styles.filtersContainer}>
             <InputDate
               className={styles.inputDate}
-              value={filter.startdeadline}
-              name="startdeadline"
-              title="Fecha límite desde:"
-              onChange={(e) => handleChange('startdeadline', e.target.value)}
+              value={filter.startdateplaced}
+              name="startdateplaced"
+              title="Fecha de solicitud desde:"
+              onChange={(e) => handleChange('startdateplaced', e.target.value)}
             />
             <InputDate
               className={styles.inputDate}
-              value={filter.enddeadline}
-              name="enddeadline"
-              title="Fecha límite hasta:"
-              onChange={(e) => handleChange('enddeadline', e.target.value)}
+              value={filter.enddateplaced}
+              name="enddateplaced"
+              title="Fecha de solicitud hasta:"
+              onChange={(e) => handleChange('enddateplaced', e.target.value)}
             />
             <SearchInput
               className={styles.inputSearch}
-              handleSearch={(val) => handleChange('search', val)}
-              name="search"
+              handleSearch={(val) => handleChange('product', val)}
+              name="product"
               placeholder="Buscar por ID de producto"
             />
           </div>
@@ -88,9 +87,10 @@ function ConfirmedOrdersPage() {
         {!loadingOrders && resultOrders && (
         <div className={styles.ordersList}>
           {resultOrders.result.map((order) => (
-            <ConfirmedOrder
+            <RequestedOrder
+              key={order.id}
               id={order.id}
-              deadline={order.deadline}
+              datePlaced={order.date_placed}
               description={order.description}
             />
           ))}
@@ -98,7 +98,7 @@ function ConfirmedOrdersPage() {
         )}
         {!errorOrders && resultOrders && (
           <Pagination
-            count={resultOrders.count}
+            count={+resultOrders.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currentPage + 1}
@@ -109,4 +109,4 @@ function ConfirmedOrdersPage() {
   );
 }
 
-export default ConfirmedOrdersPage;
+export default RequestedOrdersPage;
