@@ -45,6 +45,7 @@ function Sidebar({ displayMenu, menuRef, closeMenu }) {
             <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Nuevo pedido" onClick={closeMenu} />
             <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" onClick={closeMenu} />
             <SidebarItem path="/newOrderRequest" iconUrl={logoutIcon} text="Nuevo pedido" />
+            <SidebarItem path="/requestedOrders" iconUrl={logoutIcon} text="Solicitudes de órden" />
             <SidebarItem path="/confirmedOrders" iconUrl={logoutIcon} text="Órdenes confirmadas" />
           </>
         )}

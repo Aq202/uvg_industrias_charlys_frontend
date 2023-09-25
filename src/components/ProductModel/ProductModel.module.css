@@ -12,6 +12,7 @@
   box-shadow: var(--container--box-shadow--);
   border-radius: 10px;
   max-width: 400px;
+  margin: 2px;
 }
 
 .imageContainer {

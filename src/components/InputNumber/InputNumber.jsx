@@ -22,9 +22,9 @@ function InputNumber({
 }
 
 InputNumber.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   error: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   value: PropTypes.string,
   name: PropTypes.string,
   measureUnit: PropTypes.string,
@@ -35,6 +35,8 @@ InputNumber.defaultProps = {
   value: '',
   name: '',
   measureUnit: null,
+  title: '',
+  onChange: null,
 };
 
 export default InputNumber;

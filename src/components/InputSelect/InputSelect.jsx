@@ -4,7 +4,7 @@ import randomId from '@helpers/randomString';
 import styles from './InputSelect.module.css';
 
 function InputSelect({
-  title, error, options, className, onChange, name, placeholder, ...props
+  title, error, options, className, onChange, name, placeholder, value, ...props
 }) {
   const id = randomId(15);
   return (
@@ -14,7 +14,7 @@ function InputSelect({
           {title}
         </label>
       )}
-      <select type="text" {...props} id={id} name={name} onChange={onChange}>
+      <select type="text" {...props} id={id} name={name} onChange={onChange} value={value}>
         <option value="">{placeholder}</option>
         {options?.map((op) => <option key={randomId(10)} value={op.value}>{op.title}</option>)}
       </select>
@@ -34,6 +34,7 @@ InputSelect.propTypes = {
   })),
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  value: PropTypes.string,
 };
 
 InputSelect.defaultProps = {
@@ -43,6 +44,7 @@ InputSelect.defaultProps = {
   className: '',
   title: null,
   placeholder: 'Seleccionar opción.',
+  value: '',
 };
 
 export default InputSelect;

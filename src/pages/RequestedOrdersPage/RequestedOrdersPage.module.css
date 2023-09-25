@@ -1,0 +1,82 @@
+.confirmedOrdersPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+}
+
+.pageTitle{
+margin: 40px 0 40px 0;
+align-self: flex-start;
+}
+
+.listContainer {
+background-color: #FDFDFD;
+box-shadow: var(--container--box-shadow--);
+border-radius: 20px;
+width: 100%;
+padding: 30px 50px 50px 50px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.filtersContainer{
+align-self: flex-end;
+align-items: center;
+display: flex;
+column-gap: 15px;
+row-gap: 10px;
+width: 80%;
+justify-content: flex-end;
+flex-direction: row;
+flex-wrap: wrap;
+margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 450px) {
+.listContainer{
+    background-color: #FDFDFD;
+    box-shadow: none;
+    border-radius: 20px;
+    width: 100%;
+    padding: 0;
+}
+
+.confirmedOrdersPage{
+    background-color: #FDFDFD;
+}
+
+.pageTitle{
+    align-self: center;
+    text-align: center;
+}
+
+.filtersContainer{
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    width: 100%;
+  }
+}
+
+.inputDate{
+max-width: 300px;
+}
+
+.inputSearch{
+min-width: 300px;
+}
+
+.pagination{
+margin-top: 30px;
+}
+
+.ordersList{
+display: flex;
+flex-direction: column;
+width: 100%;
+gap: 20px;
+}
