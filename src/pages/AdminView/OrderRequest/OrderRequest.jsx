@@ -143,20 +143,18 @@ function OrderRequest() {
               <div className={`${styles.productsContainerHeader}`}>
                 <h3 className={styles.sectionTitle}>Productos a realizar</h3>
               </div>
-              <div className={styles.selectedProductsGrid}>
-                {result?.detail && result?.detail.length > 0 ? (
-                  <Products
-                    products={
-                      result.detail.map((item) => ({ ...item, organization: result.clientOrganization.name || '' }))
-                    }
-                  />
-                )
-                  : (
-                    <div className={`${styles.noProductsMessage}`}>
-                      No hay productos seleccionados para esta solicitud de orden.
-                    </div>
-                  )}
-              </div>
+              {result?.detail && result?.detail.length > 0 ? (
+                <Products
+                  products={
+                    result.detail.map((item) => ({ ...item, organization: result.clientOrganization.name || '' }))
+                  }
+                />
+              )
+                : (
+                  <div className={`${styles.noProductsMessage}`}>
+                    No hay productos seleccionados para esta solicitud de orden.
+                  </div>
+                )}
             </div>
             <div className={`${styles.deliveryInfoContainer}`}>
               <div className={`${styles.deliveryDate}`}>

@@ -202,29 +202,6 @@
     cursor: pointer;
 }
 
-.selectedProductContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-bottom: 20px;
-}
-
-.sizesTable{
-    display: grid;
-    grid-column: 2/-1;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    justify-items: center;
-    font-weight: bold;
-    align-items: center;
-    row-gap: 10px;
-}
-
-.tableHeader{
-    grid-column: 1/-1;
-    color: var(--secondary-text-color--);
-    text-align: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
 
 @media (max-width: 930px) {
     .clientInfoContainer {

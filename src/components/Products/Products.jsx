@@ -79,41 +79,39 @@ function Products({ products }) {
           onChange={handleCurrProduct}
         />
         )}
-      <div className={`${styles.product}`}>
-        <div className={`${styles.tableContainer}`}>
-          {producto
-            && (
-              <table className={`${styles.tableProduct}`}>
-                <thead>
-                  <tr className={`${styles.tableTrProduct}`}>
-                    {header?.map((val) => (
-                      <th key={val} className={`${styles.tableThProduct}`}>{val}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {tallas.map((talla) => {
-                    const size = producto.sizes
-                      ? producto.sizes.find((s) => s.size === talla) : null;
-                    const cantidad = size ? size.quantity : 0;
-                    return (
-                      <tr key={talla} className={`${styles.tableTrProduct}`}>
-                        <td className={`${styles.tableTdProduct}`}>{talla}</td>
-                        <td className={`${styles.tableTdProduct}`}>
-                          {cantidad}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                  <tr>
-                    <td className={`${styles.tableTotalProduct}`}><strong>Total</strong></td>
-                    <td className={`${styles.tableTotalProduct}`}><strong>{totalCantidad}</strong></td>
-                  </tr>
-                </tbody>
-                <tfoot />
-              </table>
-            )}
-        </div>
+      <div className={`${styles.tableContainer}`}>
+        {producto
+          && (
+            <table className={`${styles.tableProduct}`}>
+              <thead>
+                <tr className={`${styles.tableTrProduct}`}>
+                  {header?.map((val) => (
+                    <th key={val} className={`${styles.tableThProduct}`}>{val}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {tallas.map((talla) => {
+                  const size = producto.sizes
+                    ? producto.sizes.find((s) => s.size === talla) : null;
+                  const cantidad = size ? size.quantity : 0;
+                  return (
+                    <tr key={talla} className={`${styles.tableTrProduct}`}>
+                      <td className={`${styles.tableTdProduct}`}>{talla}</td>
+                      <td className={`${styles.tableTdProduct}`}>
+                        {cantidad}
+                      </td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <td className={`${styles.tableTotalProduct}`}><strong>Total</strong></td>
+                  <td className={`${styles.tableTotalProduct}`}><strong>{totalCantidad}</strong></td>
+                </tr>
+              </tbody>
+              <tfoot />
+            </table>
+          )}
       </div>
     </div>
   );
