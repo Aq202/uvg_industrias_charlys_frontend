@@ -1,0 +1,60 @@
+.tableContainer{
+  margin: auto;
+  width: 80%;
+  overflow-x: auto;
+}
+
+.selectProductUnitsTable{
+  border: none;
+  border-spacing: 0;
+  min-width: 600px;
+  width: 100%;
+
+}
+
+.selectProductUnitsTable th{
+  color: rgb(53, 53, 53);
+  border-bottom: 2px solid rgb(0, 0, 0);
+  border-right: 0;
+  border-left: 0;
+
+}
+
+.selectProductUnitsTable td{
+  padding: 10px 20px;
+}
+
+.addOtherButton{
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  color: rgb(66, 66, 66);
+  cursor: pointer;
+}
+
+.plusIcon{
+  font-size: 20px;
+}
+
+.removeButton{
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  font-size: 20px;
+  color: rgb(66, 66, 66);
+  cursor: pointer;
+  height: fit-content;
+}
+
+.removeButton:disabled{
+  color: rgb(165, 165, 165);
+  cursor: not-allowed;
+}
+
+.sizeInputSelect{
+  min-width: 170px;
+}

@@ -4,11 +4,15 @@
     flex-direction: column;
     align-items: center;
     padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+    gap:10px;
 }
 
-.pageTitle{
-    margin: 40px 0 40px 0;
+.title{
+    margin: 0;
+    padding: 0;
+    font-size: var(--h1-title-size--);
     align-self: flex-start;
+    gap: 50px;
 }
 
 .formContainer{
@@ -16,7 +20,20 @@
     box-shadow: var(--container--box-shadow--);
     border-radius: 20px;
     width: 100%;
-    padding: 30px 50px 50px 50px;
+    padding: 50px;
+}
+
+.orderInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 60%;
+    margin-bottom: 30px;
+}
+
+.orderClient{
+    display: flex;
+    justify-content: space-between;
 }
 
 .pageHeader{
@@ -32,7 +49,9 @@
 }
 
 .sectionTitle{
-    margin-bottom: 20px;
+    font-size: var(--h3-title-size--);
+    margin: 0;
+    padding: 0;
 }
 
 .secondaryText{
@@ -58,12 +77,6 @@
     color: rgb(0, 0, 238);
 }
 
-@media only screen and (max-width: 400px){
-    .newCustomerOrderRequest{
-        padding: 25px 10px;
-    }
-}
-
 .red{
     font-weight: 800;
     color: #00013E;
@@ -72,30 +85,30 @@
 .selectedProductsGrid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     width: 100%;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.productCover{
-    position: absolute;
-    background-color: black;
+.divFile {
+    padding: 20px;
+    background-color: #f3f3f5;
+    border-radius: 4px;
+    border: 1px solid #4A8AA4;
+    overflow-x: auto;
+}   
+
+.imageViewerContainer{
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 100;
-    border-radius: 10px;
-    transition: opacity 0.2s;
+    aspect-ratio: 1/0.7;
+    max-width: 700px;
+    min-width: 400px;
+    margin: auto;
 }
 
-.productCover:hover{
-    opacity: 0.1;
-    cursor: pointer;
-}
-
-.sectionTitle{
-    margin-top: 20px;
+.noImagesMessage{
+    font-size: 17px;
+    color: rgb(49, 49, 49);
 }
 
 .detailsTextArea textarea {
@@ -126,12 +139,7 @@
     margin-top: 10px;
 }
 
-@media only screen and (max-width: 800px){
-    .selectedProductContainer{
-        grid-template-columns: 1fr;
-        justify-items: center;
-    }
-}
+
 
 .tableRow{
     display: flex;
@@ -145,7 +153,7 @@
 }
 
 .section{
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
 .buttonContainer{
@@ -154,6 +162,12 @@
     justify-content: center;
 }
 
+@media only screen and (max-width: 800px){
+    .selectedProductContainer{
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+}
 
 @media only screen and (max-width: 450px) {
     .formContainer{
@@ -161,14 +175,22 @@
         box-shadow: none;
         border-radius: 20px;
         width: 100%;
-        padding: 0;
+        padding: 15px;
     }
 
-    .newCustomerOrderRequest{
-        background-color: #FDFDFD;
+    .orderInfo{
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+
     }
 
-    .pageTitle{
-        align-self: center;
+    .orderClient{
+        flex-direction: column;
+        gap:10px;
+    }
+
+    .title{
+        text-align: center;
     }
 }
