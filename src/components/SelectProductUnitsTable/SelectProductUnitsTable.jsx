@@ -38,6 +38,7 @@ function SelectProductUnitsTable({ data, onChange, className }) {
   }, []);
 
   useEffect(() => {
+    console.log(data);
     if (data) setRows(data);
   }, [data]);
 

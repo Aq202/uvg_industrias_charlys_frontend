@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import UnderConstruccionPage from '../../UnderConstruccionPage/UnderConstruccionPage';
 import PageContainer from '../../PageContainer/PageContainer';
-import NewCustomerOrderRequest from '../../NewCustomerOrderRequest/NewCustomerOrderRequest';
+import NewCustomerOrderRequestPage from '../NewCustomerOrderRequestPage/NewCustomerOrderRequestPage';
 import CustomerProductsPage from '../CustomerProductsPage';
 import NewProductModelPage from '../../NewProductModelPage/NewProductModelPage';
 import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
@@ -16,11 +16,11 @@ function CustomerMainPage() {
     <PageContainer>
       <Routes>
         <Route path="*" element={<UnderConstruccionPage />} />
-        <Route path="/orden/nuevo" element={<NewCustomerOrderRequest />} />
+        <Route path="/orden/nuevo" element={<NewCustomerOrderRequestPage />} />
         <Route path="/productos" element={<CustomerProductsPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage clientView />} />
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
-        <Route path="/newOrderRequest" element={<NewCustomerOrderRequest />} />
+        <Route path="/newOrderRequest" element={<NewCustomerOrderRequestPage />} />
         <Route path="/orden" element={<ConfirmedOrdersPage />} />
         <Route path="/orden/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/solicitudOrden" element={<RequestedOrdersPage />} />
