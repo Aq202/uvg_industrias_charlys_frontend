@@ -127,6 +127,17 @@ function ConfirmedOrderAdminPage() {
               <p>{resultOrder?.description}</p>
             </div>
           </div>
+          <div className={styles.section}>
+            <div className={`${styles.divFile} ${scrollbarGray}`}>
+              {resultOrder?.media ? (
+                <div className={styles.imageViewerContainer}>
+                  <ImageViewer images={resultOrder?.media} />
+                </div>
+              ) : (
+                <p className={styles.noImagesMessage}>No hay recursos multimedia adjuntos.</p>
+              )}
+            </div>
+          </div>
           {!resultOrder?.detail && (
             <h3 className={styles.sectionTitle}>No hay productos</h3>
           )}
@@ -200,18 +211,6 @@ function ConfirmedOrderAdminPage() {
               </Table>
             </div>
           )}
-
-          <div className={styles.section}>
-            <div className={`${styles.divFile} ${scrollbarGray}`}>
-              {resultOrder?.media ? (
-                <div className={styles.imageViewerContainer}>
-                  <ImageViewer images={resultOrder?.media} />
-                </div>
-              ) : (
-                <p className={styles.noImagesMessage}>No hay recursos multimedia adjuntos.</p>
-              )}
-            </div>
-          </div>
         </div>
       </div>
       )}
