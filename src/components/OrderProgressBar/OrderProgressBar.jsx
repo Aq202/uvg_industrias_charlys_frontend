@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import useCount from '@hooks/useCount';
@@ -12,14 +12,17 @@ import styles from './OrderProgressBar.module.css';
  * verdadero, al hacer click sobre una fase, esta es seleccionada.
  * @param onChange Func. Callback que devuelve el índice de la fase seleccionada 0-3. Notar que el
  * callback solo será activado cuando la prop useAsInput sea verdadera.
+ * @param breakPoint String. Breakpoint para aplicar el estilo vertical.
  * @returns
  */
 function OrderProgressBar({
-  stage, useAsInput, onChange, verticalStyle,
+  stage, useAsInput, onChange, breakPoint,
 }) {
   const {
     count, setCount,
   } = useCount(-1, 0, 3);
+
+  const [verticalStyle, setVerticalStyle] = useState(false);
 
   useEffect(() => {
     if (!(stage >= 0)) return null;
@@ -31,6 +34,19 @@ function OrderProgressBar({
     if (!useAsInput || !onChange) return;
     onChange(count); // Llamar al callback y devolver indice de fase seleccionada
   }, [count]);
+
+  useEffect(() => {
+    // media query para cambiar el estilo del progress bar
+    const mediaQuery = window.matchMedia(`(max-width: ${breakPoint})`);
+
+    const handleMediaChange = (e) => {
+      setVerticalStyle(e.matches);
+    };
+    mediaQuery.onchange = handleMediaChange;
+
+    // initial change
+    handleMediaChange(mediaQuery);
+  }, []);
 
   const handleStageClick = (stageNumber) => {
     if (!useAsInput) return;
@@ -122,12 +138,12 @@ OrderProgressBar.propTypes = {
   stage: PropTypes.number,
   useAsInput: PropTypes.bool,
   onChange: PropTypes.func,
-  verticalStyle: PropTypes.bool,
+  breakPoint: PropTypes.string,
 };
 
 OrderProgressBar.defaultProps = {
   stage: 0,
   useAsInput: false,
   onChange: null,
-  verticalStyle: false,
+  breakPoint: '600px',
 };

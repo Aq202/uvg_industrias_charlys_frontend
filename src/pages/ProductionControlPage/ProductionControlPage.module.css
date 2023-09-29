@@ -4,6 +4,7 @@
 
 .pageTitle{
   margin-bottom: 25px;
+  font-size: var(--h1-title-size--);
 }
 
 .productionControlPageContainer{
@@ -15,7 +16,35 @@
 .mainContainer{
   background-color: white;
   box-shadow: var(--container--box-shadow--);
-  min-height: 300vh;
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.orderData{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 30px;
+}
+
+.orderData .oneLine{
+  grid-column: 1/-1;
+}
+
+.fieldTitle{
+  font-weight: bold;
+}
+
+.sectionTitle{
+  font-size: var(--h3-title-size--);
+}
+
+.orderStateHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
 }
 
 @media only screen and (max-width:950px){
@@ -34,6 +63,11 @@
 
   .pageTitle{
     text-align: center;
+  }
+
+  .orderData{
+    grid-template-columns: 1fr;
+    row-gap: 10px;
   }
   
 }

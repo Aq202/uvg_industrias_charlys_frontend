@@ -10,7 +10,9 @@ import Spinner from '../Spinner/Spinner';
 
 /**
  *
- * @param onChange Callback que devuelve como parámetro el id de la orden seleccionada.
+ * @param onChange Callback (orderId, loading)
+ * Devuelve como parámetro el id de la orden seleccionada.
+ * Como segundo parámetro devuelve si aún está cargando las opciones.
  * @returns
  */
 function OrdersInProductionList({ onChange }) {
@@ -20,7 +22,7 @@ function OrdersInProductionList({ onChange }) {
 
   const token = useToken();
 
-  const [selectedOrderId, setSelectedOrderId] = useState();
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   useEffect(() => {
     fetchOrdersInProduction({
@@ -34,8 +36,8 @@ function OrdersInProductionList({ onChange }) {
   }, [ordersInProductionList]);
 
   useEffect(() => {
-    if (onChange) onChange(selectedOrderId);
-  }, [selectedOrderId]);
+    if (onChange) onChange(selectedOrderId, loading);
+  }, [selectedOrderId, loading]);
 
   return (
     <div className={`${styles.ordersInProductionList}`}>
@@ -61,7 +63,7 @@ function OrdersInProductionList({ onChange }) {
                   ? `Entrega ${moment(order.deadline).format('DD/MM/YYYY')}`
                   : 'Sin fecha de entrega'}
               </span>
-              <span className={styles.productsPending}>{`${order.pendingUnits} pendientes`}</span>
+              <span className={styles.productsPending}>{`${order.pendingUnits ?? 0} pendientes`}</span>
             </div>
           ))}
 
@@ -70,8 +72,8 @@ function OrdersInProductionList({ onChange }) {
       {
         (loading || error) && (
         <div className={styles.noResultContainer}>
-          { loading && <Spinner />}
           {error && <span className={styles.errorMessage}>No se encontraron pedidos nuevos</span>}
+          {loading && <Spinner />}
         </div>
         )
       }
