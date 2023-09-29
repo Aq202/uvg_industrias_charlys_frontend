@@ -38,6 +38,7 @@ function Products({ products }) {
   useEffect(() => {
     const actual = products.find((p) => p.id === currProduct);
     setProducto(actual);
+    // console.log(actual.id, productImages[actual.id]);
   }, [currProduct]);
 
   useEffect(() => {
