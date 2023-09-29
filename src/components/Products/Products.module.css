@@ -1,0 +1,35 @@
+.productContainer {
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.tableContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tableProduct {
+    width: 50%;
+    text-align: center;
+    font-size: 15px;
+    border-collapse: collapse;
+}
+
+.tableThProduct {
+    border-bottom: 2px solid black;
+}
+
+.tableThProduct, .tableTdProduct, .tableTotalProduct {
+    padding: 5px;
+}
+
+tbody .tableTrProduct:nth-child(2n) {
+    background-color: #dadcde;
+}
+
+tbody .tableTotalProduct {
+    background-color: #3d4b5e;
+    color: white;
+}

@@ -1,0 +1,81 @@
+.mainContainer {
+	width: 80vw;
+    box-shadow: var(--container--box-shadow--);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 30vh;
+	margin: 20px 0;
+}
+
+.createOrganitationBannerContainer {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.createOrganitationBanner {
+    width: 80%;
+    margin: 20px 0;
+    padding: 10px 5px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    background-color: #E2E3E5;
+    text-align: center;
+}
+
+.alertDialog {
+    width: 40px;
+    height: 40px;
+    margin: 0 20px;
+}
+
+.clientInfoContainer {
+	display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(2, minmax(300px, 0fr));
+    justify-content: start;
+    width: 100%;
+}
+
+.mesage {
+	margin: 20px 0;
+	color: #787878;
+}
+
+.selectOrgContainer {
+	width: 100%;
+	display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.4fr));
+	justify-items: center;
+	align-items: end;
+}
+
+.assignOrgContainer {
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+}
+
+@media only screen and (max-width:800px){
+    .mainContainer {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .clientInfoContainer {
+        grid-template-columns: minmax(200px, 1fr);
+    }
+
+    .createOrganitationBanner {
+        width: 100%;
+    }
+
+    .selectOrgContainer {
+        
+        gap: 1em 0;
+        justify-content: center;
+    }
+}

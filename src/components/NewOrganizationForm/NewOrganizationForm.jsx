@@ -12,6 +12,7 @@ function NewOrganizationForm(
   {
     onError,
     onSuccess,
+    newOrgId,
   },
 ) {
   const {
@@ -29,6 +30,7 @@ function NewOrganizationForm(
   useEffect(() => {
     if (!result) return;
     onSuccess();
+    newOrgId(result.id);
   }, [result]);
 
   useEffect(() => {
@@ -165,6 +167,11 @@ function NewOrganizationForm(
 NewOrganizationForm.propTypes = {
   onError: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
+  newOrgId: PropTypes.func,
+};
+
+NewOrganizationForm.defaultProps = {
+  newOrgId: null,
 };
 
 export default NewOrganizationForm;
