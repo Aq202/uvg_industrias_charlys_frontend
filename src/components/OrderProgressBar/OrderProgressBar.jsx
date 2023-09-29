@@ -14,7 +14,9 @@ import styles from './OrderProgressBar.module.css';
  * callback solo será activado cuando la prop useAsInput sea verdadera.
  * @returns
  */
-function OrderProgressBar({ stage, useAsInput, onChange }) {
+function OrderProgressBar({
+  stage, useAsInput, onChange, verticalStyle,
+}) {
   const {
     count, setCount,
   } = useCount(-1, 0, 3);
@@ -36,7 +38,7 @@ function OrderProgressBar({ stage, useAsInput, onChange }) {
   };
 
   return (
-    <div className={`${styles.container} ${scrollbarGray}`}>
+    <div className={`${styles.container} ${scrollbarGray} ${verticalStyle ? styles.vertical : ''}`}>
       <div className={`${styles.orderProgressBar} ${useAsInput ? styles.clickable : ''}`}>
         <div
           className={`${styles.circle} ${count >= 0 ? styles.active : ''}`}
@@ -105,7 +107,7 @@ function OrderProgressBar({ stage, useAsInput, onChange }) {
 
         <div className={styles.progressBarContainer}>
           <div className={styles.progressBar}>
-            <div className={styles.indicator} style={{ width: count > 0 ? `${count * 33}%` : 0 }} />
+            <div className={styles.indicator} style={verticalStyle ? { height: count > 0 ? `${count * 33}%` : 0 } : { width: count > 0 ? `${count * 33}%` : 0 }} />
           </div>
         </div>
       </div>
@@ -120,10 +122,12 @@ OrderProgressBar.propTypes = {
   stage: PropTypes.number,
   useAsInput: PropTypes.bool,
   onChange: PropTypes.func,
+  verticalStyle: PropTypes.bool,
 };
 
 OrderProgressBar.defaultProps = {
   stage: 0,
-  useAsInput: true,
+  useAsInput: false,
   onChange: null,
+  verticalStyle: false,
 };

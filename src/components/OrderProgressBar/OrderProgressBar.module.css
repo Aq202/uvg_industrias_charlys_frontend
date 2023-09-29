@@ -1,9 +1,10 @@
-.container{
+.container {
   width: 100%;
   overflow-x: auto;
   padding-bottom: 15px;
 }
-.orderProgressBar{
+
+.orderProgressBar {
   width: 100%;
   display: flex;
   align-items: center;
@@ -13,14 +14,13 @@
   margin: auto;
   margin-bottom: 80px;
   gap: 10px;
-  min-width: 400px;
 }
 
-.orderProgressBar.clickable .circle{
+.orderProgressBar.clickable .circle {
   cursor: pointer;
 }
 
-.circle{
+.circle {
   width: 100px;
   aspect-ratio: 1/1;
   border-radius: 50px;
@@ -35,22 +35,22 @@
   position: relative;
 }
 
-.circle.active{
+.circle.active {
   transition-delay: 200ms;
   border-color: #03bf03;
 }
 
-.circle svg{
+.circle svg {
   width: 50%;
   height: 50%;
 }
 
-.circle.active svg{
+.circle.active svg {
   fill: #03bf03;
   transition: all 500ms ease;
 }
 
-.stageName{
+.stageName {
   position: absolute;
   top: calc(100% + 10px);
   text-align: center;
@@ -58,11 +58,12 @@
   color: gray;
 }
 
-.stageName.current{
+.stageName.current {
   font-weight: bold;
   color: black;
 }
-.progressBarContainer{
+
+.progressBarContainer {
   position: absolute;
   display: flex;
   align-items: center;
@@ -72,15 +73,45 @@
   height: 100%;
 }
 
-.progressBar{
+.progressBar {
   width: 100%;
   height: 7px;
   background-color: black;
 }
 
-.indicator{
+.indicator {
   width: 99%;
   height: 100%;
   background-color: #03bf03;
   transition: all 600ms ease;
+}
+
+/*Estilo vertical*/
+
+.container.vertical {
+  padding-right: 100px;
+}
+
+.container.vertical .orderProgressBar {
+  flex-direction: column;
+}
+
+.container.vertical .circle .stageName {
+  top: 20%;
+  display: block;
+  width: 80px;
+  left: calc(100% + 20px);
+  text-align: left;
+}
+
+.container.vertical .progressBarContainer {
+  justify-content: center;
+  width: 100%;
+  height: 99%;
+}
+
+.container.vertical .progressBar {
+  width: 7px;
+  height: 100%;
+  background-color: black;
 }
