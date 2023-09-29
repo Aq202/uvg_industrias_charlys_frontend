@@ -15,7 +15,7 @@ import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNoti
 import alertDialog from '../../assets/alert_dialog.svg';
 import styles from './ProvisionalClient.module.css';
 
-function ProvisionalClient({ orderId, clientInfo, onSelect }) {
+function ProvisionalClient({ orderId, clientInfo }) {
   const {
     callFetch: callFetchOrgs, result: resultOrgs, error: errorOrgs,
   } = useFetch();
@@ -51,13 +51,11 @@ function ProvisionalClient({ orderId, clientInfo, onSelect }) {
   const handleSelectChange = (e) => {
     const { value, name } = e.target;
     setForm((lastValue) => ({ ...lastValue, [name]: value }));
-    onSelect(value);
   };
 
   const handleNewOrg = (newId) => {
     setNewOrg(true);
     setForm((lastValue) => ({ ...lastValue, orgMenu: newId }));
-    onSelect(newId);
   };
 
   const clearError = (e) => {
@@ -216,5 +214,4 @@ ProvisionalClient.propTypes = {
     phone: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
   }).isRequired,
-  onSelect: PropTypes.func.isRequired,
 };
