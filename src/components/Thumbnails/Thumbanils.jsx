@@ -11,7 +11,7 @@ function Thumbanils({
       <div className={`${styles.image}`}>
         <img src={img} alt="Imagen" />
       </div>
-      <div className={`${styles.delete}`}>
+      <div className={`${styles.delete}`} name="DeleteIcon">
         <DeleteIcon onClick={(e) => onDeleteClick(e, id)} />
       </div>
     </div>

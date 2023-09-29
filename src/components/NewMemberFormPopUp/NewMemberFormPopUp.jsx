@@ -32,7 +32,7 @@ function NewMemberFormPopUp({
         <PopUp
           close={close}
           maxWidth={700}
-          closeWithBackground
+          closeWithBackground={false}
           closeButton={false}
         >
           <NewMemberForm

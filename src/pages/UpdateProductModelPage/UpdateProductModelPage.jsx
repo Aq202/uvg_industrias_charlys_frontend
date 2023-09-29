@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styles from './UpdateProductModelPage.module.css';
 import InputSelect from '../../components/InputSelect/InputSelect';
@@ -18,6 +19,8 @@ import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import Thumbanils from '../../components/Thumbnails/Thumbanils';
+import useApiMultipleImages from '../../hooks/useApiMultipleImages';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function UpdateProductModelPage() {
   const { productId } = useParams();
@@ -42,51 +45,49 @@ function UpdateProductModelPage() {
   } = useFetch();
 
   const {
-    callFetch: postProductModel,
-    result: productModelResult,
-    loading: productModelLoading,
-    error: productModelError,
-  } = useFetch();
-
-  const {
-    callFetch: deleteImage,
-    result: deleteImageResult,
-    loading: deleteImageLoading,
-    error: deleteImageError,
-  } = useFetch();
-
-  const {
     callFetch: updateProductModel,
     result: updateProductModelResult,
     loading: updateProductModelLoading,
     error: updateProductModelError,
   } = useFetch();
 
+  const {
+    callFetch: getProductModel,
+    result: productModel,
+    loading: productModelLoading,
+    error: productModelError,
+  } = useFetch();
+
   const token = useToken();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
-
+  const {
+    getMultipleApiImages, result: imagesResult, error: imagesError, loading: imagesLoading,
+  } = useApiMultipleImages();
   const navigate = useNavigate();
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   useEffect(() => {
     // Obtener opciones del formulario
     getTypesFetch({ uri: `${serverHost}/product/type`, headers: { authorization: token } });
     getOrganizationsFetch({ uri: `${serverHost}/organization`, headers: { authorization: token } });
-    updateProductModel({ uri: `${serverHost}/product/model/${productId}`, headers: { authorization: token } });
+    getProductModel({ uri: `${serverHost}/product/model/${productId}`, headers: { authorization: token } });
   }, []);
 
   useEffect(() => {
-    if (!updateProductModelResult) return;
+    // escuchar resultado de data de producto
+    if (!productModel) return;
     const {
-      name, idClientOrganization, type, details, images,
-    } = updateProductModelResult;
-    setData('name', name);
-    setData('idClientOrganization', idClientOrganization);
-    setData('type', type);
+      description, id_client_organization, id_product_type, details, media,
+    } = productModel;
+    setData('name', description);
+    setData('idClientOrganization', id_client_organization);
+    setData('type', id_product_type);
     setData('details', details);
-    setData('images', images);
-  }, [updateProductModelResult]);
+    setData('media', media);
+    getMultipleApiImages(media?.map((val, index) => ({ id: val, uri: val })));
+  }, [productModel]);
 
   useEffect(() => {
     if (!organizationsError && !typesError && !updateProductModelError) return;
@@ -114,17 +115,21 @@ function UpdateProductModelPage() {
     const {
       name, idClientOrganization, type, details, images,
     } = form;
+    data.append('idProductModel', productId);
     data.append('name', name);
     data.append('idClientOrganization', idClientOrganization);
     data.append('type', type);
+
     if (details?.trim().length > 0) data.append('details', details);
 
     images?.forEach((file) => data.append('images[]', file, file.name));
 
+    if (imagesToDelete.length > 0) data.append('imagesToRemove[]', imagesToDelete);
+
     // enviar información
-    postProductModel({
+    updateProductModel({
       uri,
-      method: 'POST',
+      method: 'PUT',
       body: data,
       headers: { authorization: token },
       removeContentType: true,
@@ -132,100 +137,129 @@ function UpdateProductModelPage() {
   };
 
   useEffect(() => {
-    if (!productModelResult) return;
+    if (!updateProductModelResult) return;
+
     openSuccess();
-  }, [productModelResult]);
+  }, [updateProductModelResult]);
 
   const successCallback = () => navigate('/');
 
   return (
-    <div className={styles.UpdateProductModelPage}>
-      <h1 className={styles.pageTitle}>Actualizar producto</h1>
+    <div className={styles.Page}>
+      {productModelError && <NotFoundPage />}
+      {!productModelError && !productModelLoading && (
+      <div className={styles.UpdateProductModelPage}>
+        <h1 className={styles.pageTitle}>Actualizar producto</h1>
 
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <h3 className={styles.formSectionTitle}>Organización Cliente</h3>
-        <p className={styles.formSectionDesc}>
-          La Organización podrá ver los cambios realizados a este producto.
-        </p>
-        <InputSelect
-          title="Organización cliente:"
-          name="idClientOrganization"
-          value={form.idClientOrganization}
-          error={error?.idClientOrganization}
-          onChange={onChange}
-          onFocus={(e) => clearFieldError(e.target.name)}
-          onBlur={(e) => validateField(e.target.name)}
-          options={organizations?.result?.map((val) => ({ title: val.name, value: val.id }))}
-          disabled={!organizations}
-        />
-        <h3 className={styles.formSectionTitle}>Datos del producto</h3>
-        <p className={styles.formSectionDesc}>Procura ser lo más detallado posible.</p>
-        <InputText
-          title="Nombre del producto:"
-          name="name"
-          value={form.name}
-          error={error?.name}
-          onChange={onChange}
-          onFocus={(e) => clearFieldError(e.target.name)}
-          onBlur={(e) => validateField(e.target.name)}
-          placeholder="Ingresar nombre del producto"
-        />
-        <InputSelect
-          title="Tipo de producto:"
-          name="type"
-          value={form.type}
-          error={error?.type}
-          onChange={onChange}
-          onFocus={(e) => clearFieldError(e.target.name)}
-          onBlur={(e) => validateField(e.target.name)}
-          options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
-          disabled={!productTypes}
-        />
-        <TextArea
-          className={styles.aditionalDetails}
-          title="Detalles adicionales:"
-          name="details"
-          value={form.details}
-          error={error?.details}
-          onChange={onChange}
-          onFocus={(e) => clearFieldError(e.target.name)}
-          onBlur={(e) => validateField(e.target.name)}
-        />
-        <h3 className={styles.formSectionTitle}>Imágenes guardadas</h3>
-        <p className={styles.formSectionDesc}>
-          Estas son las imágenes que se encuentran guardadas actualmente.
-        </p>
-        <div className={styles.imageContainer}>
-          <Thumbanils img="https://img.freepik.com/vector-premium/imagen-dibujos-animados-hongo-palabra-hongo_587001-200.jpg?w=2000" />
-          <Thumbanils img="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen-1200x675.jpg" />
-        </div>
-        <h3 className={styles.formSectionTitle}>Imágenes de referencia</h3>
-        <p className={styles.formSectionDesc}>
-          Adjunta cualquier imagen que pueda ayudar a comprender mejor tus pedidos.
-        </p>
-        <ImagePicker className={styles.imagePicker} setImageFiles={saveImages} />
-        {productModelError && <p className={styles.errorMessage}>{productModelError.message}</p>}
-        <div className={styles.buttonContainer}>
-          {productModelLoading && <Spinner />}
-          {!productModelLoading && !productModelResult && (
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
+          <h3 className={styles.formSectionTitle}>Organización Cliente</h3>
+          <p className={styles.formSectionDesc}>
+            La Organización podrá ver los cambios realizados a este producto.
+          </p>
+          <InputSelect
+            title="Organización cliente:"
+            name="idClientOrganization"
+            value={form.idClientOrganization}
+            error={error?.idClientOrganization}
+            onChange={onChange}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
+            options={organizations?.result?.map((val) => ({ title: val.name, value: val.id }))}
+            disabled={!organizations}
+          />
+          <h3 className={styles.formSectionTitle}>Datos del producto</h3>
+          <p className={styles.formSectionDesc}>Procura ser lo más detallado posible.</p>
+          <InputText
+            title="Nombre del producto:"
+            name="name"
+            value={form.name}
+            error={error?.name}
+            onChange={onChange}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
+            placeholder="Ingresar nombre del producto"
+          />
+          <InputSelect
+            title="Tipo de producto:"
+            name="type"
+            value={form.type}
+            error={error?.type}
+            onChange={onChange}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
+            options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
+            disabled={!productTypes}
+          />
+          <TextArea
+            className={styles.aditionalDetails}
+            title="Detalles adicionales:"
+            name="details"
+            value={form.details || ''}
+            error={error?.details}
+            onChange={onChange}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
+          />
+          {imagesResult && (
+          <>
+            <h3 className={styles.formSectionTitle}>Imágenes guardadas</h3>
+            <p className={styles.formSectionDesc}>
+              Estas son las imágenes que se encuentran guardadas actualmente.
+            </p>
+            <div className={styles.mediaSaved}>
+
+              {imagesLoading && <Spinner />}
+
+              <div className={styles.imageContainer}>
+                {
+            imagesResult && !imagesLoading
+            && (
+              Object.entries(imagesResult).map((val) => (
+                !imagesToDelete.includes(val[0])
+                && (
+                <Thumbanils
+                  img={val[1]}
+                  id={val[0]}
+                  key={val[0]}
+                  onDeleteClick={(e, id) => {
+                    setImagesToDelete((lastValue) => [...lastValue, id]);
+                  }}
+                />
+                )
+              ))
+            )
+         }
+              </div>
+            </div>
+          </>
+          )}
+          <h3 className={styles.formSectionTitle}>Imágenes de referencia</h3>
+          <p className={styles.formSectionDesc}>
+            Adjunta cualquier imagen que pueda ayudar a comprender mejor tus pedidos.
+          </p>
+          <ImagePicker className={styles.imagePicker} setImageFiles={saveImages} />
+          {productModelError && <p className={styles.errorMessage}>{productModelError.message}</p>}
+          <div className={styles.buttonContainer}>
+            {productModelLoading && <Spinner />}
+            {!productModelLoading && !updateProductModelResult && (
             <Button
               text="Actualizar producto"
               className={styles.sendButton}
               type="submit"
               name="create-product-button"
             />
-          )}
-        </div>
-        {(loadingTypes || loadingOrganizations || updateProductModelLoading) && (
+            )}
+          </div>
+          {(loadingTypes || loadingOrganizations || updateProductModelLoading) && (
           <SubLoadingView className={styles.loadingView} />
-        )}
-      </form>
+          )}
+        </form>
 
-      <ErrorNotificationPopUp
-        isOpen={isErrorOpen}
-        close={closeError}
-        title="Ocurrió un error"
-        text={
+        <ErrorNotificationPopUp
+          isOpen={isErrorOpen}
+          close={closeError}
+          title="Ocurrió un error"
+          text={
           // eslint-disable-next-line no-nested-ternary
           typesError
             ? 'No se encontraron tipos de productos.'
@@ -233,14 +267,16 @@ function UpdateProductModelPage() {
               ? 'No se encontraron organizaciones.'
               : 'Ocurrió un error.'
         }
-      />
-      <SuccessNotificationPopUp
-        isOpen={isSuccessOpen}
-        close={closeSuccess}
-        title="Operación exitosa"
-        text="El producto se ha creado correctamente."
-        callback={successCallback}
-      />
+        />
+        <SuccessNotificationPopUp
+          isOpen={isSuccessOpen}
+          close={closeSuccess}
+          title="Operación exitosa"
+          text="El producto se ha actualizado correctamente."
+          callback={successCallback}
+        />
+      </div>
+      )}
     </div>
   );
 }

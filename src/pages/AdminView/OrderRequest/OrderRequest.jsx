@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { serverHost } from '@/config';
 import moment from 'moment';
+import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useToken from '@hooks//useToken';
 import ImageViewer from '@components/ImageViewer/ImageViewer';

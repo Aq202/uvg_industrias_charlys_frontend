@@ -13,6 +13,7 @@ import OrganizationProductsPage from '../../OrganizationProductsPage/Organizatio
 import UpdateProductModelPage from '../../UpdateProductModelPage';
 import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
 import NotFoundPage from '../../NotFoundPage/NotFoundPage';
+import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 
 function AdminMainPage() {
@@ -29,9 +30,10 @@ function AdminMainPage() {
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />
-        <Route path="/producto/actualizar" element={<UpdateProductModelPage />} />
+        <Route path="/producto/:productId/editar" element={<UpdateProductModelPage />} />
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
+        <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
       </Routes>
     </PageContainer>
