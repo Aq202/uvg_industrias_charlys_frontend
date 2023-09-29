@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
+import { Link } from 'react-router-dom';
 import styles from './ConfirmedOrder.module.css';
 
 function ConfirmedOrder({
@@ -25,10 +26,12 @@ function ConfirmedOrder({
         </div>
       </div>
       <div className={`${styles.button}`}>
-        <ArrowCircleRightOutlinedIcon
-          style={{ fontSize: '3em' }}
-          className={styles.arrowIcon}
-        />
+        <Link to={`/orden/${id}`} className={styles.arrowLink}>
+          <ArrowCircleRightOutlinedIcon
+            style={{ fontSize: '3em' }}
+            className={styles.arrowIcon}
+          />
+        </Link>
       </div>
     </div>
   );

@@ -38,6 +38,7 @@ function Sidebar({ displayMenu, menuRef, closeMenu }) {
           <SidebarItem path="/orden" iconUrl={logoutIcon} text="Pedidos recibidos" onClick={closeMenu} />
           <SidebarItem path="/inventario" iconUrl={logoutIcon} text="Inventario" onClick={closeMenu} />
           <SidebarItem path="/organizaciones" iconUrl={logoutIcon} text="Organizaciones" onClick={closeMenu} />
+          <SidebarItem path="/produccion" iconUrl={logoutIcon} text="Producción" onClick={closeMenu} />
         </>
         )}
         {role === consts.role.client && (
@@ -45,8 +46,8 @@ function Sidebar({ displayMenu, menuRef, closeMenu }) {
             <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Nuevo pedido" onClick={closeMenu} />
             <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" onClick={closeMenu} />
             <SidebarItem path="/newOrderRequest" iconUrl={logoutIcon} text="Nuevo pedido" />
-            <SidebarItem path="/requestedOrders" iconUrl={logoutIcon} text="Solicitudes de órden" />
-            <SidebarItem path="/confirmedOrders" iconUrl={logoutIcon} text="Órdenes confirmadas" />
+            <SidebarItem path="/solicitudOrden" iconUrl={logoutIcon} text="Solicitudes de órden" />
+            <SidebarItem path="/orden" iconUrl={logoutIcon} text="Órdenes confirmadas" />
           </>
         )}
         <SidebarItem path="#" iconUrl={logoutIcon} text="Salir" onClick={handleLogout} />
