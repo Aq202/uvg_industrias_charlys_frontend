@@ -13,6 +13,7 @@ import OrganizationProductsPage from '../../OrganizationProductsPage/Organizatio
 import UpdateProductModelPage from '../../UpdateProductModelPage';
 import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
 import NotFoundPage from '../../NotFoundPage/NotFoundPage';
+import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 
 function AdminMainPage() {
   return (
@@ -31,6 +32,7 @@ function AdminMainPage() {
         <Route path="/producto/actualizar" element={<UpdateProductModelPage />} />
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
+        <Route path="/produccion" element={<ProductionControlPage />} />
       </Routes>
     </PageContainer>
   );

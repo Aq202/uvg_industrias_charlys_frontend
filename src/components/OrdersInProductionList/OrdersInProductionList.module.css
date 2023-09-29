@@ -1,0 +1,112 @@
+.ordersInProductionList {
+  background-color: white;
+  box-shadow: var(--container--box-shadow--);
+  height: fit-content;
+  position: sticky;
+  top: var(--navBar-height--);
+  max-height: calc(100vh - var(--navBar-height--));
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: var(--h2-title-size--);
+  position: sticky;
+  text-align: center;
+  background-color: white;
+  margin: 20px 0;
+}
+
+.ordersListContainer{
+  overflow: auto;
+
+}
+
+.ordersList {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 0;
+  cursor: pointer;
+  max-width: 250px;
+}
+
+.orderItem.current {
+  background-color: rgba(92, 92, 92, 0.1);
+  border: 2px solid black !important;
+  outline: none;
+}
+
+.orderItem:not(:last-child) {
+  border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.itemTitle {
+  font-size: var(--h3-title-size--);
+  color: #5C5C5C;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.productsPending {
+  background-color: #FF8A00;
+  display: block;
+  padding: 7px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.errorMessage {
+  font-size: 20px;
+  text-align: center;
+  color: var(--secondary-text-color--);
+  display: block;
+  padding: 0 15px;
+}
+
+.noResultContainer {
+  padding: 20px 0 50px 0;
+}
+
+/* Diseño vertical */
+@media only screen and (max-width: 950px){
+
+  .ordersInProductionList {
+    height: fit-content;
+    position: static;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .title{
+    text-align: left;
+    margin-left: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .ordersList {
+    flex-direction: row;
+    padding: 0;
+    overflow: visible;
+    padding:  0 30px 20px 30px;
+    width: max-content;
+  }
+  
+  .orderItem{
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: none !important;
+    flex-shrink: 0;
+  }
+}

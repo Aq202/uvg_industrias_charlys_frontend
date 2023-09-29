@@ -1,0 +1,39 @@
+.productionControlPage{
+  padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+}
+
+.pageTitle{
+  margin-bottom: 25px;
+}
+
+.productionControlPageContainer{
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 25px;
+}
+
+.mainContainer{
+  background-color: white;
+  box-shadow: var(--container--box-shadow--);
+  min-height: 300vh;
+}
+
+@media only screen and (max-width:950px){
+  .productionControlPageContainer{
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+  }
+  
+}
+
+
+@media only screen and (max-width:650px){
+  .productionControlPage{
+    padding: var(--min-page-vertical-padding--) var(--min-page-horizontal-padding--);
+  }
+
+  .pageTitle{
+    text-align: center;
+  }
+  
+}
