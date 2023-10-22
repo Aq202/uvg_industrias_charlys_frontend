@@ -47,6 +47,23 @@
   margin-bottom: 100px;
 }
 
+.productSectionHeader{
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.unitsMissing{
+  display: block;
+  padding: 7px 10px;
+  background-color: #FDEEDB;
+  border: 1px #FF8A00 solid;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 @media only screen and (max-width:950px){
   .productionControlPageContainer{
     grid-template-columns: 1fr;
