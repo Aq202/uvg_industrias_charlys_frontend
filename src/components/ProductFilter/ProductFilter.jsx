@@ -33,7 +33,7 @@ function ProductFilter({ idOrganization, onChange, className }) {
       headers: { authorization: token },
     });
     getColorsFetch({
-      uri: `${serverHost}/color/by-organization/${idOrganization}`,
+      uri: `${serverHost}/color/organization/${idOrganization}`,
       headers: { authorization: token },
     });
   }, [token, idOrganization]);
