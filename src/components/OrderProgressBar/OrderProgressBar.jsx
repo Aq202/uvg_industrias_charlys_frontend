@@ -16,7 +16,7 @@ import styles from './OrderProgressBar.module.css';
  * @returns
  */
 function OrderProgressBar({
-  stage, useAsInput, onChange, breakPoint,
+  stage, useAsInput, onChange, breakPoint, className,
 }) {
   const {
     count, setCount,
@@ -54,7 +54,7 @@ function OrderProgressBar({
   };
 
   return (
-    <div className={`${styles.container} ${scrollbarGray} ${verticalStyle ? styles.vertical : ''}`}>
+    <div className={`${styles.container} ${scrollbarGray} ${verticalStyle ? styles.vertical : ''} ${className}`}>
       <div className={`${styles.orderProgressBar} ${useAsInput ? styles.clickable : ''}`}>
         <div
           className={`${styles.circle} ${count >= 0 ? styles.active : ''}`}
@@ -139,6 +139,7 @@ OrderProgressBar.propTypes = {
   useAsInput: PropTypes.bool,
   onChange: PropTypes.func,
   breakPoint: PropTypes.string,
+  className: PropTypes.string,
 };
 
 OrderProgressBar.defaultProps = {
@@ -146,4 +147,5 @@ OrderProgressBar.defaultProps = {
   useAsInput: false,
   onChange: null,
   breakPoint: '600px',
+  className: '',
 };

@@ -17,6 +17,8 @@ import useApiMultipleImages from '../../hooks/useApiMultipleImages';
 import TabMenu from '../../components/TabMenu/TabMenu';
 import ProgressTable from '../../components/ProgressTable/ProgressTable';
 import useCount from '../../hooks/useCount';
+import UpdateProductionStagePopUp from '../../components/UpdateProductionStagePopUp/UpdateProductionStagePopUp';
+import usePopUp from '../../hooks/usePopUp';
 
 function ProductionControlPage() {
   const { callFetch: fetchOrderData, result: orderResult, loading: loadingOrder } = useFetch();
@@ -26,14 +28,22 @@ function ProductionControlPage() {
 
   const { orderId: currentOrder } = useParams();
 
-  const { count: forceUpdateTrigger, next: fireForceUpdateTrigger } = useCount(0);
-  // eslint-disable-next-line no-unused-vars
+  const {
+    count: forceUpdateOrderDataTrigger,
+    next: fireForceUpdateOrderDataTrigger,
+  } = useCount(0);
+  const {
+    count: forceUpdateOrdersListTrigger,
+    next: fireForceUpdatOrdersListTrigger,
+  } = useCount(0);
   const { count: resetSliderTrigger, next: fireResetSliderTrigger } = useCount();
 
   const [orderData, setOrderData] = useState();
   const [isLoadingOrdersList, setIsLoadingOrdersList] = useState(true);
   const [orderDetail, setOrderDetail] = useState(null);
   const [productSelection, setProductSelection] = useState(null);
+
+  const [isUpdateProductionOpen, openUpdateProduction, closeUpdateProduction] = usePopUp();
 
   const currentProduct = orderData?.detail?.find((order) => order.id === productSelection);
 
@@ -44,7 +54,7 @@ function ProductionControlPage() {
       uri: `${serverHost}/order/${currentOrder}`,
       headers: { authorization: token },
     });
-  }, [currentOrder, forceUpdateTrigger]);
+  }, [currentOrder, forceUpdateOrderDataTrigger]);
 
   useEffect(() => {
     if (currentOrder) {
@@ -89,7 +99,12 @@ function ProductionControlPage() {
   };
 
   const handleProgressChange = () => {
-    fireForceUpdateTrigger(); // Forzar actualización de menu lateral
+    fireForceUpdatOrdersListTrigger(); // Forzar actualización de menu lateral y datos de la orden
+    fireForceUpdateOrderDataTrigger();
+  };
+
+  const handleOrderStageChange = () => {
+    fireForceUpdateOrderDataTrigger(); // Actualizar datos de la orden
   };
 
   return (
@@ -98,7 +113,7 @@ function ProductionControlPage() {
       <div className={styles.productionControlPageContainer}>
         <OrdersInProductionList
           onFinishLoading={() => setIsLoadingOrdersList(false)}
-          forceUpdate={forceUpdateTrigger}
+          forceUpdate={forceUpdateOrdersListTrigger}
         />
 
         <div className={styles.mainContainer}>
@@ -126,9 +141,17 @@ function ProductionControlPage() {
               <div className={styles.orderStateContainer}>
                 <div className={styles.orderStateHeader}>
                   <h3 className={styles.sectionTitle}>Estado del pedido</h3>
-                  <Button text="Actualizar estado" name="update-order-state" />
+                  <Button text="Actualizar estado" name="update-order-state" onClick={openUpdateProduction} />
                 </div>
                 <OrderProgressBar stage={orderData.phase.id ?? 0} />
+
+                <UpdateProductionStagePopUp
+                  isOpen={isUpdateProductionOpen}
+                  close={closeUpdateProduction}
+                  idOrder={currentOrder}
+                  currentPhase={orderData?.phase.id}
+                  callback={handleOrderStageChange}
+                />
               </div>
 
               {orderDetail && (
