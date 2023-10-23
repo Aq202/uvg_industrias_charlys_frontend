@@ -16,7 +16,7 @@ import Spinner from '../Spinner/Spinner';
  * Como segundo parámetro devuelve si aún está cargando las opciones.
  * @returns
  */
-function OrdersInProductionList({ onFinishLoading }) {
+function OrdersInProductionList({ onFinishLoading, forceUpdate }) {
   const {
     callFetch: fetchOrdersInProduction,
     result: ordersInProductionList,
@@ -36,7 +36,7 @@ function OrdersInProductionList({ onFinishLoading }) {
       uri: `${serverHost}/order/inProduction`,
       headers: { authorization: token },
     });
-  }, []);
+  }, [forceUpdate]);
 
   useEffect(() => {
     // Si no hay un id seleccionado, seleccionar el primer item
@@ -101,8 +101,10 @@ export default OrdersInProductionList;
 
 OrdersInProductionList.propTypes = {
   onFinishLoading: PropTypes.func,
+  forceUpdate: PropTypes.number,
 };
 
 OrdersInProductionList.defaultProps = {
   onFinishLoading: null,
+  forceUpdate: null,
 };
