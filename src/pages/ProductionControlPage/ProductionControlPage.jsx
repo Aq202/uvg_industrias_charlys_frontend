@@ -126,7 +126,7 @@ function ProductionControlPage() {
               <div className={styles.orderStateContainer}>
                 <div className={styles.orderStateHeader}>
                   <h3 className={styles.sectionTitle}>Estado del pedido</h3>
-                  <Button text="Actualizar estado" />
+                  <Button text="Actualizar estado" name="update-order-state" />
                 </div>
                 <OrderProgressBar stage={orderData.phase.id ?? 0} />
               </div>

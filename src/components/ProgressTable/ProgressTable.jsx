@@ -12,6 +12,7 @@ import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../SuccessNotificationPopUp/SuccessNotificationPopUp';
 import Spinner from '../Spinner/Spinner';
 import ErrorNotificationPopUp from '../ErrorNotificationPopUp/ErrorNotificationPopUp';
+import randomString from '../../helpers/randomString';
 
 function ProgressTable({
   productVariants, idOrder, idProduct, onChange,
@@ -91,13 +92,13 @@ function ProgressTable({
     <div className={styles.progressTableContainer}>
       <Table header={['Talla', 'Cantidad', 'Progreso']} showCheckbox={false}>
         {productVariantsData?.map((product) => (
-          <TableRow>
+          <TableRow key={randomString()}>
             <td>{product.size}</td>
             <td>{product.quantity}</td>
             <td className={styles.completedInputRow}>
               <InputNumber
                 name={product.size}
-                value={product.completed}
+                value={`${product.completed}`}
                 onChange={handleCompletedQuantityChange}
                 step={1}
                 min={0}

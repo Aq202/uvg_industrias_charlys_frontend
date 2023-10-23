@@ -85,7 +85,7 @@ ProductsSlider.propTypes = {
     name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
     type: PropTypes.string.isRequired,
-    organization: PropTypes.string.isRequired,
+    organization: PropTypes.string,
     colors: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
