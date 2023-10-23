@@ -37,6 +37,7 @@ function AdminMainPage() {
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
         <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
+        <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
       </Routes>
     </PageContainer>
   );
