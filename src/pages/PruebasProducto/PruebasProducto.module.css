@@ -1,0 +1,11 @@
+.PruebasProducto{
+  padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+  max-width: 100vw;
+}
+
+.container{
+  box-shadow: var(--container--box-shadow--);
+  background-color: white;
+  padding: 25px;
+}
+

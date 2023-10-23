@@ -55,6 +55,7 @@ function OrderRequest() {
 
   const handleEdit = (e) => {
     e.preventDefault();
+    navigate(`/orden/${orderId}/editar`);
   };
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
 import NotFoundPage from '../../NotFoundPage/NotFoundPage';
 import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
+import EditOrderPage from '../EditOrderPage/EditOrderPage';
 
 function AdminMainPage() {
   return (
@@ -26,6 +27,7 @@ function AdminMainPage() {
         <Route path="/inventario/nuevo" element={<NewArticle />} />
         <Route path="/image" element={<ImagePickerPage />} />
         <Route path="/orden/:orderId" element={<OrderRequest />} />
+        <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
         <Route path="/orden" element={<OrdersList />} />
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />
@@ -35,6 +37,7 @@ function AdminMainPage() {
         <Route path="/producto/:id" element={<ProductDetailsPage model />} />
         <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
+        <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
       </Routes>
     </PageContainer>
   );
