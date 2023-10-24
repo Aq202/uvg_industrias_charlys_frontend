@@ -19,7 +19,9 @@ import Spinner from '../Spinner/Spinner';
  * @param onChange Callback. Devuelve un arreglo de objetos como por ejemplo:
  * [{size: "M", quantity: 50, price: 50.12}]
  */
-function SelectProductUnitsTable({ data, onChange, className }) {
+function SelectProductUnitsTable({
+  data, onChange, className, showPrice,
+}) {
   const {
     callFetch: fetchSizes,
     result: sizesData,
@@ -38,7 +40,6 @@ function SelectProductUnitsTable({ data, onChange, className }) {
   }, []);
 
   useEffect(() => {
-    console.log(data);
     if (data) setRows(data);
   }, [data]);
 
@@ -79,7 +80,7 @@ function SelectProductUnitsTable({ data, onChange, className }) {
           <tr>
             <th>Talla</th>
             <th>Unidad(es)</th>
-            <th>Precio</th>
+            {showPrice && <th>Precio</th>}
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -108,14 +109,16 @@ function SelectProductUnitsTable({ data, onChange, className }) {
                     placeholder="0"
                   />
                 </td>
-                <td>
-                  <InputNumber
-                    value={row.price}
-                    onChange={(e) => handlePriceChange(index, e.target.value)}
-                    min={0}
-                    placeholder="0.00"
-                  />
-                </td>
+                {showPrice && (
+                  <td>
+                    <InputNumber
+                      value={row.price}
+                      onChange={(e) => handlePriceChange(index, e.target.value)}
+                      min={0}
+                      placeholder="0.00"
+                    />
+                  </td>
+                )}
                 <td>
                   <button
                     type="button"
@@ -173,10 +176,12 @@ SelectProductUnitsTable.propTypes = {
   ),
   onChange: PropTypes.func,
   className: PropTypes.string,
+  showPrice: PropTypes.bool,
 };
 
 SelectProductUnitsTable.defaultProps = {
   data: [{}],
   onChange: null,
   className: '',
+  showPrice: false,
 };
