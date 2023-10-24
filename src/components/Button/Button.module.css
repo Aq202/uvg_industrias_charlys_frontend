@@ -8,24 +8,23 @@
   cursor: pointer;
 }
   
-  .button[disabled] {
-    background-color: #DDD;
-    color: #333;
-    cursor: not-allowed;
-  }
-  
-  .button.secondary {
-    background-color: white;
-    color: #333;
-    border: 3px solid #333;
-  }
+.button[disabled], .button.secondary[disabled] {
+  background-color: #DDD;
+  color: #333;
+  cursor: not-allowed;
+  border: none;
+}
 
-  .button.secondary:hover {
-    background-color: #1c253217;
-    
-  }
+.button.secondary {
+  background-color: white;
+  color: #333;
+  border: 3px solid #333;
+}
 
+.button.secondary:hover {
+  background-color: #1c253217;
   
+}
 
 .button:focus{
     outline: none;
@@ -46,7 +45,6 @@
     opacity: 0.9;
 }
 
-
 .button.blue{
   background-color: #0552c7;
 }
@@ -66,7 +64,6 @@
 
 .button.emptyRed:hover{
   color: rgb(255, 46, 31);
-  
 }
 
 .button.red{
