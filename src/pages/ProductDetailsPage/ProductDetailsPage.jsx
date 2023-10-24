@@ -21,8 +21,8 @@ function ProductDetailsPage({ model }) {
   const token = useToken();
 
   useEffect(() => {
-    if (!id) return;
-    const uri = model ? `${serverHost}/product/model/${id}` : '';
+    if (!id || !token) return;
+    const uri = model ? `${serverHost}/product/model/${id}` : `${serverHost}/product/${id}`;
     fetchProductData({ uri, header: { authorization: token } });
   }, [id]);
 

@@ -19,7 +19,8 @@ function CustomerMainPage() {
         <Route path="/orden/nuevo" element={<NewCustomerOrderRequestPage />} />
         <Route path="/productos" element={<CustomerProductsPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage clientView />} />
-        <Route path="/producto/:id" element={<ProductDetailsPage model />} />
+        <Route path="/producto/:id" element={<ProductDetailsPage />} />
+        <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
         <Route path="/newOrderRequest" element={<NewCustomerOrderRequestPage />} />
         <Route path="/orden" element={<ConfirmedOrdersPage />} />
         <Route path="/orden/:idOrder" element={<ConfirmedOrderAdminPage />} />

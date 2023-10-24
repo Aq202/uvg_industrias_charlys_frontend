@@ -27,7 +27,7 @@ function CustomerProductsPage() {
 
   useEffect(() => {
     if (!token) return;
-    const { organization: orgId } = getTokenPayload(token);
+    const { clientOrganizationId: orgId } = getTokenPayload(token);
     setOrganization(orgId);
     const uri = `${serverHost}/product/model/by-organization/${orgId}`;
 
@@ -90,7 +90,7 @@ function CustomerProductsPage() {
       <div className={styles.productsContainer}>
         {products?.map((data) => (
           <ProductModel
-            url={`/producto/${data.id}`}
+            url={`/producto/modelo/${data.id}`}
             name={data.description}
             imageUrl={productImages?.[data.id] ?? null}
             type={data.type}
