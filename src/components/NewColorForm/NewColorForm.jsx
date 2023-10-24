@@ -64,9 +64,9 @@ function NewColorForm({
     const uri = `${serverHost}/color/`;
     const body = {
       name: form.name,
-      red: parseInt(form.color[1], 16),
-      green: parseInt(form.color[2], 16),
-      blue: parseInt(form.color[3], 16),
+      red: parseInt(form.color.slice(1, 3), 16),
+      green: parseInt(form.color.slice(3, 5), 16),
+      blue: parseInt(form.color.slice(5, 7), 16),
     };
 
     callFetch({
