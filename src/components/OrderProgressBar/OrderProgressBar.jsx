@@ -16,7 +16,7 @@ import styles from './OrderProgressBar.module.css';
  * @returns
  */
 function OrderProgressBar({
-  stage, useAsInput, onChange, breakPoint,
+  stage, useAsInput, onChange, breakPoint, className,
 }) {
   const {
     count, setCount,
@@ -54,14 +54,14 @@ function OrderProgressBar({
   };
 
   return (
-    <div className={`${styles.container} ${scrollbarGray} ${verticalStyle ? styles.vertical : ''}`}>
+    <div className={`${styles.container} ${scrollbarGray} ${verticalStyle ? styles.vertical : ''} ${className}`}>
       <div className={`${styles.orderProgressBar} ${useAsInput ? styles.clickable : ''}`}>
         <div
           className={`${styles.circle} ${count >= 0 ? styles.active : ''}`}
           onClick={() => handleStageClick(0)}
           onKeyUp={() => handleStageClick(0)}
           role="button"
-          tabIndex={useAsInput && 0}
+          tabIndex={useAsInput ? 0 : null}
         >
           <svg className="" width="512" height="512" enableBackground="new 0 0 512 512" version="1.1" viewBox="0 0 24 24" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -79,7 +79,7 @@ function OrderProgressBar({
           onClick={() => handleStageClick(1)}
           onKeyUp={() => handleStageClick(1)}
           role="button"
-          tabIndex={useAsInput && 0}
+          tabIndex={useAsInput ? 0 : null}
         >
           <svg className="" enableBackground="new 0 0 512 512" version="1.1" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -96,7 +96,7 @@ function OrderProgressBar({
           onClick={() => handleStageClick(2)}
           onKeyUp={() => handleStageClick(2)}
           role="button"
-          tabIndex={useAsInput && 0}
+          tabIndex={useAsInput ? 0 : null}
         >
           <svg className="" enableBackground="new 0 0 512 512" version="1.1" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg"><path className="" d="m260.248 473.786 170.667-74.1a10.669 10.669 0 0 0 6.417-9.786V280.827l46.917-20.371c5.404-2.347 7.883-8.63 5.536-14.034a10.677 10.677 0 0 0-1.562-2.547h.001l-47.7-57.74 47.667-57.2c3.773-4.52 3.167-11.243-1.354-15.016a10.667 10.667 0 0 0-2.589-1.596l-170.667-74.1a10.644 10.644 0 0 0-12.443 2.956L256 95.341l-45.141-54.167a10.655 10.655 0 0 0-12.443-2.956L27.75 112.323c-5.402 2.343-7.882 8.621-5.539 14.023.405.935.943 1.807 1.596 2.589l47.667 57.2-47.7 57.74c-3.753 4.542-3.114 11.266 1.427 15.019a10.69 10.69 0 0 0 2.547 1.562l46.917 20.371V389.9c0 4.249 2.52 8.093 6.417 9.786l170.667 74.1c.884.344 2.299.772 4.081.798a11.73 11.73 0 0 0 4.418-.798zm52.163-412.817 150.276 65.25-39.1 46.922-150.276-65.25zm87.473 125.138L256 248.582l-143.884-62.475L256 123.63zM199.589 60.969l39.1 46.922-150.278 65.25-39.1-46.922zM88.447 199.088l150.3 65.261-39.19 47.445-150.3-65.263zm7.553 91 102.417 44.47a10.675 10.675 0 0 0 12.474-2.995l34.443-41.695v157.873L96 382.9zM416 382.9l-149.333 64.841V289.87l34.443 41.695a10.675 10.675 0 0 0 12.474 2.995L416 290.09zm-103.552-71.106-39.19-47.445 150.3-65.261 39.191 47.443z" data-original="#000000" /></svg>
 
@@ -109,7 +109,7 @@ function OrderProgressBar({
           onClick={() => handleStageClick(3)}
           onKeyUp={() => handleStageClick(3)}
           role="button"
-          tabIndex={useAsInput && 0}
+          tabIndex={useAsInput ? 0 : null}
         >
           <svg className="" enableBackground="new 0 0 512 512" version="1.1" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -139,6 +139,7 @@ OrderProgressBar.propTypes = {
   useAsInput: PropTypes.bool,
   onChange: PropTypes.func,
   breakPoint: PropTypes.string,
+  className: PropTypes.string,
 };
 
 OrderProgressBar.defaultProps = {
@@ -146,4 +147,5 @@ OrderProgressBar.defaultProps = {
   useAsInput: false,
   onChange: null,
   breakPoint: '600px',
+  className: '',
 };

@@ -20,13 +20,99 @@
     padding: 30px 50px 50px 50px;
 }
 
-@media only screen and (max-width: 450px) {
+.orderInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.clientInfoContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+}
+
+.headerContainer{
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: start;
+    width: 100%;
+}
+
+.section{
+    margin-top: 20px;
+}
+
+.sectionTitle{
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
+.divFile {
+    padding: 20px;
+    background-color: #f3f3f5;
+    border-radius: 4px;
+    border: 1px solid #4A8AA4;
+    overflow-x: auto;
+}
+
+.imageViewerContainer{
+    width: 100%;
+    aspect-ratio: 1/0.7;
+    max-width: 700px;
+    min-width: 400px;
+    margin: auto;
+}
+
+.noImagesMessage{
+    font-size: 17px;
+    color: rgb(49, 49, 49);
+}
+
+.addProductButton{
+    margin-top: 30px;
+}
+
+.adminOptionsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    column-gap: 15px;
+}
+
+.discardChangesButton, .saveChangesButton {
+    width: 80%;
+    min-width: fit-content;
+    justify-self: center;
+}
+
+.buttonsContainer{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 100%;
+}
+
+
+@media only screen and (max-width: 850px) {
     .orderInfoContainer{
         background-color: #FDFDFD;
         box-shadow: none;
         border-radius: 20px;
         width: 100%;
         padding: 0;
+    }
+
+    .clientInfoContainer, .headerContainer, .adminOptionsSection{
+        grid-template-columns: 1fr;
+    }
+
+    .adminOptionsSection{
+        row-gap: 20px;
     }
 
     .editOrderPage{
@@ -39,11 +125,3 @@
     }
 }
 
-.headerContainer{
-    display: grid;
-    gap: 1em;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    justify-content: start;
-    width: 100%;
-    margin-bottom: 20px;
-}

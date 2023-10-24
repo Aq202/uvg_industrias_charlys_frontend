@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './Table.module.css';
 import Spinner from '../Spinner/Spinner';
+import randomString from '../../helpers/randomString';
 /**
  * Componente para crear las tablas del proyecto.
  *
@@ -90,7 +91,7 @@ function Table({
               </td>
             )}
             {header?.map((val) => (
-              <td style={{ maxWidth: maxCellWidth }}>{val}</td>
+              <td key={randomString()} style={{ maxWidth: maxCellWidth }}>{val}</td>
             ))}
           </tr>
         </thead>

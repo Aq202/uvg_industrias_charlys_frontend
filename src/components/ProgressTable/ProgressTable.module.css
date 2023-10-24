@@ -1,0 +1,17 @@
+.progressTableContainer{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.completedInputRow{
+  max-width: 50px;
+}
+
+.updateProgressButton{
+  margin: auto;
+}
+
+.errorMessage{
+  color: var(--error-color--);
+}

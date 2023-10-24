@@ -87,7 +87,7 @@ function OrganizationProductsPage() {
       <div className={styles.productsContainer}>
         {products?.map((data) => (
           <ProductModel
-            url={`/producto/${data.id}`}
+            url={`/producto/modelo/${data.id}`}
             name={data.description}
             imageUrl={productImages?.[data.id] ?? null}
             type={data.type}

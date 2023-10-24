@@ -28,32 +28,38 @@ import useCount from '../../hooks/useCount';
   }
  * @param onChange. Function. Callback que se ejecuta al cambiar de producto y devuelve como
  * parámetro el id del producto seleccionado.
+ * @param resetIndex trigger que coloca el producto seleccionado en 0.
  */
-function ProductsSlider({ products, onChange }) {
+function ProductsSlider({ products, onChange, resetIndex }) {
   const {
     count, next, previous, setCount,
-  } = useCount(0, 0, products.length - 1);
+  } = useCount(null, 0, products.length - 1);
 
   const sliderRef = useRef();
   const productItemsRef = useRef([]);
 
   useEffect(() => {
+    if (count === null) return;
     productItemsRef.current[count].scrollIntoView();
     if (onChange) onChange(products[count].id);
   }, [count]);
+
+  useEffect(() => {
+    if (resetIndex !== null) setCount(null);
+  }, [resetIndex]);
 
   return (
     <div className={styles.productsSlider}>
       <LeftArrow className={styles.arrowIcon} onClick={previous} />
       <div className={styles.sliderContainer}>
         <div className={`${styles.slider} ${scrollbarGray}`} ref={sliderRef}>
-          {products?.map((product, index) => (
+          {products?.sort((p) => p.quantity).map((product, index) => (
             <ProductModel
               key={product.id}
               itemRef={(ref) => {
                 productItemsRef.current[index] = ref;
               }}
-              className={`${styles.productModel} ${count === index ? styles.currentProduct : ''}`}
+              className={`${styles.productModel} ${count === index || (count === null && index === 0) ? styles.currentProduct : ''}`}
               name={product.name}
               type={product.type}
               colors={product.colors}
@@ -79,7 +85,7 @@ ProductsSlider.propTypes = {
     name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
     type: PropTypes.string.isRequired,
-    organization: PropTypes.string.isRequired,
+    organization: PropTypes.string,
     colors: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -90,9 +96,11 @@ ProductsSlider.propTypes = {
     ),
     loadingImage: PropTypes.bool,
   })),
+  resetIndex: PropTypes.number,
 };
 
 ProductsSlider.defaultProps = {
   onChange: null,
   products: null,
+  resetIndex: null,
 };
