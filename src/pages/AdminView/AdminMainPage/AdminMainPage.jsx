@@ -16,6 +16,8 @@ import NotFoundPage from '../../NotFoundPage/NotFoundPage';
 import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
+import SizesList from '../../SizesList/SizesList';
+import ColorsList from '../../ColorsList/ColorsList';
 
 function AdminMainPage() {
   return (
@@ -39,6 +41,8 @@ function AdminMainPage() {
         <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
         <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
+        <Route path="/config/tallas" element={<SizesList />} />
+        <Route path="config/colores" element={<ColorsList />} />
       </Routes>
     </PageContainer>
   );
