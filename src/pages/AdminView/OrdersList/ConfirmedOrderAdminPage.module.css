@@ -58,6 +58,10 @@
     grid-column: 1/-1;
 }
 
+.progressBar{
+    margin: 80px 0 50px 0;
+}
+
 .productInfo{
     display: flex;
     flex-direction: column;
