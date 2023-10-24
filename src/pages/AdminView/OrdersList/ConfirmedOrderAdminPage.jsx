@@ -144,41 +144,36 @@ function ConfirmedOrderAdminPage() {
           {resultOrder?.detail?.length > 0 && (
             <h3 className={styles.sectionTitle}>Productos</h3>
           )}
-
-          {resultOrder?.detail?.map((product) => (
-            <div className={styles.selectedProductsGrid}>
-              <div className={styles.selectedProductContainer} key={product.id}>
-                <ProductsSlider
-                  products={[
-                    {
-                      key: product.id,
-                      id: product.id,
-                      name: product.product,
-                      imageUrl: productImages[product.id],
-                      type: product.type,
-                      colors: product.colors,
-                      loadingImage: false,
-                    },
-                  ]}
-                  onChange={(id) => setProductSelected(id)}
-                />
+          <div className={styles.selectedProductsGrid}>
+            <div className={styles.selectedProductContainer}>
+              <ProductsSlider
+                products={resultOrder?.detail?.map((product) => ({
+                  key: product.id,
+                  id: product.id,
+                  name: product.product,
+                  imageUrl: productImages[product.id],
+                  type: product.type,
+                  colors: product.colors,
+                  loadingImage: false,
+                }))}
+                onChange={(id) => setProductSelected(id)}
+              />
+            </div>
+            <div className={styles.productInfo}>
+              <div className={styles.name}>
+                <p>Producto:</p>
+              &nbsp;
+                <p>
+                  {resultOrder?.detail?.find((element) => element.id === productSelected)?.product}
+                </p>
               </div>
-              <div className={styles.productInfo}>
-                <div className={styles.name}>
-                  <p>Producto:</p>
-                          &nbsp;
-                  <p>
-                    {resultOrder?.detail?.find((element) => element.id === productSelected)?.product}
-                  </p>
-                </div>
-                <div className={styles.details}>
-                  <a href={`/producto/${productSelected}`}>
-                    Ver detalles del producto
-                  </a>
-                </div>
+              <div className={styles.details}>
+                <a href={`/producto/${productSelected}`}>
+                  Ver detalles del producto
+                </a>
               </div>
             </div>
-          ))}
+          </div>
 
           {resultOrder?.detail?.length > 0 && (
             <div className={styles.sizes}>
