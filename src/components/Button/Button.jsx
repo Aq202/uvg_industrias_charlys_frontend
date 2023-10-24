@@ -8,6 +8,7 @@ function Button({
   onClick,
   type,
   disabled = false,
+  children,
   blue,
   red,
   emptyRed,
@@ -16,6 +17,8 @@ function Button({
   className,
   name,
   secondary,
+  // eslint-disable-next-line react/prop-types
+  buttonRef,
 }) {
   return (
     <button
@@ -31,8 +34,9 @@ function Button({
       onClick={onClick}
       disabled={disabled}
       name={name}
+      ref={buttonRef}
     >
-      <span>{text}</span>
+      {children || text}
     </button>
   );
 }
@@ -50,6 +54,7 @@ Button.propTypes = {
   green: PropTypes.bool,
   name: PropTypes.string.isRequired,
   secondary: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 Button.defaultProps = {
@@ -63,5 +68,6 @@ Button.defaultProps = {
   disabled: false,
   onClick: null,
   secondary: false,
+  children: null,
 };
 export default Button;

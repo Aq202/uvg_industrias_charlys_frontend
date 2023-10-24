@@ -14,6 +14,7 @@ import ImageViewer from '../../../components/ImageViewer/ImageViewer';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import LoadingView from '../../../components/LoadingView/LoadingView';
+import OrderProgressBar from '../../../components/OrderProgressBar/OrderProgressBar';
 
 function ConfirmedOrderAdminPage() {
   const { idOrder } = useParams();
@@ -127,6 +128,7 @@ function ConfirmedOrderAdminPage() {
               <p>{resultOrder?.description}</p>
             </div>
           </div>
+
           <div className={styles.section}>
             <div className={`${styles.divFile} ${scrollbarGray}`}>
               {resultOrder?.media ? (
@@ -138,46 +140,49 @@ function ConfirmedOrderAdminPage() {
               )}
             </div>
           </div>
+
+          <div>
+            <h3 className={styles.sectionTitle}>Progreso de la orden</h3>
+            <OrderProgressBar stage={resultOrder?.phase?.id} className={styles.progressBar} breakPoint="650px" />
+          </div>
+
           {!resultOrder?.detail && (
             <h3 className={styles.sectionTitle}>No hay productos</h3>
           )}
+
           {resultOrder?.detail?.length > 0 && (
-            <h3 className={styles.sectionTitle}>Productos</h3>
+            <>
+              <h3 className={styles.sectionTitle}>Productos</h3>
+
+              <div className={styles.selectedProductsGrid}>
+                <div className={styles.selectedProductContainer}>
+                  <ProductsSlider
+                    products={resultOrder?.detail?.map((product) => ({
+                      key: product.id,
+                      id: product.id,
+                      name: product.product,
+                      imageUrl: productImages[product.id],
+                      type: product.type,
+                      colors: product.colors,
+                      loadingImage: false,
+                    }))}
+                    onChange={(id) => setProductSelected(id)}
+                  />
+                </div>
+                <div className={styles.productInfo}>
+                  <div className={styles.name}>
+                    <p>{'Producto: '}</p>
+                    <p>{resultOrder?.detail?.find((element) => element.id === productSelected)?.product}</p>
+                  </div>
+                  <div className={styles.details}>
+                    <a href={`/producto/${productSelected}`}>
+                      Ver detalles del producto
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
-          <div className={styles.selectedProductsGrid}>
-            <div className={styles.selectedProductContainer}>
-              {resultOrder?.detail?.length > 0 && (
-              <ProductsSlider
-                products={resultOrder?.detail?.map((product) => ({
-                  key: product.id,
-                  id: product.id,
-                  name: product.product,
-                  imageUrl: productImages[product.id],
-                  type: product.type,
-                  colors: product.colors,
-                  loadingImage: false,
-                }))}
-                onChange={(id) => setProductSelected(id)}
-              />
-              )}
-            </div>
-            {resultOrder?.detail?.length > 0 && (
-            <div className={styles.productInfo}>
-              <div className={styles.name}>
-                <p>Producto:</p>
-              &nbsp;
-                <p>
-                  {resultOrder?.detail?.find((element) => element.id === productSelected)?.product}
-                </p>
-              </div>
-              <div className={styles.details}>
-                <a href={`/producto/${productSelected}`}>
-                  Ver detalles del producto
-                </a>
-              </div>
-            </div>
-            )}
-          </div>
 
           {resultOrder?.detail?.length > 0 && (
             <div className={styles.sizes}>

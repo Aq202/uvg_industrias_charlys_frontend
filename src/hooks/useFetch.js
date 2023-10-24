@@ -37,8 +37,14 @@ function useFetch() {
     }
   };
 
+  const reset = () => {
+    setResult(null);
+    setLoading(null);
+    setError(null);
+  };
+
   return {
-    callFetch, result, error, loading,
+    callFetch, result, error, loading, reset,
   };
 }
 

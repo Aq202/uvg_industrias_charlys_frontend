@@ -5,7 +5,7 @@ function useToogle(initValue = true) {
 
   const toogle = () => setValue((val) => !val);
 
-  return [value, toogle];
+  return [value, toogle, setValue];
 }
 
 export default useToogle;
