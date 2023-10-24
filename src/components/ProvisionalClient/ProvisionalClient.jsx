@@ -8,6 +8,7 @@ import usePopUp from '@hooks/usePopUp';
 import InputSelect from '@components/InputSelect';
 import Button from '@components/Button/Button';
 import Spinner from '@components/Spinner/Spinner';
+import ConfirmationPopUp from '@components/ConfirmationPopUp';
 import NewOrganizationFormPopUp from '@components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
@@ -32,11 +33,14 @@ function ProvisionalClient({ orderId, clientInfo }) {
 
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
+  const [doAssign, setDoAssing] = useState();
+  const [orgName, setOrgName] = useState();
 
   const [newOrg, setNewOrg] = useState(false);
   const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
+  const [isConfirmationOpen, openConfirmation, closeConfirmation] = usePopUp();
 
   useEffect(() => {
     if (!token) return;
@@ -51,6 +55,7 @@ function ProvisionalClient({ orderId, clientInfo }) {
   const handleSelectChange = (e) => {
     const { value, name } = e.target;
     setForm((lastValue) => ({ ...lastValue, [name]: value }));
+    setOrgName(resultOrgs.result.filter((org) => org.id === value)[0].name);
   };
 
   const handleNewOrg = (newId) => {
@@ -78,9 +83,7 @@ function ProvisionalClient({ orderId, clientInfo }) {
 
   const successCallback = () => navigate(0);
 
-  const handlePatchOrg = (e) => {
-    e.preventDefault();
-
+  const handlePatchOrg = () => {
     if (!validateSelectedOrg()) return;
 
     const uri = `${serverHost}/orderRequest/${orderId}/temporaryClient/confirm`;
@@ -108,6 +111,11 @@ function ProvisionalClient({ orderId, clientInfo }) {
     if (!patchResultSetOrg) return;
     openSuccess();
   }, [patchResultSetOrg]);
+
+  useEffect(() => {
+    if (!doAssign) return;
+    handlePatchOrg();
+  }, [doAssign]);
 
   return (
     <div className={`${styles.mainContainer}`}>
@@ -176,11 +184,18 @@ function ProvisionalClient({ orderId, clientInfo }) {
             type="submit"
             text="Asignar organización"
             name="assignOrg"
-            onClick={handlePatchOrg}
+            onClick={openConfirmation}
+            disabled={!form.orgMenu}
           />
         )}
         {patchLoadingSetOrg && <Spinner />}
       </div>
+      <ConfirmationPopUp
+        close={closeConfirmation}
+        isOpen={isConfirmationOpen}
+        body={`¿Está seguro de asignar la organización "${orgName}" solicitud de pedido?`}
+        callback={setDoAssing}
+      />
       <NewOrganizationFormPopUp
         close={closeNewOrg}
         isOpen={isNewOrgOpen}
