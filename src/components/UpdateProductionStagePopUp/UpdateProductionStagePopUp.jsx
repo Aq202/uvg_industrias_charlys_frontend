@@ -16,7 +16,7 @@ function UpdateProductionStagePopUp({
   close, callback, isOpen, currentPhase, idOrder,
 }) {
   const {
-    callFetch: fetchUpdateStage, loading, result: updateSuccess, error,
+    callFetch: fetchUpdateStage, loading, result: updateSuccess, error, reset,
   } = useFetch();
 
   const token = useToken();
@@ -58,6 +58,7 @@ function UpdateProductionStagePopUp({
   const handleSuccessClose = () => {
     close();
     if (callback) callback();
+    reset();
   };
 
   return (
