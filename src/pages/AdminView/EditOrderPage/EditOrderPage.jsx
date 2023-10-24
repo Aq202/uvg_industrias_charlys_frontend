@@ -150,6 +150,8 @@ function EditOrderPage() {
       requestedSizes[element.id] = sizesArray;
     });
     setSelectedProducts(requestedProducts);
+    console.log(requestedProducts);
+    setCurrentProduct(resultInfo.detail[0].id);
     setQuantities(requestedSizes);
   };
 
@@ -345,7 +347,7 @@ function EditOrderPage() {
             <h3 className={styles.sectionTitle}>Fecha de entrega</h3>
             <InputDate
               name="deadline"
-              value={form.deadline}
+              value={form.deadline ? form.deadline.slice(0, 10) : ''}
               onChange={handleChange}
             />
           </div>
