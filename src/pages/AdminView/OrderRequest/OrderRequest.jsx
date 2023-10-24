@@ -30,33 +30,19 @@ function OrderRequest() {
   const { orderId } = useParams();
   const token = useToken();
   const [userRole, setUserRole] = useState(null);
+  const [successMessage, setSuccessMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState();
 
   const {
     callFetch: postOrder, result: resultPost, error: errorPost, loading: loadingPost,
   } = useFetch();
 
+  const {
+    callFetch: deleteOrder, result: resultDelete, error: errorDelete, loading: loadingDelete,
+  } = useFetch();
+
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Pendiente backend: manejar la información agregada por el admin
-
-    const body = { idOrderRequest: result.id };
-    postOrder({
-      uri: `${serverHost}/order/`,
-      method: 'POST',
-      headers: { authorization: token },
-      body: JSON.stringify(body),
-    });
-  };
-
-  const redirectAfterSubmit = () => navigate('/');
-
-  const handleEdit = (e) => {
-    e.preventDefault();
-    navigate(`/orden/${orderId}/editar`);
-  };
 
   useEffect(() => {
     if (!orderId && !token) return;
@@ -73,15 +59,61 @@ function OrderRequest() {
     });
   }, [orderId, token]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const body = { idOrderRequest: orderId };
+    postOrder({
+      uri: `${serverHost}/order/`,
+      method: 'POST',
+      headers: { authorization: token },
+      body: JSON.stringify(body),
+    });
+  };
+
   useEffect(() => {
     if (!errorPost) return;
+    setErrorMessage(errorPost.message);
     openError();
   }, [errorPost]);
 
   useEffect(() => {
     if (!resultPost) return;
+    setSuccessMessage(`La solicitud de pedido fue iniciada correctamente. Orden No.${resultPost.id}`);
     openSuccess();
   }, [resultPost]);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    const body = { idOrderRequest: orderId };
+    deleteOrder({
+      uri: `${serverHost}/orderRequest/`,
+      method: 'DELETE',
+      headers: { authorization: token },
+      body: JSON.stringify(body),
+      parse: false,
+    });
+  };
+
+  useEffect(() => {
+    if (!errorDelete) return;
+    setErrorMessage(errorDelete.message);
+    openError();
+  }, [errorDelete]);
+
+  useEffect(() => {
+    if (!resultDelete) return;
+    setSuccessMessage(`La solicitud de pedido fue rechazada correctamente. Orden No.${orderId}`);
+    openSuccess();
+  }, [resultDelete]);
+
+  const redirectAfterSubmit = () => navigate('/');
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    navigate(`/orden/${orderId}/editar`);
+  };
 
   return (
     <div className={`${styles.OrderRequest}`}>
@@ -186,13 +218,27 @@ function OrderRequest() {
             {userRole !== consts.role.client
               && (
               <div className={`${styles.bottom}`}>
-                {!loadingPost && (
+                {!loadingPost && !loadingDelete && (
                 <div className={`${styles.bottomForm}`}>
-                  <Button className={styles.denyOrderButton} type="submit" text="Rechazar pedido" name="denyOrder" secondary onClick={handleSubmit} />
-                  <Button className={styles.aceptOrderButton} type="submit" text="Iniciar pedido" name="aceptOrder" onClick={handleSubmit} />
+                  <Button
+                    className={styles.denyOrderButton}
+                    type="submit"
+                    text="Rechazar pedido"
+                    name="denyOrder"
+                    secondary
+                    onClick={handleDelete}
+                  />
+                  <Button
+                    className={styles.aceptOrderButton}
+                    type="submit"
+                    text="Iniciar pedido"
+                    name="aceptOrder"
+                    onClick={handleSubmit}
+                    disabled={!result?.clientOrganization}
+                  />
                 </div>
                 )}
-                {loadingPost && <Spinner />}
+                {(loadingPost || loadingDelete) && <Spinner />}
               </div>
               )}
           </div>
@@ -200,14 +246,14 @@ function OrderRequest() {
       </main>
       <SuccessNotificationPopUp
         title="Listo"
-        text="La solicitud de pedido fue realizada correctamente"
+        text={successMessage}
         close={closeSuccess}
         isOpen={isSuccessOpen}
         callback={redirectAfterSubmit}
       />
       <ErrorNotificationPopUp
         title="Error"
-        text="Ocurrió un error al realizar la solicitud de pedido"
+        text={errorMessage}
         close={closeError}
         isOpen={isErrorOpen}
       />

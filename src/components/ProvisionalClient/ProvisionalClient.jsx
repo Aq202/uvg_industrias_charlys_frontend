@@ -135,7 +135,7 @@ function ProvisionalClient({ orderId, clientInfo }) {
           {clientInfo.address}
         </p>
       </div>
-      <div className={styles.mesage}>
+      <div className={styles.message}>
         <p>
           Para completar el pedido, es necesario que selecciones una organización ya existente.
           También puedes crear una nueva con los datos del cliente provisional.
@@ -185,6 +185,7 @@ function ProvisionalClient({ orderId, clientInfo }) {
         close={closeNewOrg}
         isOpen={isNewOrgOpen}
         newOrgId={(newId) => handleNewOrg(newId)}
+        clientInfo={clientInfo}
       />
       <SuccessNotificationPopUp
         title="Listo"

@@ -7,7 +7,7 @@ import usePopUp from '../../hooks/usePopUp';
 import ErrorNotificationPopUp from '../ErrorNotificationPopUp/ErrorNotificationPopUp';
 
 function NewOrganizationFormPopUp({
-  close, isOpen, closeCallback, successCallback, newOrgId,
+  close, isOpen, closeCallback, successCallback, newOrgId, clientInfo,
 }) {
   const [message, setMessage] = useState('');
 
@@ -44,6 +44,7 @@ function NewOrganizationFormPopUp({
             onError={handleError}
             onSuccess={handleSuccess}
             newOrgId={handleNewOrgId}
+            clientInfo={clientInfo}
           />
         </PopUp>
       )}
@@ -68,10 +69,18 @@ NewOrganizationFormPopUp.propTypes = {
   closeCallback: PropTypes.func,
   successCallback: PropTypes.func,
   newOrgId: PropTypes.func,
+  clientInfo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  }),
 };
 
 NewOrganizationFormPopUp.defaultProps = {
   closeCallback: null,
   successCallback: null,
   newOrgId: null,
+  clientInfo: null,
 };

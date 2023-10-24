@@ -13,6 +13,7 @@ function NewOrganizationForm(
     onError,
     onSuccess,
     newOrgId,
+    clientInfo,
   },
 ) {
   const {
@@ -21,6 +22,14 @@ function NewOrganizationForm(
   const token = useToken();
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!clientInfo) return;
+
+    Object.entries(clientInfo).forEach(([key, value]) => {
+      setForm((lastValue) => ({ ...lastValue, [key]: value }));
+    });
+  }, [clientInfo]);
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -168,10 +177,18 @@ NewOrganizationForm.propTypes = {
   onError: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   newOrgId: PropTypes.func,
+  clientInfo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  }),
 };
 
 NewOrganizationForm.defaultProps = {
   newOrgId: null,
+  clientInfo: null,
 };
 
 export default NewOrganizationForm;
