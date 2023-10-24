@@ -5,14 +5,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .title{
-    padding: 50px;
+    padding: 50px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
 }
 
 .title h2 {
@@ -24,7 +25,7 @@
 }
 
 .content{
-    width: 100%;
+    width: 90%;
     margin: 5px;
     border-radius: 5px;
     display: flex;
@@ -45,7 +46,7 @@
 .colors{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 10px;
     padding: 50px;
 }
@@ -77,4 +78,15 @@
 .garbageIcon{
     filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(357deg) brightness(117%) contrast(100%);
     cursor: pointer;
+}
+
+@media only screen and (max-width:730px){
+    .filters{
+        justify-content: center;
+    }
+    .colors{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }

@@ -84,9 +84,9 @@ function ConfirmedOrderAdminPage() {
   }, [idOrder]);
 
   useEffect(() => {
-    if (!productSelected) return;
+    if (!productSelected || !resultSizes) return;
     getSizesByProduct(productSelected);
-  }, [productSelected]);
+  }, [productSelected, resultSizes]);
 
   useEffect(() => {
     if (!resultImagesProduct) return;
@@ -146,6 +146,7 @@ function ConfirmedOrderAdminPage() {
           )}
           <div className={styles.selectedProductsGrid}>
             <div className={styles.selectedProductContainer}>
+              {resultOrder?.detail?.length > 0 && (
               <ProductsSlider
                 products={resultOrder?.detail?.map((product) => ({
                   key: product.id,
@@ -158,7 +159,9 @@ function ConfirmedOrderAdminPage() {
                 }))}
                 onChange={(id) => setProductSelected(id)}
               />
+              )}
             </div>
+            {resultOrder?.detail?.length > 0 && (
             <div className={styles.productInfo}>
               <div className={styles.name}>
                 <p>Producto:</p>
@@ -173,6 +176,7 @@ function ConfirmedOrderAdminPage() {
                 </a>
               </div>
             </div>
+            )}
           </div>
 
           {resultOrder?.detail?.length > 0 && (
