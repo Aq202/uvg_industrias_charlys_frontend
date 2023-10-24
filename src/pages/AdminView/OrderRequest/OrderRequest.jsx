@@ -108,7 +108,7 @@ function OrderRequest() {
     openSuccess();
   }, [resultDelete]);
 
-  const redirectAfterSubmit = () => navigate('/');
+  const redirectAfterSubmit = () => navigate(`/produccion/${resultPost.id}/`);
 
   const handleEdit = (e) => {
     e.preventDefault();
