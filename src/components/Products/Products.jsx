@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useApiMultipleImages from '@hooks/useApiMultipleImages';
 import ProductsSlider from '@components/ProductsSlider';
+
 import styles from './Products.module.css';
 
 function Products({ products }) {
   const {
-    getMultipleApiImages, result: resultImages, loading: loadingImages,
+    getMultipleApiImages, result: resultImages,
   } = useApiMultipleImages();
 
   const tallas = ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'];
@@ -20,8 +21,12 @@ function Products({ products }) {
   const getProductImages = async () => {
     if (!products) return;
 
-    const images = products.map((product) => (
-      { id: product.id, uri: product.media ? product.media[0] : null }));
+    const images = [];
+    products.forEach((product) => {
+      if (product.media?.length > 0) {
+        images.push({ id: product.id, uri: product.media[0] });
+      }
+    });
     getMultipleApiImages(images);
   };
 
@@ -33,12 +38,14 @@ function Products({ products }) {
   useEffect(() => {
     if (!products) return;
     getProductImages();
+    setCurrProduct(products[0].id);
   }, [products]);
 
   useEffect(() => {
     const actual = products.find((p) => p.id === currProduct);
     setProducto(actual);
-    // console.log(actual.id, productImages[actual.id]);
+    // if (actual) console.log(actual.id, productImages[actual.id]);
+    // if (currProduct.length > 0 && resultImages) console.log(resultImages[currProduct]);
   }, [currProduct]);
 
   useEffect(() => {
@@ -64,7 +71,7 @@ function Products({ products }) {
           products={products.map((item) => ({
             id: item.id,
             name: item.product,
-            imageUrl: productImages[item.id],
+            imageUrl: productImages?.[item.id] ?? null,
             type: item.type,
             organization: item.organization,
             colors: Array.isArray(item.colors)
@@ -75,7 +82,7 @@ function Products({ products }) {
                 b: color.b,
               }))
               : [],
-            loadingImage: loadingImages,
+            loadingImage: productImages?.[item.id] === null,
           }))}
           onChange={handleCurrProduct}
         />
