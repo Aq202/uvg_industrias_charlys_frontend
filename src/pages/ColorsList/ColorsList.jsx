@@ -49,7 +49,7 @@ function ColorsList() {
   }, [colorToDelete]);
 
   return (
-    <div>
+    <div className={styles.page}>
       {errorColors && <p>Hubo un error al cargar los colores</p>}
       {!errorColors && loadingColors && <LoadingView />}
       <div className={styles.colorsList}>
@@ -65,14 +65,12 @@ function ColorsList() {
             {errorColors && <p>No hay resultados</p>}
             {resultColors?.map((color) => (
               <div className={styles.colorsContainer}>
-                <div className={styles.info}>
-                  <span
-                    className={styles.color}
-                    style={{ backgroundColor: `rgb(${color.red}, ${color.green}, ${color.blue})` }}
-                    title={color.name}
-                  />
-                  <p>{color.name}</p>
-                </div>
+                <span
+                  className={styles.color}
+                  style={{ backgroundColor: `rgb(${color.red}, ${color.green}, ${color.blue})` }}
+                  title={color.name}
+                />
+                <p>{color.name}</p>
                 <img
                   src={garbage}
                   alt="Delete"
