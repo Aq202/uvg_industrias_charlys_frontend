@@ -38,6 +38,7 @@ function Products({ products }) {
   useEffect(() => {
     if (!products) return;
     getProductImages();
+    setCurrProduct(products[0].id);
   }, [products]);
 
   useEffect(() => {
