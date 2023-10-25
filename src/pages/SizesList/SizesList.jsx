@@ -50,7 +50,7 @@ function SizesList() {
   }, [count]);
 
   return (
-    <div>
+    <div className={styles.page}>
       {errorSizes && <p>Hubo un error al cargar las tallas</p>}
       {loadingSizes && <LoadingView />}
       <div className={styles.sizesList}>
@@ -70,7 +70,7 @@ function SizesList() {
           <div className={styles.sizes}>
             {resultSizes?.map((size) => (
               <div className={styles.size}>
-                {size.size}
+                <p>{size.size}</p>
                 <img
                   src={garbage}
                   alt="Delete"

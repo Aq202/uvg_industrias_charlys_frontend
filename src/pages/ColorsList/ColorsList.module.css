@@ -1,3 +1,8 @@
+.page{
+    width: 100%;
+    padding: 0 0 100px 0;
+}
+
 .colorsList {
     width: 100%;
     padding: 0;
@@ -13,7 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
 }
 
 .title h2 {
@@ -25,7 +30,7 @@
 }
 
 .content{
-    width: 90%;
+    width: 100%;
     margin: 5px;
     border-radius: 5px;
     display: flex;
@@ -52,6 +57,7 @@
 }
 
 .colorsContainer {
+    max-width: 400px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -59,6 +65,14 @@
     padding: 10px 30px;
     border-radius: 5px;
     box-shadow: var(--container--box-shadow--);
+    gap: 15px;
+}
+
+.colorsContainer > p{
+    text-align: left;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .info{
@@ -80,11 +94,11 @@
     cursor: pointer;
 }
 
-@media only screen and (max-width:730px){
+@media only screen and (max-width:850px){
     .filters{
         justify-content: center;
     }
-    .colors{
+    .colors{    
         display: flex;
         flex-direction: column;
         gap: 10px;
