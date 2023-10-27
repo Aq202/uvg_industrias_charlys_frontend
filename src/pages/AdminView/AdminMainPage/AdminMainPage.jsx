@@ -16,12 +16,14 @@ import NotFoundPage from '../../NotFoundPage/NotFoundPage';
 import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
+import Home from '../../Home/Home';
 
 function AdminMainPage() {
   return (
     <PageContainer>
       <Routes>
-        <Route path="/" element={<OrdersList />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/orderList" element={<OrdersList />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/inventario" element={<Inventory />} />
         <Route path="/inventario/nuevo" element={<NewArticle />} />
