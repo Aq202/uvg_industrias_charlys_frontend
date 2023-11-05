@@ -11,7 +11,6 @@ import LoadingView from '../../../components/LoadingView/LoadingView';
 import { serverHost } from '../../../config';
 import useToken from '../../../hooks/useToken';
 import TextArea from '../../../components/TextArea/TextArea';
-import ImageViewer from '../../../components/ImageViewer/ImageViewer';
 import ProductsSlider from '../../../components/ProductsSlider/ProductsSlider';
 import SelectProductUnitsTable from '../../../components/SelectProductUnitsTable/SelectProductUnitsTable';
 import ProductCatalog from '../../../components/ProductCatalog/ProductCatalog';
@@ -21,6 +20,8 @@ import Button from '../../../components/Button/Button';
 import useApiMultipleImages from '../../../hooks/useApiMultipleImages';
 import InputDate from '../../../components/InputDate/InputDate';
 import ImagePicker from '../../../components/ImagePicker/ImagePicker';
+import Thumbanils from '../../../components/Thumbnails/Thumbanils';
+import randomString from '../../../helpers/randomString';
 
 function EditOrderPage() {
   const { orderId } = useParams();
@@ -32,12 +33,17 @@ function EditOrderPage() {
   const [selectedProducts, setSelectedProducts] = useState({});
   const [quantities, setQuantities] = useState({});
   const [currentProduct, setCurrentProduct] = useState('');
+  const [imagesToRemove, setImagesToRemove] = useState([]);
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
 
   const {
-    getMultipleApiImages, result: resultImages,
+    getMultipleApiImages, result: resultProductImages,
+  } = useApiMultipleImages();
+
+  const {
+    getMultipleApiImages: getExtraImages, result: resultExtraImages,
   } = useApiMultipleImages();
 
   const {
@@ -58,6 +64,11 @@ function EditOrderPage() {
 
   const handleImagePickerChange = (files) => {
     setForm((lastValue) => ({ ...lastValue, files }));
+  };
+
+  const removeImage = (e, id) => {
+    e.preventDefault();
+    setImagesToRemove((lastValue) => ([...lastValue, id]));
   };
 
   const handleSubmit = (e) => {
@@ -85,8 +96,6 @@ function EditOrderPage() {
       });
     });
 
-    console.log(JSON.stringify(products));
-
     // guardar en formdata
     const formData = new FormData();
 
@@ -94,12 +103,12 @@ function EditOrderPage() {
     form.files?.forEach((file) => formData.append('files[]', file, file.name));
     delete form.files;
 
+    imagesToRemove?.forEach((image) => formData.append('imagesToRemove[]', image));
+
     // guardar otras props
     Object.entries(form).forEach((item) => formData.append(item[0], item[1]));
 
     formData.append('products', JSON.stringify(products));
-
-    console.log(...formData);
 
     postChanges({
       uri,
@@ -119,11 +128,21 @@ function EditOrderPage() {
     getMultipleApiImages(images);
   };
 
+  const getImages = async () => {
+    if (!resultInfo.media) return;
+    const images = [];
+    resultInfo.media.forEach((image) => {
+      images.push({ id: images.length, uri: image });
+    });
+    getExtraImages(images);
+  };
+
   const selectProduct = (product) => {
     if (product.id in selectedProducts) {
       closeCatalog();
       return;
     }
+    setCurrentProduct(product.id);
     setSelectedProducts((prevArray) => ({ ...prevArray, [product.id]: product }));
     closeCatalog();
   };
@@ -140,7 +159,7 @@ function EditOrderPage() {
         type: element.type,
         organization: resultInfo.clientOrganization.id,
         colors: element.colors,
-        imageUrl: resultImages[element.id],
+        imageUrl: resultProductImages[element.id],
       };
 
       const sizesArray = [];
@@ -150,7 +169,6 @@ function EditOrderPage() {
       requestedSizes[element.id] = sizesArray;
     });
     setSelectedProducts(requestedProducts);
-    console.log(requestedProducts);
     setCurrentProduct(resultInfo.detail[0].id);
     setQuantities(requestedSizes);
   };
@@ -193,23 +211,19 @@ function EditOrderPage() {
 
   useEffect(() => {
     if (!resultInfo) return;
-    console.log(resultInfo);
 
     const prevInfo = {};
     if (resultInfo.details) prevInfo.details = resultInfo.details;
     if (resultInfo.deadline) prevInfo.deadline = resultInfo.deadline;
     setForm(prevInfo);
     if (resultInfo.detail) getProductImages();
+    if (resultInfo.media) getImages();
   }, [resultInfo]);
 
   useEffect(() => {
-    if (!resultImages) return;
+    if (!resultProductImages) return;
     setPreviousProducts();
-  }, [resultImages]);
-
-  useEffect(() => {
-    console.log(quantities);
-  }, [quantities]);
+  }, [resultProductImages]);
 
   useEffect(() => {
     if (resultPut) openSuccess();
@@ -289,9 +303,20 @@ function EditOrderPage() {
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>Archivos adjuntos</h3>
             <div className={`${styles.divFile} ${scrollbarGray}`}>
-              {resultInfo?.media ? (
+              {resultExtraImages ? (
                 <div className={styles.imageViewerContainer}>
-                  <ImageViewer images={resultInfo?.media} />
+                  {Object.entries(resultExtraImages).map((image) => (
+                    !imagesToRemove.includes(image[1])
+                    && (
+                      <Thumbanils
+                        img={image[1]}
+                        id={image[1]}
+                        key={randomString(10)}
+                        onDeleteClick={removeImage}
+                        className={styles.imageThumbnail}
+                      />
+                    )
+                  ))}
                 </div>
               ) : (
                 <p className={styles.noImagesMessage}>No hay recursos multimedia adjuntos.</p>
@@ -375,7 +400,7 @@ function EditOrderPage() {
       />
       <ErrorNotificationPopUp
         title="Error"
-        text="Ocurrió un error al actualizar la solicitud de pedido"
+        text={errorPut?.message}
         close={closeError}
         isOpen={isErrorOpen}
       />
