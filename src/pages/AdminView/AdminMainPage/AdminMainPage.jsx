@@ -16,6 +16,7 @@ import NotFoundPage from '../../NotFoundPage/NotFoundPage';
 import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
+import NewAdminOrderRequestPage from '../NewAdminOrderRequestPage/NewAdminOrderRequestPage';
 import Config from '../Config/Config';
 
 function AdminMainPage() {
@@ -30,6 +31,7 @@ function AdminMainPage() {
         <Route path="/orden/:orderId" element={<OrderRequest />} />
         <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
         <Route path="/orden" element={<OrdersList />} />
+        <Route path="/orden/nuevo" element={<NewAdminOrderRequestPage />} />
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />

@@ -1,0 +1,80 @@
+.newAdminOrderRequestPage{
+    width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+}
+
+.pageTitle{
+    margin: 40px 0 40px 0;
+    align-self: flex-start;
+}
+
+.formContainer{
+    background-color: #FDFDFD;
+    box-shadow: var(--container--box-shadow--);
+    border-radius: 20px;
+    width: 100%;
+    padding: 30px 50px 50px 50px;
+}
+
+.section{
+    margin-top: 20px;
+}
+
+.sectionTitle{
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
+
+.secondaryText{
+    color: var(--secondary-text-color--);
+    margin-bottom: 20px;
+}
+
+.addProductButton{
+    margin-top: 30px;
+}
+
+.adminOptionsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    column-gap: 15px;
+}
+
+.buttonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 850px) {
+    .formContainer{
+        background-color: #FDFDFD;
+        box-shadow: none;
+        border-radius: 20px;
+        width: 100%;
+        padding: 0;
+    }
+
+    .newAdminOrderRequestPage{
+        background-color: #FDFDFD;
+    }
+
+    .pageTitle{
+        align-self: center;
+        text-align: center;
+    }
+
+    .adminOptionsSection{
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+    }
+}
