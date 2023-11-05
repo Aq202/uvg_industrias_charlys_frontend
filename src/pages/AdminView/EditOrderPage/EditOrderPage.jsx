@@ -75,9 +75,13 @@ function EditOrderPage() {
     e.preventDefault();
     // Pendiente backend: manejar la información agregada por el admin
 
-    if (resultInfo.clientOrganization) form.idClientOrganization = resultInfo.clientOrganization.id;
+    const formCopy = { ...form };
 
-    form.idOrderRequest = orderId;
+    if (resultInfo.clientOrganization) {
+      formCopy.idClientOrganization = resultInfo.clientOrganization.id;
+    }
+
+    formCopy.idOrderRequest = orderId;
 
     const uri = `${serverHost}/orderRequest/`;
 
@@ -100,13 +104,13 @@ function EditOrderPage() {
     const formData = new FormData();
 
     // guardar imagenes
-    form.files?.forEach((file) => formData.append('files[]', file, file.name));
-    delete form.files;
+    formCopy.files?.forEach((file) => formData.append('files[]', file, file.name));
+    delete formCopy.files;
 
     imagesToRemove?.forEach((image) => formData.append('imagesToRemove[]', image));
 
     // guardar otras props
-    Object.entries(form).forEach((item) => formData.append(item[0], item[1]));
+    Object.entries(formCopy).forEach((item) => formData.append(item[0], item[1]));
 
     formData.append('products', JSON.stringify(products));
 

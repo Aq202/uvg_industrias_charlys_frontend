@@ -126,7 +126,7 @@ function NewCustomerOrderRequestPage() {
     delete formCopy.files;
 
     // guardar otras props
-    Object.entries(form).forEach((item) => formData.append(item[0], item[1]));
+    Object.entries(formCopy).forEach((item) => formData.append(item[0], item[1]));
 
     // products.forEach((product) => formData.append('products[]', product));
 

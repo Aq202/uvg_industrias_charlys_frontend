@@ -148,8 +148,8 @@ function NewAdminOrderRequestPage() {
     const formData = new FormData();
 
     // guardar imagenes
-    form.files?.forEach((file) => formData.append('files[]', file, file.name));
-    delete form.files;
+    formCopy.files?.forEach((file) => formData.append('files[]', file, file.name));
+    delete formCopy.files;
 
     // guardar otras props
     Object.entries(formCopy).forEach((item) => formData.append(item[0], item[1]));
