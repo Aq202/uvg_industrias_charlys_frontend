@@ -69,7 +69,7 @@ function InventoryMaterialsPage() {
               value={type}
               onChange={(e) => setType(e.target.value)}
               name="type"
-              options={result2?.result.map((option) => ({
+              options={result2?.result?.result.map((option) => ({
                 value: option.name,
                 title: option.name,
               }))}
@@ -87,7 +87,7 @@ function InventoryMaterialsPage() {
           className={styles.table}
           loading={loading}
         >
-          {result?.map(
+          {result?.result?.map(
             (val) => (type === '' || val.materialType === type) && (
             <TableRow key={val.id} onClick={() => setSelectedItemId(val.id)}>
               <td>{val.id}</td>

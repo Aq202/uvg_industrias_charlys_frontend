@@ -132,6 +132,8 @@ function InventoryProductsPage() {
                     </tfoot>
                   </table>
 
+                  <Button text="Editar" name="editar-" className={styles.rowEditButton} />
+
                 </div>
               </div>
             </TableRow>
