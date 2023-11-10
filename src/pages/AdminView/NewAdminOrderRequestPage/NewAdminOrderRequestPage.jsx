@@ -72,6 +72,16 @@ function NewAdminOrderRequestPage() {
     closeCatalog();
   };
 
+  const deleteProduct = (id) => {
+    const currentSelectedProducts = { ...selectedProducts };
+    const currentQuantities = { ...quantities };
+    delete currentSelectedProducts[id];
+    delete currentQuantities[id];
+    setQuantities(currentQuantities);
+    setSelectedProducts(currentSelectedProducts);
+    setCurrentProduct('');
+  };
+
   const handleQuantities = (data) => {
     if (JSON.stringify(data) === '[{}]') return;
 
@@ -103,6 +113,27 @@ function NewAdminOrderRequestPage() {
     return true;
   };
 
+  const validateProducts = () => {
+    let valid = true;
+    if (Object.keys(selectedProducts).length === 0) return true;
+    if (Object.keys(quantities).length === 0) valid = false;
+    Object.keys(quantities).forEach((product) => {
+      quantities[product].forEach((entry) => {
+        if (!entry.size || !entry.quantity || !entry.price) {
+          valid = false;
+        }
+      });
+    });
+    if (!valid) {
+      setErrors((lastVal) => ({
+        ...lastVal,
+        products: 'Para cada producto seleccionado se requiere talla, cantidad y precio',
+      }));
+      return false;
+    }
+    return true;
+  };
+
   const getTotal = () => {
     let currentTotal = 0.00;
     Object.keys(quantities).forEach((product) => {
@@ -121,6 +152,9 @@ function NewAdminOrderRequestPage() {
     e.preventDefault();
 
     if (!validateDescription()) return;
+    if (!validateProducts()) return;
+
+    setErrors({});
 
     const formCopy = { ...form };
 
@@ -224,6 +258,7 @@ function NewAdminOrderRequestPage() {
               <ProductsSlider
                 products={Object.values(selectedProducts)}
                 onChange={setCurrentProduct}
+                onDelete={deleteProduct}
               />
             ) : (
               <p className={styles.secondaryText}>
@@ -282,6 +317,7 @@ function NewAdminOrderRequestPage() {
             {!loadingPost && <Button type="submit" name="send-request" text="Enviar solicitud" onClick={handleSubmit} />}
             {loadingPost && <Spinner />}
           </div>
+          {errors?.products && <p className={styles.errorText}>{errors.products}</p>}
         </form>
         )}
       </div>

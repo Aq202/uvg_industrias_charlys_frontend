@@ -29,8 +29,11 @@ import useCount from '../../hooks/useCount';
  * @param onChange. Function. Callback que se ejecuta al cambiar de producto y devuelve como
  * parámetro el id del producto seleccionado.
  * @param resetIndex trigger que coloca el producto seleccionado en 0.
+ * @param onDelete. Callback opcional a una función para eliminar el producto de un arreglo u objeto
  */
-function ProductsSlider({ products, onChange, resetIndex }) {
+function ProductsSlider({
+  products, onChange, resetIndex, onDelete,
+}) {
   const {
     count, next, previous, setCount,
   } = useCount(null, 0, products.length - 1);
@@ -67,6 +70,7 @@ function ProductsSlider({ products, onChange, resetIndex }) {
               organization={product.organization}
               loadingImage={product.loadingImage}
               onClick={() => setCount(index)}
+              onDelete={() => onDelete(product.id)}
             />
           ))}
         </div>
@@ -97,10 +101,12 @@ ProductsSlider.propTypes = {
     loadingImage: PropTypes.bool,
   })),
   resetIndex: PropTypes.number,
+  onDelete: PropTypes.func,
 };
 
 ProductsSlider.defaultProps = {
   onChange: null,
   products: null,
   resetIndex: null,
+  onDelete: null,
 };
