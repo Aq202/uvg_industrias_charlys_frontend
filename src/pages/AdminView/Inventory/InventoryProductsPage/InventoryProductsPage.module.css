@@ -38,6 +38,7 @@
   justify-content: center;
   box-shadow: var(--container--box-shadow--);
   padding: 35px;
+  background-color: white;
 }
 
 .head{
@@ -83,6 +84,8 @@ Table {
   text-align: left;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  row-gap: 25px;
 }
 
 .productData{
@@ -157,8 +160,11 @@ Table {
 
   .info{
     align-items: center;
-    padding: 25px;
+    padding: 0px;
+    background-color: transparent;
+    box-shadow: none;
   }
+
 }
 
 @media screen and (max-width: 400px) {

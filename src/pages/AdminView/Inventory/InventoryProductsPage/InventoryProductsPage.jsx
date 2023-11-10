@@ -80,7 +80,7 @@ function InventoryProductsPage() {
         </div>
         <Table
           header={['Productos en inventario']}
-          breakPoint="600px"
+          breakPoint="1px"
           showCheckbox={false}
           className={styles.table}
           loading={loadingProducts}

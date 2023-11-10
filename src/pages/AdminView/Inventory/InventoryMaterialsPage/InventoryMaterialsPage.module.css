@@ -38,6 +38,7 @@
   justify-content: center;
   box-shadow: var(--container--box-shadow--);
   padding: 35px;
+  background-color: white;
 }
 
 .head{
@@ -118,7 +119,9 @@ Table {
 
   .info{
     align-items: center;
-    padding: 25px;
+    padding: 0;
+    box-shadow: none;
+    background-color: transparent;
   }
 }
 

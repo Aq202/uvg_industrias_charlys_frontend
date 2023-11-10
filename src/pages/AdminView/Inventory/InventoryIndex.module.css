@@ -22,5 +22,6 @@
 
 .inventoryIndex{
   padding: var(--min-page-vertical-padding--) var(--min-page-horizontal-padding--);
+  background-color: white;
 }
 }
