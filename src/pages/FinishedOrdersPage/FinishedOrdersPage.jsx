@@ -44,8 +44,6 @@ function FinishedOrdersPage() {
       ? `${serverHost}/order/finished?client=${userInfo.clientOrganizationId}&${searchParams.toString()}`
       : `${serverHost}/order/finished?${searchParams.toString()}`;
 
-    console.log(uri);
-
     getOrders({
       uri,
       headers: { authorization: token },
@@ -55,12 +53,6 @@ function FinishedOrdersPage() {
   useEffect(() => {
     getConfirmedOrders();
   }, [currentPage, filter]);
-
-  useEffect(() => {
-    console.log(userInfo);
-    if (!resultOrders) return;
-    console.log(resultOrders);
-  }, [resultOrders]);
 
   return (
     <div className={styles.confirmedOrdersPage}>
