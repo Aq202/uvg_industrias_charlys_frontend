@@ -39,7 +39,7 @@ function AdminMainPage() {
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
         <Route path="/producto/:id" element={<ProductDetailsPage />} />
         <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
-        <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
+        <Route path="/ordenConfirmada/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
         <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
         <Route path="/config/*" element={<Config />} />

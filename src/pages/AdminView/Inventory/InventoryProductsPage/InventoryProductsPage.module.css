@@ -1,0 +1,168 @@
+.inventory{
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  
+.store{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 3%;
+  justify-content: space-between;
+}
+
+.store h2{
+  font-size: var(--h2-title-size--);
+  width: 100%;
+  color: #313131;
+  padding: 0;
+}
+
+.store Button {
+  height: 6vh;
+  font-size: 15px;
+}
+
+.info{
+  width: 100%;
+  margin-top: 30px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  box-shadow: var(--container--box-shadow--);
+  padding: 35px;
+}
+
+.head{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.content{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+Table {
+  margin-top: 3.5vh;
+}
+
+.table{
+  width: 100%;
+}
+
+.icons{
+  display: flex;
+  gap: 10%;
+  justify-content: center;
+}
+
+.iconButton{
+  background: none;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rowContainer{
+  background-color: white;
+  padding: 25px 50px;
+  border-bottom: 1px solid rgb(156, 156, 156);
+  text-align: left;
+  display: flex;
+  justify-content: space-around;
+}
+
+.productData{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dataRow{
+  margin: 0;
+}
+
+.dataRow span{
+  font-weight: bold;
+}
+
+.sizesTable{
+  text-align: center;
+}
+
+.sizesTable thead tr{
+  background-color: transparent;
+  color: black;
+}
+
+.sizesTable thead th{
+  border-bottom: 2px solid black;
+}
+
+.productModel{
+  max-width: 300px;
+}
+
+@media  screen and (max-width: 600px) {
+  .store{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .store h2{
+      text-align: center;
+  }
+
+  .store Button{
+      width: 100%;
+  }
+
+  .head{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+  }
+
+  .content{
+      width: 100vw;
+      margin: -1% 0 2% 0;
+      display: flex;
+      justify-content: center;
+  }
+
+
+  .head{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;  
+  }
+
+  .info{
+    align-items: center;
+    padding: 25px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .store Button{
+      width: 90%;
+  }
+}

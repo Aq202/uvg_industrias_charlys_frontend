@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import styles from './InventoryIndex.module.css';
 import TabMenu from '../../../components/TabMenu/TabMenu';
 import InventoryMaterialsPage from './InventoryMaterialsPage/InventoryMaterialsPage';
+import InventoryProductsPage from './InventoryProductsPage/InventoryProductsPage';
 
 function InventoryIndex() {
   return (
@@ -14,6 +15,7 @@ function InventoryIndex() {
 
       <Routes>
         <Route path="/" element={<InventoryMaterialsPage />} />
+        <Route path="/producto" element={<InventoryProductsPage />} />
       </Routes>
 
     </div>
