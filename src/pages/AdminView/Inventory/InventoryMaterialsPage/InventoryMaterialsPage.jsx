@@ -3,21 +3,21 @@ import React, { useState, useEffect } from 'react';
 import UpdateIcon from '@mui/icons-material/Update';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
-import useCount from '../../../hooks/useCount';
-import SearchInput from '../../../components/SearchInput/SearchInput';
-import InputSelect from '../../../components/InputSelect/InputSelect';
-import styles from './Inventory.module.css';
-import useToken from '../../../hooks/useToken';
-import Button from '../../../components/Button/Button';
-import usePopUp from '../../../hooks/usePopUp';
-import InventoryDetails from '../../../components/InventoryDetails/InventoryDetails';
-import PopUp from '../../../components/PopUp/PopUp';
-import SuccessNotificationPopUp from '../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
-import NewMaterialFormPopUp from '../../../components/NewMaterialFormPopUp/NewMaterialFormPopUp';
-import Table from '../../../components/Table/Table';
-import TableRow from '../../../components/TableRow/TableRow';
+import useCount from '../../../../hooks/useCount';
+import SearchInput from '../../../../components/SearchInput/SearchInput';
+import InputSelect from '../../../../components/InputSelect/InputSelect';
+import styles from './InventoryMaterialsPage.module.css';
+import useToken from '../../../../hooks/useToken';
+import Button from '../../../../components/Button/Button';
+import usePopUp from '../../../../hooks/usePopUp';
+import InventoryDetails from '../../../../components/InventoryDetails/InventoryDetails';
+import PopUp from '../../../../components/PopUp/PopUp';
+import SuccessNotificationPopUp from '../../../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
+import NewMaterialFormPopUp from '../../../../components/NewMaterialFormPopUp/NewMaterialFormPopUp';
+import Table from '../../../../components/Table/Table';
+import TableRow from '../../../../components/TableRow/TableRow';
 
-function Inventory() {
+function InventoryMaterialsPage() {
   const {
     callFetch, result, loading,
   } = useFetch();
@@ -35,7 +35,7 @@ function Inventory() {
   const [idToUpdate, setIdToUpdate] = useState(null);
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/inventory`, headers: { authorization: token } });
+    callFetch({ uri: `${serverHost}/inventory/material`, headers: { authorization: token } });
   }, [count]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function Inventory() {
   return (
     <div className={styles.inventory}>
       <div className={`${styles.store}`}>
-        <h1>Inventario en bodega</h1>
+        <h2>Inventario en bodega</h2>
         <Button text="Nuevo" name="create-item-button" type="button" green onClick={openMaterialForm} />
       </div>
       <div className={`${styles.info}`}>
@@ -81,7 +81,7 @@ function Inventory() {
         </div>
         <Table
           header={['ID', 'Nombre', 'Tipo', 'Cantidad', 'Acción']}
-          breakPoint="400px"
+          breakPoint="600px"
           maxCellWidth="140px"
           showCheckbox={false}
           className={styles.table}
@@ -131,4 +131,4 @@ function Inventory() {
   );
 }
 
-export default Inventory;
+export default InventoryMaterialsPage;

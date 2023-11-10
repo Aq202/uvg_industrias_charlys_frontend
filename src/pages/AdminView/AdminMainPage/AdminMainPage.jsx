@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import PageContainer from '@pages/PageContainer';
 import OrdersList from '../OrdersList/OrdersList';
 import NewArticle from '../NewArticle/NewArticle';
-import Inventory from '../Inventory/Inventory';
 import ImagePickerPage from '../ImagePickerPage/ImagePickerPage';
 import OrderRequest from '../OrderRequest/OrderRequest';
 import OrganizationsPage from '../Organizations/OrganizationsPage';
@@ -18,6 +17,7 @@ import ProductionControlPage from '../../ProductionControlPage/ProductionControl
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
 import NewAdminOrderRequestPage from '../NewAdminOrderRequestPage/NewAdminOrderRequestPage';
 import Config from '../Config/Config';
+import InventoryIndex from '../Inventory/InventoryIndex';
 
 function AdminMainPage() {
   return (
@@ -25,8 +25,8 @@ function AdminMainPage() {
       <Routes>
         <Route path="/" element={<OrdersList />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/inventario" element={<Inventory />} />
         <Route path="/inventario/nuevo" element={<NewArticle />} />
+        <Route path="/inventario/*" element={<InventoryIndex />} />
         <Route path="/image" element={<ImagePickerPage />} />
         <Route path="/orden/:orderId" element={<OrderRequest />} />
         <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
