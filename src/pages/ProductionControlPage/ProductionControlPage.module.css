@@ -2,6 +2,11 @@
   padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
 }
 
+.pageHeader{
+  display: flex;
+  justify-content: space-between;
+}
+
 .pageTitle{
   margin-bottom: 25px;
   font-size: var(--h1-title-size--);

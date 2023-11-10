@@ -95,10 +95,12 @@ function NewCustomerOrderRequestPage() {
 
     if (!validateDescription()) return;
 
-    const descriptionValue = form.description;
-    if (!(descriptionValue?.length > 0)) form.description = 'Productos ordenados previamente';
+    const formCopy = { ...form };
 
-    form.idClientOrganization = orgId;
+    const descriptionValue = formCopy.description;
+    if (!(descriptionValue?.length > 0)) formCopy.description = 'Productos ordenados previamente';
+
+    formCopy.idClientOrganization = orgId;
 
     const uri = `${serverHost}/orderRequest/client`;
 
@@ -120,11 +122,11 @@ function NewCustomerOrderRequestPage() {
     const formData = new FormData();
 
     // guardar imagenes
-    form.files?.forEach((file) => formData.append('files[]', file, file.name));
-    delete form.files;
+    formCopy.files?.forEach((file) => formData.append('files[]', file, file.name));
+    delete formCopy.files;
 
     // guardar otras props
-    Object.entries(form).forEach((item) => formData.append(item[0], item[1]));
+    Object.entries(formCopy).forEach((item) => formData.append(item[0], item[1]));
 
     // products.forEach((product) => formData.append('products[]', product));
 
@@ -147,9 +149,6 @@ function NewCustomerOrderRequestPage() {
     const tokenPayload = getTokenPayload(token);
     setOrgId(() => tokenPayload.clientOrganizationId);
   }, [token]);
-
-  useEffect(() => {
-  }, [selectedProducts]);
 
   useEffect(() => {
     if (!errorPost) return;

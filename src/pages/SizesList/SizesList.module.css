@@ -1,0 +1,86 @@
+.page{
+    width: 100%;
+    padding: 0 0 100px 0;
+}
+
+.sizesList {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.title h2 {
+    font-size: var(--h2-title-size--);
+    width: 100%;
+    color: #313131;
+    padding: 0;
+    margin: 0;
+}
+
+.content{
+    width: 100%;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--container--box-shadow--);
+    padding: 15px;
+}
+
+.filters {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 10px 50px;
+}
+
+.sizes{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 50px;
+}
+
+.size{
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: var(--container--box-shadow--);
+}
+
+.size > p{
+    text-align: left;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.garbageIcon{
+    filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(357deg) brightness(117%) contrast(100%);
+    cursor: pointer;
+}
+
+@media only screen and (max-width:730px){
+    .filters{
+        justify-content: center;
+    }
+}

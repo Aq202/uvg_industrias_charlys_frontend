@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
+import { Pagination } from '@mui/material';
 import styles from './Table.module.css';
 import Spinner from '../Spinner/Spinner';
 import randomString from '../../helpers/randomString';
+
 /**
  * Componente para crear las tablas del proyecto.
  *
@@ -21,6 +23,12 @@ import randomString from '../../helpers/randomString';
  * @param showCheckbox boolean. Mostrar los check para seleccionar filas.
  * @param onSelectedRowsChange callback que devuelve las filas seleccionadas.
  * @param className clase a aplicar al contenedor de la tabla.
+ * @param numOfPages Total de páginas a desplegar en el componente de paginación. Si no se
+ * especifíca un número, no se muestra la paginación.
+ * @param currentPage Página actual. Las páginas inician con el índice cero.
+ * @param handlePageChange Función callback que se va a ejecutar cuando se cambie de página.
+ * Esta función devuelve en su parámetro la página nueva seleccionada.
+ *
  *
  */
 function Table({
@@ -32,6 +40,9 @@ function Table({
   onSelectedRowsChange,
   className,
   loading,
+  numOfPages,
+  currentPage,
+  handlePageChange,
 }) {
   const [selectedRowsId, setSelectedRowsId] = useState([]);
   const [useVerticalStyle, setUseVerticalStyle] = useState(false);
@@ -52,6 +63,10 @@ function Table({
       // seleccionar todos
       setSelectedRowsId(React.Children.map(children, (item) => item.props.id));
     } else setSelectedRowsId([]); // vaciar todos
+  };
+
+  const pageChange = (e, page) => {
+    if (handlePageChange) handlePageChange(page - 1);
   };
 
   useEffect(() => {
@@ -91,7 +106,9 @@ function Table({
               </td>
             )}
             {header?.map((val) => (
-              <td key={randomString()} style={{ maxWidth: maxCellWidth }}>{val}</td>
+              <td key={randomString()} style={{ maxWidth: maxCellWidth }}>
+                {val}
+              </td>
             ))}
           </tr>
         </thead>
@@ -106,7 +123,10 @@ function Table({
 
           {!loading && !children && (
             <tr>
-              <td className={`${styles.completeRow} ${styles.noResults}`} colSpan={(header?.length ?? 0) + 1}>
+              <td
+                className={`${styles.completeRow} ${styles.noResults}`}
+                colSpan={(header?.length ?? 0) + 1}
+              >
                 No hay resultados.
               </td>
             </tr>
@@ -128,6 +148,18 @@ function Table({
         </tbody>
         <tfoot />
       </table>
+
+      {numOfPages && (
+        <div className={styles.paginationContainer}>
+          <Pagination
+            count={numOfPages}
+            siblingCount={2}
+            className={styles.pagination}
+            onChange={pageChange}
+            page={currentPage + 1}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -143,6 +175,9 @@ Table.propTypes = {
   onSelectedRowsChange: PropTypes.func,
   className: PropTypes.string,
   loading: PropTypes.bool,
+  numOfPages: PropTypes.number,
+  currentPage: PropTypes.number,
+  handlePageChange: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -153,4 +188,7 @@ Table.defaultProps = {
   onSelectedRowsChange: null,
   className: '',
   loading: false,
+  numOfPages: null,
+  currentPage: 0,
+  handlePageChange: null,
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
-  Link, Route, Routes, useParams,
+  Link, Route, Routes, useLocation, useParams,
 } from 'react-router-dom';
 import styles from './ProductionControlPage.module.css';
 import OrdersInProductionList from '../../components/OrdersInProductionList/OrdersInProductionList';
@@ -19,6 +19,7 @@ import ProgressTable from '../../components/ProgressTable/ProgressTable';
 import useCount from '../../hooks/useCount';
 import UpdateProductionStagePopUp from '../../components/UpdateProductionStagePopUp/UpdateProductionStagePopUp';
 import usePopUp from '../../hooks/usePopUp';
+import ProductionActionButton from './ProductionActionButton/ProductionActionButton';
 
 function ProductionControlPage() {
   const { callFetch: fetchOrderData, result: orderResult, loading: loadingOrder } = useFetch();
@@ -27,6 +28,7 @@ function ProductionControlPage() {
   const token = useToken();
 
   const { orderId: currentOrder } = useParams();
+  const location = useLocation();
 
   const {
     count: forceUpdateOrderDataTrigger,
@@ -63,6 +65,14 @@ function ProductionControlPage() {
       setOrderData(null);
     }
   }, [currentOrder]);
+
+  useEffect(() => {
+    // Recargar lista de ordenes, según estado proporcinado en la ruta
+    // Esto se produce al redireccionar cuando se eliminó una orden
+    if (location?.state?.reload) {
+      fireForceUpdatOrdersListTrigger();
+    }
+  }, [location.state]);
 
   useEffect(() => {
     // Añadir resultado de orden a variable de estado
@@ -109,7 +119,12 @@ function ProductionControlPage() {
 
   return (
     <div className={styles.productionControlPage}>
-      <h1 className={styles.pageTitle}>Control de producción</h1>
+
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Control de producción</h1>
+        <ProductionActionButton idOrder={currentOrder} />
+      </header>
+
       <div className={styles.productionControlPageContainer}>
         <OrdersInProductionList
           onFinishLoading={() => setIsLoadingOrdersList(false)}
