@@ -28,7 +28,7 @@
     align-items: center;
     display: flex;
     column-gap: 15px;
-    row-gap: 10px;
+    row-gap: 20px;
     width: 80%;
     justify-content: flex-end;
     flex-direction: row;
@@ -36,7 +36,7 @@
     margin-bottom: 30px;
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 520px) {
     .listContainer{
         background-color: #FDFDFD;
         box-shadow: none;

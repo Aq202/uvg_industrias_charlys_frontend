@@ -2,11 +2,22 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { BsCardImage as ImageIcon } from 'react-icons/bs';
+import { TiDelete as DeleteIcon } from 'react-icons/ti';
 import styles from './ProductModel.module.css';
 import randomString from '../../helpers/randomString';
 
 function ProductModel({
-  url, name, imageUrl, type, organization, colors, loadingImage, className, itemRef, onClick,
+  url,
+  name,
+  imageUrl,
+  type,
+  organization,
+  colors,
+  loadingImage,
+  className,
+  itemRef,
+  onClick,
+  onDelete,
 }) {
   const [showDefaultImg, setShowDefaultImg] = useState(false);
 
@@ -19,42 +30,45 @@ function ProductModel({
   };
 
   return (
-    <NavLink to={url} className={`${styles.linkContainer} ${className}`} ref={itemRef} onClick={onClick}>
-      <div className={styles.productModel}>
-        <div className={styles.imageContainer}>
-          {!loadingImage && !showDefaultImg && (
-          <img
-            src={`${imageUrl}`}
-            alt="Imagen descriptiva del producto"
-            loading="lazy"
-            onError={handleImageError}
-          />
-          )}
-          {
+    <div className={`${styles.productModelContainer} ${className}`}>
+      { onDelete && <DeleteIcon className={styles.deleteIcon} onClick={onDelete} /> }
+      <NavLink to={url} className={styles.linkContainer} ref={itemRef} onClick={onClick}>
+        <div className={styles.productModel}>
+          <div className={styles.imageContainer}>
+            {!loadingImage && !showDefaultImg && (
+            <img
+              src={`${imageUrl}`}
+              alt="Imagen descriptiva del producto"
+              loading="lazy"
+              onError={handleImageError}
+            />
+            )}
+            {
             showDefaultImg && (
             <div className={styles.defaultImageContainer}>
               <ImageIcon className={styles.defaultImage} />
             </div>
             )
           }
-        </div>
-        <div className={styles.infoContainer}>
-          <h3 className={styles.productName}>{name}</h3>
-          <p className={styles.productType}>{type}</p>
-          <p className={styles.organization}>{organization}</p>
-          <div className={styles.colorsContainer}>
-            {colors?.map((color) => (
-              <span
-                key={randomString()}
-                className={styles.color}
-                style={{ backgroundColor: `rgb(${color.r}, ${color.g}, ${color.b})` }}
-                title={color.name}
-              />
-            ))}
+          </div>
+          <div className={styles.infoContainer}>
+            <h3 className={styles.productName}>{name}</h3>
+            <p className={styles.productType}>{type}</p>
+            <p className={styles.organization}>{organization}</p>
+            <div className={styles.colorsContainer}>
+              {colors?.map((color) => (
+                <span
+                  key={randomString()}
+                  className={styles.color}
+                  style={{ backgroundColor: `rgb(${color.r}, ${color.g}, ${color.b})` }}
+                  title={color.name}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </NavLink>
+      </NavLink>
+    </div>
   );
 }
 
@@ -79,6 +93,7 @@ ProductModel.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   itemRef: PropTypes.any,
   onClick: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 ProductModel.defaultProps = {
@@ -90,4 +105,5 @@ ProductModel.defaultProps = {
   itemRef: null,
   onClick: null,
   organization: '',
+  onDelete: null,
 };

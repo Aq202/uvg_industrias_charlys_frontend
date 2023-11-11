@@ -16,6 +16,7 @@ import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
 import NewAdminOrderRequestPage from '../NewAdminOrderRequestPage/NewAdminOrderRequestPage';
+import FinishedOrdersPage from '../../FinishedOrdersPage/FinishedOrdersPage';
 import Config from '../Config/Config';
 import InventoryIndex from '../Inventory/InventoryIndex';
 
@@ -31,6 +32,7 @@ function AdminMainPage() {
         <Route path="/orden/:orderId" element={<OrderRequest />} />
         <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
         <Route path="/orden" element={<OrdersList />} />
+        <Route path="/orden/finalizadas" element={<FinishedOrdersPage />} />
         <Route path="/orden/nuevo" element={<NewAdminOrderRequestPage />} />
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />

@@ -101,6 +101,11 @@
     min-width: 100px;
 }
 
+.errorText{
+    text-align: center;
+    margin-top: 10px;
+    color: var(--error-color--);
+}
 
 @media only screen and (max-width: 850px) {
     .orderInfoContainer{

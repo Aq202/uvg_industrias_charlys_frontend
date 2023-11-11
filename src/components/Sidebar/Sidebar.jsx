@@ -36,9 +36,11 @@ function Sidebar({ displayMenu, menuRef, closeMenu }) {
         {role === consts.role.admin && (
         <>
           <SidebarItem path="/orden" iconUrl={logoutIcon} text="Pedidos recibidos" onClick={closeMenu} />
+          <SidebarItem path="/orden/finalizadas" iconUrl={logoutIcon} text="Órdenes finalizadas" onClick={closeMenu} />
           <SidebarItem path="/inventario" iconUrl={logoutIcon} text="Inventario" onClick={closeMenu} />
           <SidebarItem path="/organizaciones" iconUrl={logoutIcon} text="Organizaciones" onClick={closeMenu} />
           <SidebarItem path="/produccion" iconUrl={logoutIcon} text="Producción" onClick={closeMenu} />
+          <SidebarItem path="/orden/nuevo" iconUrl={logoutIcon} text="Realizar nuevo pedido manualmente" onClick={closeMenu} />
         </>
         )}
         {role === consts.role.client && (
@@ -47,6 +49,7 @@ function Sidebar({ displayMenu, menuRef, closeMenu }) {
             <SidebarItem path="/productos" iconUrl={logoutIcon} text="Productos" onClick={closeMenu} />
             <SidebarItem path="/newOrderRequest" iconUrl={logoutIcon} text="Nuevo pedido" />
             <SidebarItem path="/solicitudOrden" iconUrl={logoutIcon} text="Solicitudes de órden" />
+            <SidebarItem path="/orden/finalizadas" iconUrl={logoutIcon} text="Órdenes finalizadas" onClick={closeMenu} />
             <SidebarItem path="/orden" iconUrl={logoutIcon} text="Órdenes confirmadas" />
           </>
         )}

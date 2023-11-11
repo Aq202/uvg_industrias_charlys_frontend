@@ -1,18 +1,35 @@
-.linkContainer{
-  text-decoration: none;
-  width: 100%;
-  max-width: 400px;
-  height: fit-content;
-}
-.productModel {
+.productModelContainer{
   overflow: hidden;
   height: 350px;
   display: flex;
   flex-direction: column;
   box-shadow: var(--container--box-shadow--);
   border-radius: 10px;
+  width: 100%;
   max-width: 400px;
   margin: 2px;
+  position: relative;
+}
+
+.linkContainer{
+  text-decoration: none;
+  width: 100%;
+  max-width: 400px;
+  height: fit-content;
+}
+
+.productModel {
+  overflow: hidden;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 2px;
+}
+
+.productModel{
+  display: flex;
 }
 
 .imageContainer {
@@ -25,6 +42,13 @@
 .imageContainer img {
   width: 100%;
   height: auto;
+}
+
+.deleteIcon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 200;
 }
 
 .infoContainer {

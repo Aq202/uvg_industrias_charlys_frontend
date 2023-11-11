@@ -8,6 +8,7 @@ import NewProductModelPage from '../../NewProductModelPage/NewProductModelPage';
 import ProductDetailsPage from '../../ProductDetailsPage/ProductDetailsPage';
 import ConfirmedOrdersPage from '../../ConfirmedOrdersPage/ConfirmedOrdersPage';
 import RequestedOrdersPage from '../../RequestedOrdersPage/RequestedOrdersPage';
+import FinishedOrdersPage from '../../FinishedOrdersPage/FinishedOrdersPage';
 import ConfirmedOrderAdminPage from '../../AdminView/OrdersList/ConfirmedOrderAdminPage';
 import OrderRequest from '../../AdminView/OrderRequest/OrderRequest';
 
@@ -23,6 +24,7 @@ function CustomerMainPage() {
         <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
         <Route path="/newOrderRequest" element={<NewCustomerOrderRequestPage />} />
         <Route path="/orden" element={<ConfirmedOrdersPage />} />
+        <Route path="/orden/finalizadas" element={<FinishedOrdersPage />} />
         <Route path="/orden/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/solicitudOrden" element={<RequestedOrdersPage />} />
         <Route path="/solicitudOrden/:orderId" element={<OrderRequest />} />
