@@ -5,6 +5,8 @@ import NewOrderRequest from '@pages/UnloggedView/NewOrderRequest';
 import Portfolio from '@pages/Portfolio';
 import FinishRegistrationPage from '../FinishRegistrationPage/FinishRegistrationPage';
 import PageContainer from '../../PageContainer/PageContainer';
+import RecoverPasswordPage from '../RecoverPasswordPage/RecoverPasswordPage';
+import UpdatePasswordPage from '../UpdatePasswordPage/UpdatePasswordPage';
 
 function UnloggedMainPage() {
   return (
@@ -14,6 +16,8 @@ function UnloggedMainPage() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/newOrder" element={<PageContainer><NewOrderRequest /></PageContainer>} />
       <Route path="/registro" element={<PageContainer><FinishRegistrationPage /></PageContainer>} />
+      <Route path="/recuperacion" element={<PageContainer><RecoverPasswordPage /></PageContainer>} />
+      <Route path="/actualizarContrasena" element={<PageContainer><UpdatePasswordPage /></PageContainer>} />
     </Routes>
   );
 }

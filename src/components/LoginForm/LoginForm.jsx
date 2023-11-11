@@ -75,7 +75,7 @@ function LoginForm() {
 
           <div className="forgot-password-container">
             <span>¿Olvidaste tu contraseña?</span>
-            <a href="./">Recupérala</a>
+            <a href="/recuperacion">Recupérala</a>
           </div>
         </div>
       </div>
