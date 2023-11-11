@@ -24,7 +24,7 @@ function InventoryDetails({ itemId }) {
   }, [error]);
 
   useEffect(() => {
-    const uri = `${serverHost}/inventory?id=${itemId}`;
+    const uri = `${serverHost}/inventory/material?id=${itemId}`;
     callFetch({
       uri,
       method: 'GET',
