@@ -1,0 +1,27 @@
+.inventoryIndex{
+  padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.pageTitle{
+  font-size: var(--h1-title-size--);
+  margin-bottom: 20px;
+}
+
+.mainContainer{
+  box-shadow: var(--container--box-shadow--);
+  background-color: white;
+}
+
+@media screen and (max-width: 600px) {
+  
+.pageTitle{
+  text-align: center;
+}
+
+.inventoryIndex{
+  padding: var(--min-page-vertical-padding--) var(--min-page-horizontal-padding--);
+  background-color: white;
+}
+}

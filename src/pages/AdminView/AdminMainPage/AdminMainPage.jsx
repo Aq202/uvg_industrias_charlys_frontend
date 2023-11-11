@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import PageContainer from '@pages/PageContainer';
 import OrdersList from '../OrdersList/OrdersList';
 import NewArticle from '../NewArticle/NewArticle';
-import Inventory from '../Inventory/Inventory';
 import ImagePickerPage from '../ImagePickerPage/ImagePickerPage';
 import OrderRequest from '../OrderRequest/OrderRequest';
 import OrganizationsPage from '../Organizations/OrganizationsPage';
@@ -17,7 +16,9 @@ import ConfirmedOrderAdminPage from '../OrdersList/ConfirmedOrderAdminPage';
 import ProductionControlPage from '../../ProductionControlPage/ProductionControlPage';
 import EditOrderPage from '../EditOrderPage/EditOrderPage';
 import NewAdminOrderRequestPage from '../NewAdminOrderRequestPage/NewAdminOrderRequestPage';
+import FinishedOrdersPage from '../../FinishedOrdersPage/FinishedOrdersPage';
 import Config from '../Config/Config';
+import InventoryIndex from '../Inventory/InventoryIndex';
 
 function AdminMainPage() {
   return (
@@ -25,12 +26,13 @@ function AdminMainPage() {
       <Routes>
         <Route path="/" element={<OrdersList />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/inventario" element={<Inventory />} />
         <Route path="/inventario/nuevo" element={<NewArticle />} />
+        <Route path="/inventario/*" element={<InventoryIndex />} />
         <Route path="/image" element={<ImagePickerPage />} />
         <Route path="/orden/:orderId" element={<OrderRequest />} />
         <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
         <Route path="/orden" element={<OrdersList />} />
+        <Route path="/orden/finalizadas" element={<FinishedOrdersPage />} />
         <Route path="/orden/nuevo" element={<NewAdminOrderRequestPage />} />
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />
@@ -39,7 +41,7 @@ function AdminMainPage() {
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
         <Route path="/producto/:id" element={<ProductDetailsPage />} />
         <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
-        <Route path="confirmedOrder/:idOrder" element={<ConfirmedOrderAdminPage />} />
+        <Route path="/ordenConfirmada/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
         <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
         <Route path="/config/*" element={<Config />} />

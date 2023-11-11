@@ -34,6 +34,7 @@ function EditOrderPage() {
   const [quantities, setQuantities] = useState({});
   const [currentProduct, setCurrentProduct] = useState('');
   const [imagesToRemove, setImagesToRemove] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
@@ -71,9 +72,31 @@ function EditOrderPage() {
     setImagesToRemove((lastValue) => ([...lastValue, id]));
   };
 
+  const validateProducts = () => {
+    let valid = true;
+    if (Object.keys(selectedProducts).length === 0) return true;
+    if (Object.keys(quantities).length === 0) valid = false;
+    Object.keys(quantities).forEach((product) => {
+      quantities[product].forEach((entry) => {
+        if (!entry.size || !entry.quantity) {
+          valid = false;
+        }
+      });
+    });
+    if (!valid) {
+      setErrors((lastVal) => ({
+        ...lastVal,
+        products: 'Para cada producto seleccionado se requiere talla, cantidad y precio',
+      }));
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Pendiente backend: manejar la información agregada por el admin
+
+    if (!validateProducts()) return;
 
     const formCopy = { ...form };
 
@@ -211,6 +234,16 @@ function EditOrderPage() {
       });
     });
     return currentTotal;
+  };
+
+  const deleteProduct = (id) => {
+    const currentSelectedProducts = { ...selectedProducts };
+    const currentQuantities = { ...quantities };
+    delete currentSelectedProducts[id];
+    delete currentQuantities[id];
+    setQuantities(currentQuantities);
+    setSelectedProducts(currentSelectedProducts);
+    setCurrentProduct('');
   };
 
   useEffect(() => {
@@ -352,6 +385,7 @@ function EditOrderPage() {
           <ProductsSlider
             products={Object.values(selectedProducts)}
             onChange={setCurrentProduct}
+            onDelete={deleteProduct}
           />
           )}
                   {Object.keys(selectedProducts).length === 0
@@ -394,6 +428,7 @@ function EditOrderPage() {
           )}
           {loadingPut && <Spinner />}
         </div>
+        {errors?.products && <p className={styles.errorText}>{errors.products}</p>}
       </div>
       <SuccessNotificationPopUp
         title="Listo"
