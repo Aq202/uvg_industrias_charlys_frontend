@@ -54,7 +54,7 @@ function UpdatePasswordPage() {
     e.preventDefault();
 
     const errors = await validateForm();
-    if (errors) return;
+    if (errors && Object.keys(errors).length > 0) return;
 
     callFetch({
       uri: `${serverHost}/user/updatePassword`,
@@ -68,7 +68,7 @@ function UpdatePasswordPage() {
 
   const navigateToHome = () => navigate('/');
 
-  const forceLogin = () => login({ user: userData.email, password: form.password });
+  const forceLogin = () => login({ email: userData.email, password: form.password });
 
   useEffect(() => {
     if (!validateAccessError) return;
