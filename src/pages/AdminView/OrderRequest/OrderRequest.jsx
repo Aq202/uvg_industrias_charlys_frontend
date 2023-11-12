@@ -19,9 +19,9 @@ import SuccessNotificationPopUp from '@components/SuccessNotificationPopUp/Succe
 import ErrorNotificationPopUp from '@components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import ConfirmationPopUp from '@components/ConfirmationPopUp';
 import NotFoundPage from '@pages/NotFoundPage/NotFoundPage';
-
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './OrderRequest.module.css';
+import alertDialog from '../../../assets/alert_dialog.svg';
 
 function OrderRequest() {
   const {
@@ -130,6 +130,7 @@ function OrderRequest() {
   return (
     <div className={`${styles.OrderRequest}`}>
       {error && <NotFoundPage />}
+      {loading && <LoadingView />}
       {!error && !loading
           && (
           <main>
@@ -145,8 +146,6 @@ function OrderRequest() {
                 )}
             <div className={`${styles.details}`}>
               <div className={`${styles.orderInfoContainer}`}>
-                {loading && <LoadingView />}
-
                 <div className={`${styles.orderInfoHeader}`}>
                   {userRole !== consts.role.client
                     && (
@@ -212,7 +211,9 @@ function OrderRequest() {
                   )
                     : (
                       <div className={`${styles.noProductsMessage}`}>
+                        <img className={styles.alertDialog} src={alertDialog} alt="alert_dialog" />
                         No hay productos seleccionados para esta solicitud de orden.
+                        Debe haber, como mínimo, un producto seleccionado.
                       </div>
                     )}
                 </div>
@@ -246,7 +247,7 @@ function OrderRequest() {
                       text="Iniciar pedido"
                       name="aceptOrder"
                       onClick={openConfirmationPost}
-                      disabled={!result?.clientOrganization}
+                      disabled={!result?.clientOrganization || !result?.detail}
                     />
                   </div>
                   )}
