@@ -10,7 +10,6 @@ import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
 import SearchInput from '../../../components/SearchInput/SearchInput';
 import randomString from '../../../helpers/randomString';
-import consts from '../../../helpers/consts';
 
 function OrdersList() {
   const [query, setQuery] = useState(null);
@@ -74,7 +73,7 @@ function OrdersList() {
         </div>
         {!loading && !error && result && (
           <Pagination
-            count={Math.floor(result.count / consts.pageLength) + 1}
+            count={+result.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}

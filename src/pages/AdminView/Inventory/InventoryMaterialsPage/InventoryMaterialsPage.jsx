@@ -17,7 +17,6 @@ import SuccessNotificationPopUp from '../../../../components/SuccessNotification
 import NewMaterialFormPopUp from '../../../../components/NewMaterialFormPopUp/NewMaterialFormPopUp';
 import Table from '../../../../components/Table/Table';
 import TableRow from '../../../../components/TableRow/TableRow';
-import consts from '../../../../helpers/consts';
 
 function InventoryMaterialsPage() {
   const {
@@ -35,22 +34,26 @@ function InventoryMaterialsPage() {
   const [type, setType] = useState('');
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [idToUpdate, setIdToUpdate] = useState(null);
+  const [query, setQuery] = useState(null);
   const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/inventory/material`, headers: { authorization: token } });
-  }, [count]);
+    let uri = `${serverHost}/inventory/material`;
+
+    if (query) {
+      const params = new URLSearchParams({ search: query });
+      uri += `?${params.toString()}`;
+    }
+
+    const page = new URLSearchParams({ page: currPage });
+    uri += `?${page.toString()}`;
+
+    callFetch({ uri, headers: { authorization: token } });
+  }, [count, query, currPage]);
 
   useEffect(() => {
     callFetch2({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
   }, [count]);
-
-  const searchMaterial = (search) => {
-    callFetch({
-      uri: `${serverHost}/inventory?search=${search}`,
-      headers: { authorization: token },
-    });
-  };
 
   const handleUpdateClick = (e, id) => {
     e.stopPropagation();
@@ -61,6 +64,11 @@ function InventoryMaterialsPage() {
   const handlePageChange = (e, page) => {
     e.preventDefault();
     setCurrPage(page - 1);
+  };
+
+  const handleSearch = (val) => {
+    if (val?.trim().length > 0) setQuery(val);
+    else setQuery(null);
   };
 
   const handleOnUpdateSuccess = () => openSuccess();
@@ -84,7 +92,7 @@ function InventoryMaterialsPage() {
             />
           </div>
           <div className={styles.searchContainer}>
-            <SearchInput handleSearch={searchMaterial} />
+            <SearchInput handleSearch={handleSearch} />
           </div>
         </div>
         <Table
@@ -115,7 +123,7 @@ function InventoryMaterialsPage() {
         </Table>
         {!loading && result && (
           <Pagination
-            count={Math.floor(result.count / consts.pageLength) + 1}
+            count={+result.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}

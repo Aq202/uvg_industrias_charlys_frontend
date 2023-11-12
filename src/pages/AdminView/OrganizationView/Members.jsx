@@ -14,7 +14,6 @@ import DeleteMemberPopUp from '../../../components/DeleteMemberPopUp/DeleteMembe
 import usePopUp from '../../../hooks/usePopUp';
 import styles from './Members.module.css';
 import SearchInput from '../../../components/SearchInput/SearchInput';
-import consts from '../../../helpers/consts';
 
 function Members({ orgId, orgName }) {
   const {
@@ -100,7 +99,7 @@ function Members({ orgId, orgName }) {
         </div>
         {!loading && result && (
           <Pagination
-            count={Math.floor(result.count / consts.pageLength) + 1}
+            count={+result.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}

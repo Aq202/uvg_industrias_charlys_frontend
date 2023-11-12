@@ -11,7 +11,6 @@ import TableRow from '@components/TableRow/TableRow';
 import DateSearch from '@components/DateSearch/DateSearch';
 import DropdownMenuProductType from '@components/DropdownMenuMultProductType/DropdownMenuProducType';
 import styles from './ConfirmedOrders.module.css';
-import consts from '../../../helpers/consts';
 
 function ConfirmedOrders({ orgId }) {
   const {
@@ -96,7 +95,7 @@ function ConfirmedOrders({ orgId }) {
         </div>
         {!loading && result && (
           <Pagination
-            count={Math.floor(result.count / consts.pageLength) + 1}
+            count={+result.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}

@@ -9,7 +9,6 @@ import SearchInput from '../../../components/SearchInput/SearchInput';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import styles from './Requests.module.css';
-import consts from '../../../helpers/consts';
 
 function Requests({ orgId }) {
   const {
@@ -78,7 +77,7 @@ function Requests({ orgId }) {
         </div>
         {!loading && result && (
           <Pagination
-            count={Math.floor(result.count / consts.pageLength) + 1}
+            count={+result.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}
