@@ -11,8 +11,8 @@ function Products({ products }) {
   } = useApiMultipleImages();
 
   const tallas = ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'];
-  const header = ['Talla', 'Cantidad'];
-  const [totalCantidad, setTotalCantidad] = useState(0);
+  const header = ['Talla', 'Cantidad', 'Precio'];
+  const [totalCantidad, setTotalCantidad] = useState({});
   const [productImages, setProductImages] = useState({});
 
   const [currProduct, setCurrProduct] = useState('');
@@ -50,12 +50,15 @@ function Products({ products }) {
 
   useEffect(() => {
     if (producto && producto.sizes) {
-      const newTotalCantidad = producto.sizes.reduce((total, size) => (
+      const quantity = producto.sizes.reduce((total, size) => (
         total + size.quantity
       ), 0);
-      setTotalCantidad(newTotalCantidad);
+      const totalPrice = producto.sizes.reduce((total, size) => (
+        total + size.unit_price
+      ), 0);
+      setTotalCantidad((prev) => ({ ...prev, quantity, totalPrice }));
     } else {
-      setTotalCantidad(0);
+      setTotalCantidad((prev) => ({ ...prev, quantity: 0 }));
     }
   }, [producto]);
 
@@ -109,12 +112,16 @@ function Products({ products }) {
                       <td className={`${styles.tableTdProduct}`}>
                         {cantidad}
                       </td>
+                      <td className={`${styles.tableTdProduct}`}>
+                        {(size && size.unit_price) ? size.unit_price : '0'}
+                      </td>
                     </tr>
                   );
                 })}
                 <tr>
                   <td className={`${styles.tableTotalProduct}`}><strong>Total</strong></td>
-                  <td className={`${styles.tableTotalProduct}`}><strong>{totalCantidad}</strong></td>
+                  <td className={`${styles.tableTotalProduct}`}><strong>{totalCantidad.quantity}</strong></td>
+                  <td className={`${styles.tableTotalProduct}`}><strong>{totalCantidad.totalPrice}</strong></td>
                 </tr>
               </tbody>
               <tfoot />
