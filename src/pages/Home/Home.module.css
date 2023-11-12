@@ -44,17 +44,17 @@
     padding: 10px 20px;
 }
 
-/* .item:hover {
-    background-color: #eeeeee;
-} */
-
 .item:hover {
+    background-color: #eeeeee;
+}
+
+/* .item:hover {
     background-color: var(--blue-theme-color--);
 
     .text, .icon {
         color: #eeeeee;
     }
-}
+} */
 
 .text {
     color: #000000;
