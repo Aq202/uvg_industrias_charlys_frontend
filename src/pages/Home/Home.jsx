@@ -6,6 +6,8 @@ import {
   MdAddShoppingCart as NewOrderRequestIcon,
   MdShoppingCartCheckout as OrdersRequestIcon,
   MdOutlineShoppingCart as ConfirmedOrdersIcon,
+  MdOutlineCheckCircle as FinishedOrdersIcon,
+  MdOutlineAddTask as NewManualOrderRequestIcon,
 } from 'react-icons/md';
 import {
   GiOrganigram as OrganizationsIcon,
@@ -60,6 +62,11 @@ function Home() {
       text: 'Producción',
       url: '/produccion',
     },
+    {
+      icon: <NewManualOrderRequestIcon className={styles.icon} />,
+      text: 'Crear solicitud de pedido',
+      url: '/orden/nuevo',
+    },
   ];
 
   const clientItems = [
@@ -82,6 +89,11 @@ function Home() {
       icon: <ConfirmedOrdersIcon className={styles.icon} />,
       text: 'Órdenes confirmadas',
       url: '/orden',
+    },
+    {
+      icon: <FinishedOrdersIcon className={styles.icon} />,
+      text: 'Órdenes finalizadas',
+      url: '/orden/finalizadas',
     },
   ];
 
