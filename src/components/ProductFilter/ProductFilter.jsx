@@ -72,7 +72,7 @@ function ProductFilter({ idOrganization, onChange, className }) {
               <DownArrow className={`${styles.sectionArrow} ${!showTypeFilter ? styles.up : ''}`} />
             </div>
             <AnimateHeight height={showTypeFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
-              {types?.map((item) => (
+              {types?.result.map((item) => (
                 <CheckboxItem
                   key={item.id}
                   onChange={handleTypeOptionChange}
@@ -96,7 +96,7 @@ function ProductFilter({ idOrganization, onChange, className }) {
               <DownArrow className={`${styles.sectionArrow} ${!showColorFilter ? styles.up : ''}`} />
             </div>
             <AnimateHeight height={showColorFilter ? 'auto' : 0} className={`${styles.itemContainer} ${scrollbarGray}`}>
-              {colors?.map((item) => (
+              {colors?.result.map((item) => (
                 <CheckboxColorItem
                   key={item.id}
                   onChange={handleColorOptionChange}

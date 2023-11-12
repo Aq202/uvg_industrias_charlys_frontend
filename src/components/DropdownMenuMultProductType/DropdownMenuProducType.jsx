@@ -106,7 +106,7 @@ function DropdownMenuProductType({ orgId, onChange }) {
           <div className={`${styles.caret}`} />
           <ul className={`${styles.options} ${showList && styles.show}`}>
             {result
-              && result.map((type) => (
+              && result.result.map((type) => (
                 <li
                   key={type.id}
                   className={`${styles.option} ${
