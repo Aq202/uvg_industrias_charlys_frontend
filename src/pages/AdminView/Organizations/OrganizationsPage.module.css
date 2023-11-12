@@ -91,3 +91,9 @@
     filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(357deg) brightness(117%) contrast(100%);
     cursor: pointer;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}

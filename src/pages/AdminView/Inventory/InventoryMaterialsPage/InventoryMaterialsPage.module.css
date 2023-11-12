@@ -77,6 +77,13 @@ Table {
   cursor: pointer;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
 
 @media  screen and (max-width: 600px) {
   .store{

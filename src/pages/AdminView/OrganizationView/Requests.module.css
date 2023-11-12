@@ -65,6 +65,13 @@ Table {
     width: 100%;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    width: 100%;
+}
+
 @media screen and (max-width: 1400px) {
     .searchContainer {
         width: 40%;

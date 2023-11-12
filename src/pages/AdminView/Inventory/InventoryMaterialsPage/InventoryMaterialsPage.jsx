@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import UpdateIcon from '@mui/icons-material/Update';
+import { Pagination } from '@mui/material';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useCount from '../../../../hooks/useCount';
@@ -16,6 +17,7 @@ import SuccessNotificationPopUp from '../../../../components/SuccessNotification
 import NewMaterialFormPopUp from '../../../../components/NewMaterialFormPopUp/NewMaterialFormPopUp';
 import Table from '../../../../components/Table/Table';
 import TableRow from '../../../../components/TableRow/TableRow';
+import consts from '../../../../helpers/consts';
 
 function InventoryMaterialsPage() {
   const {
@@ -33,6 +35,7 @@ function InventoryMaterialsPage() {
   const [type, setType] = useState('');
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [idToUpdate, setIdToUpdate] = useState(null);
+  const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
     callFetch({ uri: `${serverHost}/inventory/material`, headers: { authorization: token } });
@@ -53,6 +56,11 @@ function InventoryMaterialsPage() {
     e.stopPropagation();
     setIdToUpdate(id);
     openMaterialForm();
+  };
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
   };
 
   const handleOnUpdateSuccess = () => openSuccess();
@@ -105,7 +113,14 @@ function InventoryMaterialsPage() {
             ),
           )}
         </Table>
-
+        {!loading && result && (
+          <Pagination
+            count={Math.floor(result.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </div>
       {selectedItemId !== null && (
         <PopUp close={() => setSelectedItemId(null)} closeWithBackground>

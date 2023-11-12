@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Pagination } from '@mui/material';
 import moment from 'moment';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
@@ -10,6 +11,7 @@ import TableRow from '@components/TableRow/TableRow';
 import DateSearch from '@components/DateSearch/DateSearch';
 import DropdownMenuProductType from '@components/DropdownMenuMultProductType/DropdownMenuProducType';
 import styles from './ConfirmedOrders.module.css';
+import consts from '../../../helpers/consts';
 
 function ConfirmedOrders({ orgId }) {
   const {
@@ -21,6 +23,7 @@ function ConfirmedOrders({ orgId }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [types, setTypes] = useState([]);
+  const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
     let uri = `${serverHost}/organization/orders/${orgId}`;
@@ -29,6 +32,9 @@ function ConfirmedOrders({ orgId }) {
       const params = new URLSearchParams({ search: query });
       uri += `?${params.toString()}`;
     }
+
+    const page = new URLSearchParams({ page: 0 });
+    uri += `?${page.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
   }, [query, startDate, endDate, types]);
@@ -45,6 +51,11 @@ function ConfirmedOrders({ orgId }) {
 
   const handleTypeSelection = (typesSelected) => {
     setTypes(typesSelected);
+  };
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
   };
 
   return (
@@ -83,6 +94,14 @@ function ConfirmedOrders({ orgId }) {
             ))}
           </Table>
         </div>
+        {!loading && result && (
+          <Pagination
+            count={Math.floor(result.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </div>
     </div>
   );

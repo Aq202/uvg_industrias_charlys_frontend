@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
+import { Pagination } from '@mui/material';
 import { useNavigate } from 'react-router';
 import styles from './OrganizationsPage.module.css';
 import Button from '../../../components/Button/Button';
@@ -16,6 +17,7 @@ import SuccessNotificationPopUp from '../../../components/SuccessNotificationPop
 import ErrorNotificationPopUp from '../../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import NewOrganizationFormPopUp from '../../../components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 import garbage from '../../../assets/garbage.svg';
+import consts from '../../../helpers/consts';
 
 function OrganizationsPage() {
   const {
@@ -34,6 +36,7 @@ function OrganizationsPage() {
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
   const [isErrorOpen, openError, closeError] = usePopUp();
   const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
+  const [currPage, setCurrPage] = useState(0);
 
   const getOrganizations = (page) => {
     const uri = `${serverHost}/organization/?page=${page}`;
@@ -72,6 +75,11 @@ function OrganizationsPage() {
 
   const selectOrganization = (orgId) => {
     navigate(`/organizacion/${orgId}`);
+  };
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
   };
 
   useEffect(() => {
@@ -137,6 +145,14 @@ function OrganizationsPage() {
             </TableRow>
           ))}
         </Table>
+        {!loadingOrg && !errorOrg && resultOrg && (
+          <Pagination
+            count={Math.floor(resultOrg.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </div>
       {popUpDisable !== null && (
         <PopUp close={() => setPopUpDisable(null)} closeWithBackground>

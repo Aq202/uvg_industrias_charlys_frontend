@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Pagination } from '@mui/material';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import useToken from '../../../hooks/useToken';
@@ -8,6 +9,7 @@ import SearchInput from '../../../components/SearchInput/SearchInput';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import styles from './Requests.module.css';
+import consts from '../../../helpers/consts';
 
 function Requests({ orgId }) {
   const {
@@ -15,16 +17,31 @@ function Requests({ orgId }) {
   } = useFetch();
 
   const token = useToken();
+  const [query, setQuery] = useState(null);
+  const [currPage, setCurrPage] = useState(0);
+
+  const handleSearch = (val) => {
+    if (val?.trim().length > 0) setQuery(val);
+    else setQuery(null);
+  };
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/orderRequests/${orgId}`, headers: { authorization: token } });
-  }, []);
+    let uri = `${serverHost}/organization/orderRequests/${orgId}`;
 
-  const searchRequest = (search) => {
-    callFetch({
-      uri: `${serverHost}/organization/orderRequests/:${orgId}?search=${search}`,
-      headers: { authorization: token },
-    });
+    if (query) {
+      const params = new URLSearchParams({ search: query });
+      uri += `?${params.toString()}`;
+    }
+
+    const page = new URLSearchParams({ page: currPage });
+    uri += `?${page.toString()}`;
+
+    callFetch({ uri, headers: { authorization: token } });
+  }, [query, currPage]);
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
   };
 
   return (
@@ -37,7 +54,7 @@ function Requests({ orgId }) {
       </div>
       <div className={styles.requestsList}>
         <div className={styles.searchContainer}>
-          <SearchInput handleSearch={searchRequest} />
+          <SearchInput handleSearch={handleSearch} />
         </div>
         <div className={styles.content}>
           <Table
@@ -59,6 +76,14 @@ function Requests({ orgId }) {
             }
           </Table>
         </div>
+        {!loading && result && (
+          <Pagination
+            count={Math.floor(result.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </div>
     </div>
   );

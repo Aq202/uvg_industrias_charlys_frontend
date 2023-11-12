@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Pagination } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
@@ -13,6 +14,7 @@ import DeleteMemberPopUp from '../../../components/DeleteMemberPopUp/DeleteMembe
 import usePopUp from '../../../hooks/usePopUp';
 import styles from './Members.module.css';
 import SearchInput from '../../../components/SearchInput/SearchInput';
+import consts from '../../../helpers/consts';
 
 function Members({ orgId, orgName }) {
   const {
@@ -24,22 +26,37 @@ function Members({ orgId, orgName }) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [isDeleteMemberOpen, openDeleteMember, closeDeleteMember] = usePopUp();
   const [isMemberFormOpen, openMemberForm, closeMemberForm] = usePopUp();
+  const [query, setQuery] = useState(null);
+  const [currPage, setCurrPage] = useState(0);
+
+  const handleSearch = (val) => {
+    if (val?.trim().length > 0) setQuery(val);
+    else setQuery(null);
+  };
 
   useEffect(() => {
-    callFetch({ uri: `${serverHost}/organization/clients/${orgId}`, headers: { authorization: token } });
-  }, [count]);
+    let uri = `${serverHost}/organization/clients/${orgId}`;
 
-  const searchMember = (search) => {
-    callFetch({
-      uri: `${serverHost}/organization/clients/${orgId}?search=${search}`,
-      headers: { authorization: token },
-    });
-  };
+    if (query) {
+      const params = new URLSearchParams({ search: query });
+      uri += `?${params.toString()}`;
+    }
+
+    const page = new URLSearchParams({ page: currPage });
+    uri += `?${page.toString()}`;
+
+    callFetch({ uri, headers: { authorization: token } });
+  }, [count, query, currPage]);
 
   const handleDeleteClick = (e, id) => {
     e.stopPropagation();
     setIdToDelete(id);
     openDeleteMember();
+  };
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
   };
 
   return (
@@ -52,7 +69,7 @@ function Members({ orgId, orgName }) {
       </div>
       <div className={styles.membersList}>
         <div className={styles.searchContainer}>
-          <SearchInput handleSearch={searchMember} />
+          <SearchInput handleSearch={handleSearch} />
         </div>
         <div className={styles.content}>
           <Table
@@ -81,6 +98,14 @@ function Members({ orgId, orgName }) {
             }
           </Table>
         </div>
+        {!loading && result && (
+          <Pagination
+            count={Math.floor(result.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </div>
       <NewMemberFormPopUp
         close={closeMemberForm}

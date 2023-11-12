@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Pagination } from '@mui/material';
 import moment from 'moment';
 import Order from '@components/Order/Order';
 import { serverHost } from '@/config';
@@ -9,10 +10,14 @@ import useToken from '../../../hooks/useToken';
 import Spinner from '../../../components/Spinner/Spinner';
 import SearchInput from '../../../components/SearchInput/SearchInput';
 import randomString from '../../../helpers/randomString';
+import consts from '../../../helpers/consts';
 
 function OrdersList() {
   const [query, setQuery] = useState(null);
   const token = useToken();
+
+  const [currPage, setCurrPage] = useState(0);
+
   const {
     callFetch, result, error, loading,
   } = useFetch();
@@ -30,8 +35,16 @@ function OrdersList() {
       uri += `?${params.toString()}`;
     }
 
+    const page = new URLSearchParams({ page: currPage });
+    uri += `?${page.toString()}`;
+
     callFetch({ uri, headers: { authorization: token } });
-  }, [query]);
+  }, [query, currPage]);
+
+  const handlePageChange = (e, page) => {
+    e.preventDefault();
+    setCurrPage(page - 1);
+  };
 
   return (
     <div className={`${styles.OrdersList}`}>
@@ -48,8 +61,8 @@ function OrdersList() {
           </div>
           )}
           {loading && <Spinner />}
-          {result?.length > 0
-            && result.map((val) => (
+          {result?.result.length > 0
+            && result.result.map((val) => (
               <Order
                 id={val.id}
                 cliente={val.client}
@@ -59,6 +72,14 @@ function OrdersList() {
               />
             ))}
         </div>
+        {!loading && !error && result && (
+          <Pagination
+            count={Math.floor(result.count / consts.pageLength) + 1}
+            className={styles.pagination}
+            onChange={handlePageChange}
+            page={currPage + 1}
+          />
+        )}
       </main>
     </div>
   );
