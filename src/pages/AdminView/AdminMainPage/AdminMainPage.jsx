@@ -19,12 +19,14 @@ import NewAdminOrderRequestPage from '../NewAdminOrderRequestPage/NewAdminOrderR
 import FinishedOrdersPage from '../../FinishedOrdersPage/FinishedOrdersPage';
 import Config from '../Config/Config';
 import InventoryIndex from '../Inventory/InventoryIndex';
+import Home from '../../Home/Home';
 
 function AdminMainPage() {
   return (
     <PageContainer>
       <Routes>
-        <Route path="/" element={<OrdersList />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/orderList" element={<OrdersList />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/inventario/nuevo" element={<NewArticle />} />
         <Route path="/inventario/*" element={<InventoryIndex />} />
