@@ -1,0 +1,67 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.form h1{
+    font-size: var(--h1-title-size--);
+    margin: 0;
+    padding: 0;
+}
+
+.form hr{
+    width: 100%;
+}
+
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+    gap: 20px;
+}
+
+.products{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.productInfo{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+  
+.selected {
+    border: 3px solid blue;
+    border-radius: 15px;
+}
+  
+.buttons{
+    display: flex;
+    gap: 20px;
+    padding: 15px 0 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media only screen and (max-width:730px){
+    .products{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .productInfo{
+        display: flex;
+        flex-direction: column;
+    }
+}
