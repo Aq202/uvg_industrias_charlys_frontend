@@ -20,6 +20,7 @@ import useCount from '../../hooks/useCount';
 import UpdateProductionStagePopUp from '../../components/UpdateProductionStagePopUp/UpdateProductionStagePopUp';
 import usePopUp from '../../hooks/usePopUp';
 import ProductionActionButton from './ProductionActionButton/ProductionActionButton';
+import ProductionLogTable from '../../components/ProductionLogTable/ProductionLogTable';
 
 function ProductionControlPage() {
   const { callFetch: fetchOrderData, result: orderResult, loading: loadingOrder } = useFetch();
@@ -221,7 +222,15 @@ function ProductionControlPage() {
                         />
                       )}
                     />
-                    <Route path="/bitacora" element="adios" />
+                    <Route
+                      path="/bitacora"
+                      element={(
+                        <ProductionLogTable
+                          orderId={orderData?.id}
+                          productId={currentProduct?.id}
+                        />
+                      )}
+                    />
                   </Routes>
                 </div>
               )}
