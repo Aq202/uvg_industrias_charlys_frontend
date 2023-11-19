@@ -10,6 +10,8 @@ import Button from '../../../../components/Button/Button';
 import Table from '../../../../components/Table/Table';
 import TableRow from '../../../../components/TableRow/TableRow';
 import ProductModel from '../../../../components/ProductModel/ProductModel';
+import usePopUp from '../../../../hooks/usePopUp';
+import NewProductFormPopUp from '../../../../components/NewProductPopUp/NewProductPopUp';
 
 function InventoryProductsPage() {
   const [filter, setFilter] = useState({});
@@ -28,6 +30,8 @@ function InventoryProductsPage() {
     result: productsResult,
     loading: loadingProducts,
   } = useFetch();
+
+  const [isNewProductoOpen, openNewProduct, closeNewProduct] = usePopUp();
 
   const handleFilterChange = (id, value) => {
     setFilter((prev) => ({ ...prev, [id]: value }));
@@ -58,7 +62,7 @@ function InventoryProductsPage() {
     <div className={styles.inventory}>
       <div className={`${styles.store}`}>
         <h2>Productos en inventario</h2>
-        <Button text="Nuevo" name="create-inv-product-button" type="button" green />
+        <Button text="Nuevo" name="create-inv-product-button" type="button" green onClick={openNewProduct} />
       </div>
       <div className={`${styles.info}`}>
         <div className={`${styles.head}`}>
@@ -141,6 +145,8 @@ function InventoryProductsPage() {
         </Table>
 
       </div>
+
+      <NewProductFormPopUp close={closeNewProduct} isOpen={isNewProductoOpen} />
 
     </div>
   );

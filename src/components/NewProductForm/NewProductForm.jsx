@@ -15,10 +15,9 @@ import InputSelect from '../InputSelect/InputSelect';
 import Button from '../Button/Button';
 import ProductModel from '../ProductModel/ProductModel';
 import SubLoadingView from '../SubLoadingView/SubLoadingView';
+import useForm from '../../hooks/useForm';
 
-function NewProductForm({
-  onError, onSuccess, onCancel,
-}) {
+function NewProductForm({ onError, onSuccess, onCancel }) {
   const {
     callFetch: getOrganizations,
     result: resultOrganizations,
@@ -29,6 +28,7 @@ function NewProductForm({
     callFetch: getOrders,
     result: resultOrders,
     loading: loadingOrders,
+    error: errorOrders,
   } = useFetch();
 
   const {
@@ -37,23 +37,24 @@ function NewProductForm({
     loading: loadingOrderDetails,
   } = useFetch();
 
-  const {
-    getMultipleApiImages,
-    result: resultImagesProduct,
-  } = useApiMultipleImages();
+  const { getMultipleApiImages, result: resultImagesProduct } = useApiMultipleImages();
 
-  const {
-    callFetch: getSizes,
-    result: resultSizes,
-    loading: loadingSizes,
-  } = useFetch();
+  const { callFetch: getSizes, result: resultSizes, loading: loadingSizes } = useFetch();
 
   const {
     callFetch: postProduct,
+    result: postSuccess,
+    error: postError,
+    loading: postLoading,
   } = useFetch();
 
+  const {
+    form, error, setData, validateForm, clearFieldError, validateField,
+  } = useForm({
+    schema: createProductSchema,
+  });
+
   const token = useToken();
-  const [form, setForm] = useState({});
   const [productImages, setProductImages] = useState({});
   const [productSelected, setProductSelected] = useState(null);
 
@@ -104,16 +105,23 @@ function NewProductForm({
   }, []);
 
   useEffect(() => {
-    if (!form.client) return;
-    orders(form.client);
-    form.order = null;
+    setData('order', null);
+    clearFieldError('order');
     setProductSelected(null);
+
+    if (!form.client) return;
+    orders(form.client); // fetch orders
   }, [form.client]);
 
   useEffect(() => {
+    setProductSelected(null);
+    setData('size', null);
+    setData('quantity', null);
+    clearFieldError('size');
+    clearFieldError('quantity');
+
     if (!form.order) return;
     orderDetails(form.order);
-    setProductSelected(null);
   }, [form.order, form.client]);
 
   useEffect(() => {
@@ -132,20 +140,30 @@ function NewProductForm({
     form.quantity = 0;
   }, [productSelected]);
 
-  const validateForm = async () => {
-    try {
-      await createProductSchema.validate(form, { abortEarly: false });
-      return null;
-    } catch (err) {
-      return err;
-    }
+  useEffect(() => {
+    if (postSuccess && onSuccess) onSuccess();
+  }, [postSuccess]);
+
+  useEffect(() => {
+    if (postError && onError) onError(postError.message);
+  }, [postError]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData(name, value);
+  };
+
+  const handleProductClick = (id) => {
+    setData('idProduct', id);
+    clearFieldError('idProduct');
+    clearFieldError('size');
+    clearFieldError('quantity');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = await validateForm();
     if (errors) {
-      onError(errors);
       return;
     }
 
@@ -155,8 +173,6 @@ function NewProductForm({
       headers: { authorization: token },
       body: JSON.stringify(form),
     });
-
-    onSuccess();
   };
 
   return (
@@ -164,80 +180,105 @@ function NewProductForm({
       <h1>Nuevo Producto</h1>
       <hr />
       <div className={styles.formGroup}>
-        {(loadingOrganizations || loadingSizes) && <SubLoadingView />}
+        {(loadingOrganizations
+          || loadingSizes
+          || loadingOrders
+          || loadingOrderDetails
+          || loadingSizes
+          || postLoading) && <SubLoadingView />}
         {resultOrganizations && (
           <InputSelect
             title="Organización"
             name="client"
-            options={
-              resultOrganizations?.result?.map((org) => ({ value: org.id, title: org.name }))
-            }
-            onChange={(e) => setForm({ ...form, client: e.target.value })}
+            options={resultOrganizations?.result?.map((org) => ({
+              value: org.id,
+              title: org.name,
+            }))}
+            onChange={handleChange}
             value={form.client}
+            error={error?.client}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
           />
         )}
-        {loadingOrders && <SubLoadingView />}
-        {!loadingOrders && form.client && (
-        <InputSelect
-          title="Orden"
-          name="order"
-          options={
-              resultOrders?.result?.map((order) => ({ value: order.id, title: order.id }))
-            }
-          onChange={(e) => setForm({ ...form, order: e.target.value })}
-          value={form.order}
-        />
-        )}
-        {loadingOrderDetails && <SubLoadingView />}
-        {resultImagesProduct?.detail?.length === 0 && <p>No hay productos en esta orden</p>}
-        {form.order && (
-          <div className={styles.products}>
-            {resultOrderDetails?.detail?.map((product) => (
-              <div
-                key={product.id}
-                onClick={() => setProductSelected(product.id)}
-                className={productSelected === product.id ? styles.selected : ''}
-              >
-                <ProductModel
-                  id={product.id}
-                  name={product.product}
-                  type={product.description}
-                  organization={product.client}
-                  colors={product.colors}
-                  imageUrl={productImages[product.id]}
-                />
-              </div>
-            ))}
-
-          </div>
-        )}
-        { productSelected && (
-        <div className={styles.productInfo}>
-          {loadingSizes && <SubLoadingView />}
+        {resultOrders && form.client && (
           <InputSelect
-            title="Talla"
-            name="size"
-            options={
-                resultSizes?.map((size) => ({ value: size.id, title: size.size }))
-            }
-            onChange={(e) => setForm({ ...form, size: e.target.value })}
-            value={form.size}
+            title="Orden"
+            name="order"
+            options={resultOrders?.result?.map((order) => ({ value: order.id, title: order.id }))}
+            onChange={handleChange}
+            value={form.order}
+            error={error?.order}
+            onFocus={(e) => clearFieldError(e.target.name)}
+            onBlur={(e) => validateField(e.target.name)}
           />
-          <InputNumber
-            title="Cantidad"
-            name="quantity"
-            value={form.quantity}
-            onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-          />
-        </div>
+        )}
+        {form.client && errorOrders && (
+          <p className={styles.errorMessage}>No hay ordenes finalizadas.</p>
+        )}
+
+        {form.order && !resultOrderDetails?.detail && !loadingOrderDetails && (
+          <p className={styles.errorMessage}>No hay productos en esta orden.</p>
+        )}
+        {form.order && (
+          <>
+            <div className={styles.products}>
+              {resultOrderDetails?.detail?.map((product) => (
+                <div
+                  key={product.id}
+                  onClick={() => handleProductClick(product.id)}
+                  className={form.idProduct === product.id ? styles.selected : ''}
+                >
+                  <ProductModel
+                    id={product.id}
+                    name={product.product}
+                    type={product.type}
+                    organization={product.client}
+                    colors={product.colors}
+                    imageUrl={productImages[product.id]}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {error?.idProduct && <p className={styles.errorMessage}>{error?.idProduct}</p>}
+          </>
+        )}
+        {form.idProduct && (
+          <div className={styles.productInfo}>
+            <InputSelect
+              title="Talla"
+              name="size"
+              options={resultSizes?.result?.map((size) => ({ value: size.id, title: size.size }))}
+              onChange={handleChange}
+              value={form.size}
+              error={error?.size}
+              onFocus={(e) => clearFieldError(e.target.name)}
+              onBlur={(e) => validateField(e.target.name)}
+            />
+            <InputNumber
+              title="Cantidad"
+              name="quantity"
+              value={form.quantity}
+              onChange={handleChange}
+              error={error?.quantity}
+              onFocus={(e) => clearFieldError(e.target.name)}
+              onBlur={(e) => validateField(e.target.name)}
+            />
+          </div>
         )}
       </div>
       <div className={styles.buttons}>
-        <Button text="Enviar" type="submit" />
-        <Button text="Cancelar" emptyRed type="button" onClick={onCancel} />
+        <Button text="Enviar" type="submit" name="send-new-product-inv" />
+        <Button
+          text="Cancelar"
+          emptyRed
+          type="button"
+          onClick={onCancel}
+          name="cancel-new-product-inv"
+        />
       </div>
     </form>
-
   );
 }
 

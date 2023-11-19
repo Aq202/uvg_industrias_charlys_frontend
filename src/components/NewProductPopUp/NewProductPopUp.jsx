@@ -21,7 +21,6 @@ function NewProductFormPopUp({
   };
 
   const handleError = (val) => {
-    close();
     openError();
     setMessage(val);
   };
