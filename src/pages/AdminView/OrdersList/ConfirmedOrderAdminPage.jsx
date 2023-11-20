@@ -15,6 +15,7 @@ import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import LoadingView from '../../../components/LoadingView/LoadingView';
 import OrderProgressBar from '../../../components/OrderProgressBar/OrderProgressBar';
+import FinishedOrderAlert from '../../../components/FinishedOrderAlert/FinishedOrderAlert';
 
 function ConfirmedOrderAdminPage() {
   const { idOrder } = useParams();
@@ -109,6 +110,9 @@ function ConfirmedOrderAdminPage() {
       <div className={styles.confirmedOrderAdminPage}>
         <h1 className={styles.title}> Orden Confirmada </h1>
         <div className={styles.formContainer}>
+
+          {resultOrder?.isFinished && <FinishedOrderAlert />}
+
           <div className={styles.orderInfo}>
             <div className={styles.orderClient}>
               <div className={styles.name}>

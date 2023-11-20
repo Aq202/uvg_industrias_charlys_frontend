@@ -31,11 +31,11 @@ function AdminMainPage() {
         <Route path="/inventario/nuevo" element={<NewArticle />} />
         <Route path="/inventario/*" element={<InventoryIndex />} />
         <Route path="/image" element={<ImagePickerPage />} />
-        <Route path="/orden/:orderId" element={<OrderRequest />} />
-        <Route path="/orden/:orderId/editar" element={<EditOrderPage />} />
-        <Route path="/orden" element={<OrdersList />} />
+        <Route path="/solicitudOrden/:orderId" element={<OrderRequest />} />
+        <Route path="/solicitudOrden/:orderId/editar" element={<EditOrderPage />} />
+        <Route path="/solicitudOrden" element={<OrdersList />} />
         <Route path="/orden/finalizadas" element={<FinishedOrdersPage />} />
-        <Route path="/orden/nuevo" element={<NewAdminOrderRequestPage />} />
+        <Route path="/solicitudOrden/nuevo" element={<NewAdminOrderRequestPage />} />
         <Route path="organizacion/:orgId" element={<OrganizationView />} />
         <Route path="/organizaciones" element={<OrganizationsPage />} />
         <Route path="/producto/nuevo" element={<NewProductModelPage />} />
@@ -43,7 +43,7 @@ function AdminMainPage() {
         <Route path="/organizacion/:orgId/productos" element={<OrganizationProductsPage />} />
         <Route path="/producto/:id" element={<ProductDetailsPage />} />
         <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
-        <Route path="/ordenConfirmada/:idOrder" element={<ConfirmedOrderAdminPage />} />
+        <Route path="/orden/:idOrder" element={<ConfirmedOrderAdminPage />} />
         <Route path="/produccion" element={<ProductionControlPage />} />
         <Route path="/produccion/:orderId/*" element={<ProductionControlPage />} />
         <Route path="/config/*" element={<Config />} />

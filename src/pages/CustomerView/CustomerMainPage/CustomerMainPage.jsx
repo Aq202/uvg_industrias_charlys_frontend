@@ -22,7 +22,7 @@ function CustomerMainPage() {
         <Route path="/producto/nuevo" element={<NewProductModelPage clientView />} />
         <Route path="/producto/:id" element={<ProductDetailsPage />} />
         <Route path="/producto/modelo/:id" element={<ProductDetailsPage model />} />
-        <Route path="/newOrderRequest" element={<NewCustomerOrderRequestPage />} />
+        <Route path="/solicitudOrden/nuevo" element={<NewCustomerOrderRequestPage />} />
         <Route path="/orden" element={<ConfirmedOrdersPage />} />
         <Route path="/orden/finalizadas" element={<FinishedOrdersPage />} />
         <Route path="/orden/:idOrder" element={<ConfirmedOrderAdminPage />} />

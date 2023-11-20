@@ -61,7 +61,7 @@ function EditOrderPage() {
     error: errorPut,
   } = useFetch();
 
-  const redirectToDetails = () => navigate(`/orden/${orderId}`);
+  const redirectToDetails = () => navigate(`/solicitudOrden/${orderId}`);
 
   const handleImagePickerChange = (files) => {
     setForm((lastValue) => ({ ...lastValue, files }));

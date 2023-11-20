@@ -29,7 +29,7 @@ function Order({
         <ArrowCircleRightOutlinedIcon
           style={{ fontSize: '3em' }}
           className={styles.arrowIcon}
-          onClick={() => navigate(`/orden/${id}`)}
+          onClick={() => navigate(`/solicitudOrden/${id}`)}
         />
       </div>
     </div>

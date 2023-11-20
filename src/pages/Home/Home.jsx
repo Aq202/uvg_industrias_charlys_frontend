@@ -65,7 +65,7 @@ function Home() {
     {
       icon: <NewManualOrderRequestIcon className={styles.icon} />,
       text: 'Crear solicitud de pedido',
-      url: '/orden/nuevo',
+      url: '/solicitudOrden/nuevo',
     },
   ];
 
@@ -73,7 +73,7 @@ function Home() {
     {
       icon: <NewOrderRequestIcon className={styles.icon} />,
       text: 'Nueva solicitud de pedido',
-      url: '/orden/nuevo',
+      url: '/solicitudOrden/nuevo',
     },
     {
       icon: <ProductsIcon className={styles.icon} />,

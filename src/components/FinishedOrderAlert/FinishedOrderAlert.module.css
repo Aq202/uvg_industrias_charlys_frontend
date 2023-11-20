@@ -1,0 +1,13 @@
+.finishedOrderAlert{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.finishedIcon{
+  color: green;
+  font-size: 25px;
+}
