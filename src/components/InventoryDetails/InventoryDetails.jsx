@@ -16,8 +16,9 @@ function InventoryDetails({ itemId }) {
 
   useEffect(() => {
     if (!result) return;
-    setInfo(() => (result[0]));
-    setItemType(() => result[0].type);
+    const materialData = result.result;
+    setInfo(() => (materialData[0]));
+    setItemType(() => materialData[0]?.type);
   }, [result]);
 
   useEffect(() => {
@@ -42,14 +43,14 @@ function InventoryDetails({ itemId }) {
         <div className={styles.detailsContainer}>
           <span className={styles.title}>
             {'Descripción del '}
-            {itemType.toLowerCase()}
+            {itemType?.toLowerCase()}
           </span>
           <hr className={styles.divider} />
           <div className={styles.rowContainer}>
             <div className={styles.sectionContainer}>
               <span className={styles.sectionTitle}>Descripción</span>
               <span className={styles.sectionContent}>
-                {info.materialName}
+                {info.materialName ?? 'Sin descripción.'}
               </span>
             </div>
             <div className={styles.sectionContainer}>
@@ -64,13 +65,13 @@ function InventoryDetails({ itemId }) {
             </div>
             <div className={styles.sectionContainer}>
               <span className={styles.sectionTitle}>Proveedor</span>
-              <span className={styles.sectionContent}>{info.supplier}</span>
+              <span className={styles.sectionContent}>{info.supplier ?? 'Sin proveedor.'}</span>
             </div>
           </div>
           <div className={styles.rowContainer}>
             <div className={styles.sectionContainer}>
               <span className={styles.sectionTitle}>Detalles</span>
-              <span className={styles.sectionContent}>{info.details}</span>
+              <span className={styles.sectionContent}>{info.details ?? 'Sin detalles.'}</span>
             </div>
           </div>
         </div>

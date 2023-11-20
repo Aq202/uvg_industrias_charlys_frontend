@@ -20,10 +20,10 @@ import TableRow from '../../../../components/TableRow/TableRow';
 
 function InventoryMaterialsPage() {
   const {
-    callFetch, result, loading,
+    callFetch: fetchMaterials, result, loading,
   } = useFetch();
   const {
-    callFetch: callFetch2, result: result2, loading: loading2,
+    callFetch: fetchMaterialTypes, result: materialsResult, loading: loading2,
   } = useFetch();
 
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
@@ -38,21 +38,18 @@ function InventoryMaterialsPage() {
   const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
-    let uri = `${serverHost}/inventory/material`;
-
+    const params = new URLSearchParams({ page: currPage });
     if (query) {
-      const params = new URLSearchParams({ search: query });
-      uri += `?${params.toString()}`;
+      params.set('search', query);
     }
 
-    const page = new URLSearchParams({ page: currPage });
-    uri += `?${page.toString()}`;
+    const uri = `${serverHost}/inventory/material?${params.toString()}`;
 
-    callFetch({ uri, headers: { authorization: token } });
+    fetchMaterials({ uri, headers: { authorization: token } });
   }, [count, query, currPage]);
 
   useEffect(() => {
-    callFetch2({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
+    fetchMaterialTypes({ uri: `${serverHost}/inventory/materialType`, headers: { authorization: token } });
   }, [count]);
 
   const handleUpdateClick = (e, id) => {
@@ -85,7 +82,7 @@ function InventoryMaterialsPage() {
               value={type}
               onChange={(e) => setType(e.target.value)}
               name="type"
-              options={result2?.result?.result.map((option) => ({
+              options={materialsResult?.result?.map((option) => ({
                 value: option.name,
                 title: option.name,
               }))}
