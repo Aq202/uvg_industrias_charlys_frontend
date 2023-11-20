@@ -135,7 +135,18 @@ function OrderRequest() {
           && (
           <main>
             <div className={`${styles.top}`}>
-              <span className={`${styles.title}`}>Solicitud de pedido</span>
+              <h1 className={`${styles.title}`}>Solicitud de pedido</h1>
+              {userRole !== consts.role.client
+                    && (
+                      <Button
+                        className={styles.editOrderButton}
+                        type="submit"
+                        text="Editar"
+                        name="denyOrder"
+                        onClick={handleEdit}
+                        disabled={!result?.clientOrganization}
+                      />
+                    )}
             </div>
             {result?.temporaryClient && userRole !== consts.role.client
                 && (
@@ -147,19 +158,7 @@ function OrderRequest() {
             <div className={`${styles.details}`}>
               <div className={`${styles.orderInfoContainer}`}>
                 <div className={`${styles.orderInfoHeader}`}>
-                  {userRole !== consts.role.client
-                    && (
-                    <div className={`${styles.editOrderContainer}`}>
-                      <Button
-                        className={styles.editOrderButton}
-                        type="submit"
-                        text="Editar solicitud de pedido"
-                        name="denyOrder"
-                        onClick={handleEdit}
-                        disabled={!result?.clientOrganization}
-                      />
-                    </div>
-                    )}
+
                   {result?.clientOrganization
                     && (
                       <div className={styles.clientInfoContainer}>

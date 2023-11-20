@@ -1,11 +1,12 @@
 .mainContainer {
-	width: 80vw;
+	width: 100%;
     box-shadow: var(--container--box-shadow--);
-    padding: 20px;
+    padding: 40px;
     position: relative;
     overflow: hidden;
     min-height: 30vh;
 	margin: 20px 0;
+    background-color: white;
 }
 
 .createOrganitationBannerContainer {
