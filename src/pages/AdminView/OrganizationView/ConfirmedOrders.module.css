@@ -48,7 +48,7 @@ Button{
     gap:10px;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     margin: 1% 0;
-    align-items: center;
+    align-items: end;
 }
 
 .content{

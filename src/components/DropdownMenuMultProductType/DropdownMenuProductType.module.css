@@ -9,6 +9,7 @@
     padding: 0.5em;
     border-radius: 0.25em;
     outline: none;
+    height: 45px;
 }
 
 .value {
@@ -100,11 +101,12 @@
 }
 
 .option:hover {
-    background-color: #2b73df;
+    background-color: #000281;
     color: white;
 }
 
 .option.selected {
-    background-color: #2b73df;
+    background-color: #000281;
+    color: white;
 }
 
