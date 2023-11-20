@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import UpdateIcon from '@mui/icons-material/Update';
+import { MdEdit as UpdateIcon } from 'react-icons/md';
 import { Pagination } from '@mui/material';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
@@ -113,7 +113,7 @@ function InventoryMaterialsPage() {
               <td>
                 <div className={`${styles.icons}`}>
                   <button type="button" className={styles.iconButton} onClick={(e) => handleUpdateClick(e, val.id)}>
-                    <UpdateIcon />
+                    <UpdateIcon className={styles.updateIcon} />
                   </button>
                 </div>
               </td>

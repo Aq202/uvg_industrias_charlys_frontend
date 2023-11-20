@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import { Link } from 'react-router-dom';
+import { MdEdit as UpdateIcon } from 'react-icons/md';
 import SearchInput from '../../../../components/SearchInput/SearchInput';
 import InputSelect from '../../../../components/InputSelect/InputSelect';
 import styles from './InventoryProductsPage.module.css';
@@ -12,10 +13,15 @@ import TableRow from '../../../../components/TableRow/TableRow';
 import ProductModel from '../../../../components/ProductModel/ProductModel';
 import usePopUp from '../../../../hooks/usePopUp';
 import NewProductFormPopUp from '../../../../components/NewProductPopUp/NewProductPopUp';
+import UpdateInventoryProductPopUp from '../../../../components/UpdateInventoryProductPopUp/UpdateInventoryProductPopUp';
+import useCount from '../../../../hooks/useCount';
 
 function InventoryProductsPage() {
   const [filter, setFilter] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
+  const [productToEdit, setProductToEdit] = useState(null);
+
+  const { count: updateTableTrigger, next: activateTrigger } = useCount(0);
 
   const token = useToken();
 
@@ -52,7 +58,7 @@ function InventoryProductsPage() {
     const uri = `${serverHost}/inventory/product?${searchParams.toString()}`;
 
     fetchProducts({ uri, headers: { authorization: token } });
-  }, [filter, currentPage]);
+  }, [filter, currentPage, updateTableTrigger]);
 
   useEffect(() => {
     setCurrentPage(0);
@@ -120,23 +126,43 @@ function InventoryProductsPage() {
                       <tr>
                         <th>Talla</th>
                         <th>Cantidad</th>
+                        <th>&nbsp;</th>
                       </tr>
                     </thead>
                     {product.sizes.map(({ size, quantity }) => (
                       <tr>
                         <td>{size}</td>
                         <td>{quantity}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className={styles.iconButton}
+                            onClick={() => setProductToEdit({
+                              product: {
+                                id: product.idProduct,
+                                name: product.productName,
+                                imageUrl: product.media?.[0] ? `${serverHost}/image/product/${product.media?.[0]}` : null,
+                                type: product.type,
+                                organization: product.client,
+                                colors: product.colors,
+
+                              },
+                              size,
+                              quantity,
+                            })}
+                          >
+                            <UpdateIcon className={styles.updateIcon} />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                     <tfoot>
                       <tr>
                         <td>Total</td>
-                        <td>{`${product.sizes?.reduce((ac, prod) => (ac?.quantity || 0) + (prod?.quantity || 0), 0)}`}</td>
+                        <td>{`${product.sizes?.reduce((ac, prod) => ac + (prod?.quantity || 0), 0)}`}</td>
                       </tr>
                     </tfoot>
                   </table>
-
-                  <Button text="Editar" name="editar-" className={styles.rowEditButton} />
 
                 </div>
               </div>
@@ -147,6 +173,14 @@ function InventoryProductsPage() {
       </div>
 
       <NewProductFormPopUp close={closeNewProduct} isOpen={isNewProductoOpen} />
+      <UpdateInventoryProductPopUp
+        close={() => setProductToEdit(null)}
+        isOpen={productToEdit !== null}
+        product={productToEdit?.product}
+        size={productToEdit?.size}
+        defaultQuantity={productToEdit?.quantity}
+        onSuccess={activateTrigger}
+      />
 
     </div>
   );

@@ -119,6 +119,16 @@ Table {
   max-width: 300px;
 }
 
+.iconButton{
+  background: none;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+.updateIcon{
+  font-size: 20px;
+}
+
 @media  screen and (max-width: 600px) {
   .store{
       display: flex;

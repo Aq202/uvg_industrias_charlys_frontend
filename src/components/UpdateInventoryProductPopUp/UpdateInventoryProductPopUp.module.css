@@ -1,0 +1,38 @@
+.title{
+  text-align: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.formContainer{
+  display: grid;
+  grid-template-columns: minmax(0, 300px) 1fr;
+  column-gap: 20px;
+}
+
+.dataContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.dataRow span{
+  font-weight: bold;
+}
+
+.buttons{
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 450px){
+  .formContainer{
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+}
