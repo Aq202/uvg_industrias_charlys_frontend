@@ -27,7 +27,12 @@
     width: 100%;
     background-color: #FDFDFD;
     box-shadow: var(--container--box-shadow--);
-    padding: 2%;
+    padding: 40px;
+}
+
+.searchInput{
+    width: max-content;
+    align-self: end;
 }
 
 @media only screen and (max-width: 450px) {

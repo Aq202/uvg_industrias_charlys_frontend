@@ -16,8 +16,8 @@ import SuccessNotificationPopUp from '../../../components/SuccessNotificationPop
 import ErrorNotificationPopUp from '../../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import NewOrganizationFormPopUp from '../../../components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 import garbage from '../../../assets/garbage.svg';
-import consts from '../../../helpers/consts';
 import AppLink from '../../../components/Link/AppLink';
+import SearchInput from '../../../components/SearchInput/SearchInput';
 
 function OrganizationsPage() {
   const {
@@ -36,9 +36,16 @@ function OrganizationsPage() {
   const [isErrorOpen, openError, closeError] = usePopUp();
   const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
   const [currPage, setCurrPage] = useState(0);
+  const [query, setQuery] = useState(null);
 
-  const getOrganizations = (page) => {
-    const uri = `${serverHost}/organization/?page=${page}`;
+  const getOrganizations = (page, searchQuery = null) => {
+    const params = new URLSearchParams({ page });
+
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
+
+    const uri = `${serverHost}/organization/?${params.toString()}`;
 
     callFetch({
       uri,
@@ -78,8 +85,8 @@ function OrganizationsPage() {
   };
 
   useEffect(() => {
-    getOrganizations(0);
-  }, []);
+    getOrganizations(currPage, query);
+  }, [currPage, query]);
 
   useEffect(() => {
     if (!resultDel) return;
@@ -104,7 +111,7 @@ function OrganizationsPage() {
         />
       </div>
       <div className={styles.tableContainer}>
-        {errorOrg && <p>Ocurrió un error al obtener las organizaciones registradas</p>}
+        <SearchInput className={styles.searchInput} handleSearch={setQuery} />
         <Table
           loading={loadingOrg}
           header={['Nombre', 'Correo electrónico', 'Teléfono', '']}
@@ -142,7 +149,7 @@ function OrganizationsPage() {
         </Table>
         {!loadingOrg && !errorOrg && resultOrg && (
           <Pagination
-            count={Math.floor(resultOrg.count / consts.pageLength) + 1}
+            count={resultOrg.count}
             className={styles.pagination}
             onChange={handlePageChange}
             page={currPage + 1}
