@@ -32,7 +32,10 @@ function ConfirmedOrders({ orgId }) {
       uri += `?${params.toString()}`;
     }
 
-    const page = new URLSearchParams({ page: 0 });
+    // const page = new URLSearchParams({ page: currPage });
+    // uri += `?${page.toString()}`;
+
+    const page = new URLSearchParams({ page: currPage });
     uri += `?${page.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
