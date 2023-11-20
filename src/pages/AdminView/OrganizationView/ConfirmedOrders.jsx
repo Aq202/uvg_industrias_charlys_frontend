@@ -25,18 +25,15 @@ function ConfirmedOrders({ orgId }) {
   const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
-    let uri = `${serverHost}/organization/orders/${orgId}`;
-
+    const params = new URLSearchParams({ page: currPage });
     if (query) {
-      const params = new URLSearchParams({ search: query });
-      uri += `?${params.toString()}`;
+      params.set('search', query);
     }
 
-    const page = new URLSearchParams({ page: 0 });
-    uri += `?${page.toString()}`;
+    const uri = `${serverHost}/organization/orders/${orgId}?${params.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
-  }, [query, startDate, endDate, types]);
+  }, [query, startDate, endDate, types, currPage]);
 
   const searchText = (search) => {
     if (search?.trim().length > 0) setQuery(search);
@@ -88,7 +85,7 @@ function ConfirmedOrders({ orgId }) {
               <TableRow key={val.id}>
                 <td>{val.id}</td>
                 <td>{val.description}</td>
-                <td>{val.deadline ? moment(val.deadline).format('DD-MM-YYYY') : 'Null'}</td>
+                <td>{val.deadline ? moment(val.deadline).format('DD-MM-YYYY') : 'S.F.'}</td>
               </TableRow>
             ))}
           </Table>

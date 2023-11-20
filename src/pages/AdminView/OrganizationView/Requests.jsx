@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Pagination } from '@mui/material';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
+import moment from 'moment';
 import useToken from '../../../hooks/useToken';
 import Button from '../../../components/Button/Button';
 import SearchInput from '../../../components/SearchInput/SearchInput';
@@ -25,15 +26,12 @@ function Requests({ orgId }) {
   };
 
   useEffect(() => {
-    let uri = `${serverHost}/organization/orderRequests/${orgId}`;
-
+    const params = new URLSearchParams({ page: currPage });
     if (query) {
-      const params = new URLSearchParams({ search: query });
-      uri += `?${params.toString()}`;
+      params.set('search', query);
     }
 
-    const page = new URLSearchParams({ page: currPage });
-    uri += `?${page.toString()}`;
+    const uri = `${serverHost}/organization/orderRequests/${orgId}?${params.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
   }, [query, currPage]);
@@ -69,7 +67,7 @@ function Requests({ orgId }) {
                 <TableRow key={val.id}>
                   <td>{val.id}</td>
                   <td>{val.description}</td>
-                  <td>{val.date_placed}</td>
+                  <td>{val.date_placed ? moment(val.date_placed).format('DD-MM-YYYY') : 'S.F.'}</td>
                 </TableRow>
               ))
             }

@@ -34,15 +34,12 @@ function Members({ orgId, orgName }) {
   };
 
   useEffect(() => {
-    let uri = `${serverHost}/organization/clients/${orgId}`;
-
+    const page = new URLSearchParams({ page: currPage });
     if (query) {
-      const params = new URLSearchParams({ search: query });
-      uri += `?${params.toString()}`;
+      page.set('search', query);
     }
 
-    const page = new URLSearchParams({ page: currPage });
-    uri += `?${page.toString()}`;
+    const uri = `${serverHost}/organization/clients/${orgId}?${page.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
   }, [count, query, currPage]);

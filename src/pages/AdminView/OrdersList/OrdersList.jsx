@@ -27,15 +27,12 @@ function OrdersList() {
   };
 
   useEffect(() => {
-    let uri = `${serverHost}/orderRequest`;
-
+    const params = new URLSearchParams({ page: currPage });
     if (query) {
-      const params = new URLSearchParams({ search: query });
-      uri += `?${params.toString()}`;
+      params.set('search', query);
     }
 
-    const page = new URLSearchParams({ page: currPage });
-    uri += `?${page.toString()}`;
+    const uri = `${serverHost}/orderRequest?${params.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
   }, [query, currPage]);
