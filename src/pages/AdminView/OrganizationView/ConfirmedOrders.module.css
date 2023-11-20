@@ -44,11 +44,14 @@ Button{
 
 .searchContainer {
     width: 100%;
-    display: grid;
+    display: flex;
     gap:10px;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     margin: 1% 0;
     align-items: end;
+}
+
+.searchContainer > * {
+    justify-content: right;
 }
 
 .content{

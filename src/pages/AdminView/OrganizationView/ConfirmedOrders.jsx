@@ -9,7 +9,6 @@ import SearchInput from '@components/SearchInput/SearchInput';
 import Table from '@components/Table/Table';
 import TableRow from '@components/TableRow/TableRow';
 import DateSearch from '@components/DateSearch/DateSearch';
-import DropdownMenuProductType from '@components/DropdownMenuMultProductType/DropdownMenuProducType';
 import styles from './ConfirmedOrders.module.css';
 
 function ConfirmedOrders({ orgId }) {
@@ -21,7 +20,7 @@ function ConfirmedOrders({ orgId }) {
   const [query, setQuery] = useState(null);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [types, setTypes] = useState([]);
+  // const [types, setTypes] = useState([]);
   const [currPage, setCurrPage] = useState(0);
 
   useEffect(() => {
@@ -30,10 +29,18 @@ function ConfirmedOrders({ orgId }) {
       params.set('search', query);
     }
 
+    if (startDate) {
+      params.set('startDeadline', startDate);
+    }
+
+    if (endDate) {
+      params.set('endDeadline', endDate);
+    }
+
     const uri = `${serverHost}/organization/orders/${orgId}?${params.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
-  }, [query, startDate, endDate, types, currPage]);
+  }, [query, startDate, endDate, currPage]);
 
   const searchText = (search) => {
     if (search?.trim().length > 0) setQuery(search);
@@ -45,9 +52,9 @@ function ConfirmedOrders({ orgId }) {
     setEndDate(end);
   };
 
-  const handleTypeSelection = (typesSelected) => {
-    setTypes(typesSelected);
-  };
+  // const handleTypeSelection = (typesSelected) => {
+  //   setTypes(typesSelected);
+  // };
 
   const handlePageChange = (e, page) => {
     e.preventDefault();
@@ -63,14 +70,14 @@ function ConfirmedOrders({ orgId }) {
       </div>
       <div className={styles.ConfirmedOrdersList}>
         <div className={styles.searchContainer}>
-          <SearchInput handleSearch={searchText} />
           <DateSearch
             onSearch={searchDate}
           />
-          <DropdownMenuProductType
+          <SearchInput handleSearch={searchText} />
+          {/* <DropdownMenuProductType
             orgId={orgId}
             onChange={handleTypeSelection}
-          />
+          /> */}
         </div>
         <div className={styles.content}>
           <Table

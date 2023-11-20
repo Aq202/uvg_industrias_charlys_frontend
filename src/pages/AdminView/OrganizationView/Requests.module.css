@@ -46,8 +46,13 @@ Button{
     display: flex;
     justify-content: end;
     margin: 1% 0;
-    width: 50%;
-    gap:10px;
+    width: 100%;
+    gap: 15px;
+    align-items: end;
+}
+
+.searchContainer > *{
+    justify-content: right !important;
 }
 
 .content{
@@ -70,28 +75,6 @@ Table {
     justify-content: center;
     margin-top: 30px;
     width: 100%;
-}
-
-@media screen and (max-width: 1400px) {
-    .searchContainer {
-        width: 40%;
-    }
-
-    .searchContainer > button {
-        height: 7vh;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .searchContainer {
-        width: 40%;
-    }
-}
-
-@media  screen and (max-width: 900px) {
-    .searchContainer {
-        width: 40%;
-    }
 }
 
 @media  screen and (max-width: 700px) {

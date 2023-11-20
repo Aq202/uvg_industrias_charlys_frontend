@@ -10,6 +10,7 @@ import SearchInput from '../../../components/SearchInput/SearchInput';
 import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import styles from './Requests.module.css';
+import DateSearch from '../../../components/DateSearch/DateSearch';
 
 function Requests({ orgId }) {
   const {
@@ -19,6 +20,8 @@ function Requests({ orgId }) {
   const token = useToken();
   const [query, setQuery] = useState(null);
   const [currPage, setCurrPage] = useState(0);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const handleSearch = (val) => {
     if (val?.trim().length > 0) setQuery(val);
@@ -31,14 +34,27 @@ function Requests({ orgId }) {
       params.set('search', query);
     }
 
+    if (startDate) {
+      params.set('startDatePlaced', startDate);
+    }
+
+    if (endDate) {
+      params.set('endDatePlaced', endDate);
+    }
+
     const uri = `${serverHost}/organization/orderRequests/${orgId}?${params.toString()}`;
 
     callFetch({ uri, headers: { authorization: token } });
-  }, [query, currPage]);
+  }, [query, currPage, startDate, endDate]);
 
   const handlePageChange = (e, page) => {
     e.preventDefault();
     setCurrPage(page - 1);
+  };
+
+  const searchDate = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
   };
 
   return (
@@ -51,11 +67,14 @@ function Requests({ orgId }) {
       </div>
       <div className={styles.requestsList}>
         <div className={styles.searchContainer}>
+          <DateSearch
+            onSearch={searchDate}
+          />
           <SearchInput handleSearch={handleSearch} />
         </div>
         <div className={styles.content}>
           <Table
-            header={['ID', 'Descripción', 'Fecha']}
+            header={['ID', 'Descripción', 'Fecha solicitud']}
             breakPoint="280px"
             maxCellWidth="140px"
             showCheckbox={false}
