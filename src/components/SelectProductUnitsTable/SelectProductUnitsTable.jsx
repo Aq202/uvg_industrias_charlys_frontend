@@ -31,7 +31,7 @@ function SelectProductUnitsTable({
 
   const token = useToken();
 
-  const sizes = sizesData?.map((size) => size.size);
+  const sizes = sizesData?.result?.map((size) => size.size);
 
   const [rows, setRows] = useState([{ }]);
 

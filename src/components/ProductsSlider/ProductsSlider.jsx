@@ -51,6 +51,12 @@ function ProductsSlider({
     if (resetIndex !== null) setCount(null);
   }, [resetIndex]);
 
+  useEffect(() => {
+    if (!products) return;
+
+    if (products.length === count) setCount(products.length - 1);
+  }, [products]);
+
   return (
     <div className={styles.productsSlider}>
       <LeftArrow className={styles.arrowIcon} onClick={previous} />

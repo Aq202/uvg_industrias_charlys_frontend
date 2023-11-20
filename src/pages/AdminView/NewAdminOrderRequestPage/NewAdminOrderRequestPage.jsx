@@ -40,7 +40,7 @@ function NewAdminOrderRequestPage() {
     callFetch: postRequest, result: resultPost, error: errorPost, loading: loadingPost,
   } = useFetch();
 
-  const redirectAfterSubmit = () => navigate('/solicitudOrden');
+  const redirectAfterSubmit = () => navigate(`/solicitudOrden/${resultPost.id}`);
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
