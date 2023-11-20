@@ -10,6 +10,7 @@ import Table from '@components/Table/Table';
 import TableRow from '@components/TableRow/TableRow';
 import DateSearch from '@components/DateSearch/DateSearch';
 import styles from './ConfirmedOrders.module.css';
+import AppLink from '../../../components/Link/AppLink';
 
 function ConfirmedOrders({ orgId }) {
   const {
@@ -90,7 +91,7 @@ function ConfirmedOrders({ orgId }) {
           >
             {result?.result.map((val) => (
               <TableRow key={val.id}>
-                <td>{val.id}</td>
+                <td><AppLink to={`/orden/${val.id}`}>{val.id}</AppLink></td>
                 <td>{val.description}</td>
                 <td>{val.deadline ? moment(val.deadline).format('DD-MM-YYYY') : 'S.F.'}</td>
               </TableRow>

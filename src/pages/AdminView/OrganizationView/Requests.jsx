@@ -11,6 +11,7 @@ import Table from '../../../components/Table/Table';
 import TableRow from '../../../components/TableRow/TableRow';
 import styles from './Requests.module.css';
 import DateSearch from '../../../components/DateSearch/DateSearch';
+import AppLink from '../../../components/Link/AppLink';
 
 function Requests({ orgId }) {
   const {
@@ -84,7 +85,7 @@ function Requests({ orgId }) {
             {
               result?.result.map((val) => (
                 <TableRow key={val.id}>
-                  <td>{val.id}</td>
+                  <td><AppLink to={`/solicitudOrden/${val.id}`}>{val.id}</AppLink></td>
                   <td>{val.description}</td>
                   <td>{val.date_placed ? moment(val.date_placed).format('DD-MM-YYYY') : 'S.F.'}</td>
                 </TableRow>

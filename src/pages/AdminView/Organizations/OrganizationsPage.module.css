@@ -79,13 +79,7 @@
     font-weight: 600;
 }
 
-.organizationName{
-    cursor: pointer;
-}
 
-.organizationName:hover{
-    color: darkblue;
-}
 
 .garbageIcon{
     filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(357deg) brightness(117%) contrast(100%);

@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
-import { useNavigate } from 'react-router';
 import styles from './OrganizationsPage.module.css';
 import Button from '../../../components/Button/Button';
 import useFetch from '../../../hooks/useFetch';
@@ -18,6 +17,7 @@ import ErrorNotificationPopUp from '../../../components/ErrorNotificationPopUp/E
 import NewOrganizationFormPopUp from '../../../components/NewOrganizationFormPopUp/NewOrganizationFormPopUp';
 import garbage from '../../../assets/garbage.svg';
 import consts from '../../../helpers/consts';
+import AppLink from '../../../components/Link/AppLink';
 
 function OrganizationsPage() {
   const {
@@ -30,7 +30,6 @@ function OrganizationsPage() {
     loading: loadingDel,
   } = useFetch();
   const token = useToken();
-  const navigate = useNavigate();
   const [popUpDisable, setPopUpDisable] = useState(null);
   const [popUpDelete, setPopUpDelete] = useState(null);
   const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
@@ -71,10 +70,6 @@ function OrganizationsPage() {
 
     setPopUpDelete(() => null);
     getOrganizations(0);
-  };
-
-  const selectOrganization = (orgId) => {
-    navigate(`/organizacion/${orgId}`);
   };
 
   const handlePageChange = (e, page) => {
@@ -118,8 +113,8 @@ function OrganizationsPage() {
         >
           {resultOrg && resultOrg.result.map((org) => (
             <TableRow>
-              <td className={styles.organizationName} onClick={() => selectOrganization(org.id)}>
-                {org.name}
+              <td className={styles.organizationName}>
+                <AppLink to={`/organizacion/${org.id}`}>{org.name}</AppLink>
               </td>
               <td>{org.email}</td>
               <td>{org.phone}</td>
