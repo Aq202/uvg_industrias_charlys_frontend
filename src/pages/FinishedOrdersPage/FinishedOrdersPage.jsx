@@ -97,6 +97,7 @@ function FinishedOrdersPage() {
               deadline={order.deadline}
               description={order.description}
               client={order.client}
+              link={`/ordenConfirmada/${order.id}`}
             />
           ))}
         </div>

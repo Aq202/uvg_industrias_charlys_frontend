@@ -92,6 +92,7 @@ function ConfirmedOrdersPage() {
               id={order.id}
               deadline={order.deadline}
               description={order.description}
+              link={`/orden/${order.id}`}
             />
           ))}
         </div>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import styles from './ConfirmedOrder.module.css';
 
 function ConfirmedOrder({
-  id, deadline, description, client, phase,
+  id, deadline, description, client, phase, link,
 }) {
   const date = new Date(deadline);
   return (
@@ -24,7 +24,7 @@ function ConfirmedOrder({
         )}
         <div className={`${styles.text}`}>
           <span>Fecha límite de entrega:</span>
-          {deadline ? `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}` : ''}
+          {deadline ? `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}` : 'Sin fecha'}
         </div>
         <div className={`${styles.text}`}>
           <span>Descripción:</span>
@@ -38,7 +38,7 @@ function ConfirmedOrder({
         )}
       </div>
       <div className={`${styles.button}`}>
-        <Link to={`/orden/${id}`} className={styles.arrowLink}>
+        <Link to={link} className={styles.arrowLink}>
           <ArrowCircleRightOutlinedIcon
             style={{ fontSize: '3em' }}
             className={styles.arrowIcon}
@@ -55,12 +55,14 @@ ConfirmedOrder.propTypes = {
   description: PropTypes.string.isRequired,
   client: PropTypes.string,
   phase: PropTypes.string,
+  link: PropTypes.string,
 };
 
 ConfirmedOrder.defaultProps = {
   deadline: null,
   client: null,
   phase: null,
+  link: null,
 };
 
 export default ConfirmedOrder;
