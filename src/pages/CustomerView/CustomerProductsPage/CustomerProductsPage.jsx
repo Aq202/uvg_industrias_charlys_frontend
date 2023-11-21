@@ -94,7 +94,6 @@ function CustomerProductsPage() {
             name={data.description}
             imageUrl={productImages?.[data.id] ?? null}
             type={data.type}
-            organization="Colegio Don Bosco"
             colors={data?.colors?.map((color) => ({
               name: color.color,
               r: color.red,
