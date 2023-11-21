@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import styles from './NewAdminOrderRequestPage.module.css';
 import useFetch from '../../../hooks/useFetch';
 import { serverHost } from '../../../config';
@@ -21,6 +22,7 @@ import usePopUp from '../../../hooks/usePopUp';
 function NewAdminOrderRequestPage() {
   const token = useToken();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
@@ -200,6 +202,13 @@ function NewAdminOrderRequestPage() {
       removeContentType: true,
     });
   };
+
+  useEffect(() => {
+    // añadir org por defecto si viene en la ruta
+    if (searchParams.has('org')) {
+      setForm((prev) => ({ ...prev, idClientOrganization: searchParams.get('org') }));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (!errorPost) return;

@@ -4,6 +4,7 @@ import { Pagination } from '@mui/material';
 import { serverHost } from '@/config';
 import useFetch from '@hooks/useFetch';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import useToken from '../../../hooks/useToken';
 import Button from '../../../components/Button/Button';
 import SearchInput from '../../../components/SearchInput/SearchInput';
@@ -64,7 +65,9 @@ function Requests({ orgId }) {
         <h2>
           Solicitudes
         </h2>
-        <Button text="Nuevo" />
+        <Link to={`/solicitudOrden/nuevo?org=${orgId}`}>
+          <Button text="Nuevo" />
+        </Link>
       </div>
       <div className={styles.requestsList}>
         <div className={styles.searchContainer}>

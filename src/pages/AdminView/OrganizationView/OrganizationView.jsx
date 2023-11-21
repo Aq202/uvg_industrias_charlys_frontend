@@ -46,7 +46,6 @@ function OrganizationView() {
           <h1>
             {result.name}
           </h1>
-          <Button text="Administrar" type="secondary" />
         </div>
         <div className={styles.orgInfo}>
           <div className={styles.infoElement}>
