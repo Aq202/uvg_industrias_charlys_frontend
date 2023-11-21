@@ -35,7 +35,7 @@ function NewCustomerOrderRequestPage() {
   const [orgId, setOrgId] = useState('');
   const [currentProduct, setCurrentProduct] = useState('');
 
-  const redirectAfterSubmit = () => navigate('/');
+  const redirectAfterSubmit = () => navigate(`/solicitudOrden/${resultPost?.id ?? ''}`);
 
   const handleChange = (e) => {
     const { name: field, value } = e.target;
@@ -52,6 +52,7 @@ function NewCustomerOrderRequestPage() {
       return;
     }
     setSelectedProducts((prevArray) => ({ ...prevArray, [product.id]: product }));
+    setCurrentProduct(product.id);
     closeCatalog();
   };
 
@@ -88,6 +89,16 @@ function NewCustomerOrderRequestPage() {
 
   const clearError = (e) => {
     setErrors((lastVal) => ({ ...lastVal, [e.target.name]: null }));
+  };
+
+  const deleteProduct = (id) => {
+    const currentSelectedProducts = { ...selectedProducts };
+    const currentQuantities = { ...quantities };
+    delete currentSelectedProducts[id];
+    delete currentQuantities[id];
+    setQuantities(currentQuantities);
+    setSelectedProducts(currentSelectedProducts);
+    setCurrentProduct('');
   };
 
   const handleSubmit = (e) => {
@@ -182,6 +193,7 @@ function NewCustomerOrderRequestPage() {
           <ProductsSlider
             products={Object.values(selectedProducts)}
             onChange={setCurrentProduct}
+            onDelete={deleteProduct}
           />
           )}
           {Object.keys(selectedProducts).length === 0
