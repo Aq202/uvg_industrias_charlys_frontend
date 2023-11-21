@@ -68,7 +68,7 @@ function SizesList() {
             <SearchInput handleSearch={searchSizes} />
           </div>
           <div className={styles.sizes}>
-            {resultSizes?.map((size) => (
+            {resultSizes?.result?.map((size) => (
               <div className={styles.size}>
                 <p>{size.size}</p>
                 <img

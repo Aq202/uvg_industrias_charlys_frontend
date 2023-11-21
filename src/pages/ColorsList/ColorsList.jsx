@@ -63,7 +63,7 @@ function ColorsList() {
           </div>
           <div className={styles.colors}>
             {errorColors && <p>No hay resultados</p>}
-            {resultColors?.map((color) => (
+            {resultColors?.result?.map((color) => (
               <div className={styles.colorsContainer}>
                 <span
                   className={styles.color}
