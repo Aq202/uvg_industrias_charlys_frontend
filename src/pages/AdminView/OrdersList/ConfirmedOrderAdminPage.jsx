@@ -60,7 +60,7 @@ function ConfirmedOrderAdminPage() {
 
   const getSizesByProduct = async (idProduct) => {
     const sizesArray = [];
-    resultSizes?.forEach((size) => {
+    resultSizes?.result?.forEach((size) => {
       const sizeObject = {
         size: size.size,
         quantity: 0,
