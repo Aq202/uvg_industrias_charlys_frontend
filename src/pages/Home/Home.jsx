@@ -15,7 +15,6 @@ import {
 import {
   FaClipboardList as OrderListIcon,
   FaTasks as ProductionIcon,
-  FaUsersCog as UserGroupIcon,
   FaShoppingBasket as ProductsIcon,
 } from 'react-icons/fa';
 import useToken from '@hooks//useToken';
@@ -28,12 +27,14 @@ function Home() {
   // const navigate = useNavigate();
 
   const [userRole, setUserRole] = useState(null);
+  const [userName, setUserName] = useState(null);
 
   useEffect(() => {
     if (!token) return;
 
     const userData = getTokenPayload(token);
-    if (userData?.role) setUserRole(userData?.role);
+    setUserRole(userData?.role);
+    setUserName(userData?.name);
   }, [token]);
 
   const adminItems = [
@@ -41,11 +42,6 @@ function Home() {
       icon: <OrderListIcon className={styles.icon} />,
       text: 'Pedidos recibidos',
       url: '/orderList',
-    },
-    {
-      icon: <UserGroupIcon className={styles.icon} />,
-      text: 'Administración de usuarios',
-      url: '',
     },
     {
       icon: <InventoryIcon className={styles.icon} />,
@@ -100,7 +96,7 @@ function Home() {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.title}>
-        Panel de trabajo
+        {`¡Bienvenido ${userName ?? ''}!`}
       </div>
       <div className={styles.itemsContainer}>
         {userRole === consts.role.admin
