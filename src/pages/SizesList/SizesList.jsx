@@ -51,7 +51,6 @@ function SizesList() {
 
   return (
     <div className={styles.page}>
-      {errorSizes && <p>Hubo un error al cargar las tallas</p>}
       {loadingSizes && <LoadingView />}
       <div className={styles.sizesList}>
         <div className={styles.title}>
@@ -67,6 +66,7 @@ function SizesList() {
           <div className={styles.filters}>
             <SearchInput handleSearch={searchSizes} />
           </div>
+          {errorSizes && <p className={styles.noResult}>No se encontraron resultados.</p>}
           <div className={styles.sizes}>
             {resultSizes?.result?.map((size) => (
               <div className={styles.size}>

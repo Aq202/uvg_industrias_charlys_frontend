@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import PopUp from '../PopUp/PopUp';
+import SuccessNotificationPopUp from '../SuccessNotificationPopUp/SuccessNotificationPopUp';
+import usePopUp from '../../hooks/usePopUp';
+import ErrorNotificationPopUp from '../ErrorNotificationPopUp/ErrorNotificationPopUp';
+import DeleteProductType from './DeleteProductType/DeleteProductType';
+
+function DeleteProductTypePopUp({
+  id, name, close, isOpen, successCallback,
+}) {
+  const [message, setMessage] = useState('');
+
+  const [isSuccessOpen, openSuccess, closeSuccess] = usePopUp();
+  const [isErrorOpen, openError, closeError] = usePopUp();
+
+  const handleSuccess = (val) => {
+    close();
+    openSuccess();
+    setMessage(val);
+  };
+
+  const handleError = (val) => {
+    close();
+    openError();
+    setMessage(val);
+  };
+
+  return (
+    <>
+      {isOpen && (
+        <PopUp
+          close={close}
+          maxWidth={700}
+          closeWithBackground
+          closeButton={false}
+        >
+          <DeleteProductType
+            id={id}
+            name={name}
+            onCancel={close}
+            onError={handleError}
+            onSuccess={handleSuccess}
+          />
+        </PopUp>
+      )}
+
+      <SuccessNotificationPopUp
+        close={closeSuccess}
+        isOpen={isSuccessOpen}
+        text={message}
+        callback={successCallback}
+      />
+
+      <ErrorNotificationPopUp close={closeError} isOpen={isErrorOpen} text={message} />
+    </>
+  );
+}
+
+export default DeleteProductTypePopUp;
+
+DeleteProductTypePopUp.propTypes = {
+  close: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  successCallback: PropTypes.func,
+};
+
+DeleteProductTypePopUp.defaultProps = {
+  successCallback: null,
+};

@@ -50,7 +50,7 @@ function ColorsList() {
 
   return (
     <div className={styles.page}>
-      {errorColors && <p>Hubo un error al cargar los colores</p>}
+
       {!errorColors && loadingColors && <LoadingView />}
       <div className={styles.colorsList}>
         <div className={styles.title}>
