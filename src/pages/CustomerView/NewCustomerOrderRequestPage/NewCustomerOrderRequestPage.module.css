@@ -7,16 +7,15 @@
 }
 
 .pageTitle{
-    margin: 40px 0 40px 0;
+    margin-bottom: 20px;
     align-self: flex-start;
 }
 
 .formContainer{
     background-color: #FDFDFD;
     box-shadow: var(--container--box-shadow--);
-    border-radius: 20px;
     width: 100%;
-    padding: 30px 50px 50px 50px;
+    padding: 40px;
 }
 
 .pageHeader{
