@@ -18,6 +18,7 @@ import NewOrganizationFormPopUp from '../../../components/NewOrganizationFormPop
 import garbage from '../../../assets/garbage.svg';
 import AppLink from '../../../components/Link/AppLink';
 import SearchInput from '../../../components/SearchInput/SearchInput';
+import useCount from '../../../hooks/useCount';
 
 function OrganizationsPage() {
   const {
@@ -37,6 +38,8 @@ function OrganizationsPage() {
   const [isNewOrgOpen, openNewOrg, closeNewOrg] = usePopUp();
   const [currPage, setCurrPage] = useState(0);
   const [query, setQuery] = useState(null);
+
+  const { count: trigger, next: fireTrigger } = useCount();
 
   const getOrganizations = (page, searchQuery = null) => {
     const params = new URLSearchParams({ page });
@@ -64,7 +67,7 @@ function OrganizationsPage() {
     });
 
     setPopUpDisable(() => null);
-    getOrganizations(0);
+    fireTrigger();
   };
 
   const deleteOrganization = () => {
@@ -76,7 +79,7 @@ function OrganizationsPage() {
     });
 
     setPopUpDelete(() => null);
-    getOrganizations(0);
+    fireTrigger();
   };
 
   const handlePageChange = (e, page) => {
@@ -86,7 +89,7 @@ function OrganizationsPage() {
 
   useEffect(() => {
     getOrganizations(currPage, query);
-  }, [currPage, query]);
+  }, [currPage, query, trigger]);
 
   useEffect(() => {
     if (!resultDel) return;
@@ -194,6 +197,7 @@ function OrganizationsPage() {
       <NewOrganizationFormPopUp
         close={closeNewOrg}
         isOpen={isNewOrgOpen}
+        successCallback={fireTrigger}
       />
     </div>
   );

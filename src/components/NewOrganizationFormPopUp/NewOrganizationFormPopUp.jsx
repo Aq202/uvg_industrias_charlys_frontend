@@ -21,11 +21,10 @@ function NewOrganizationFormPopUp({
   };
 
   const handleNewOrgId = (id) => {
-    newOrgId(id);
+    if (newOrgId) newOrgId(id);
   };
 
   const handleError = (val) => {
-    close();
     openError();
     setMessage(val);
   };

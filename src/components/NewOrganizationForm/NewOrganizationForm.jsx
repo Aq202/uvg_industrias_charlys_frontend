@@ -38,13 +38,13 @@ function NewOrganizationForm(
 
   useEffect(() => {
     if (!result) return;
-    onSuccess();
-    newOrgId(result.id);
+    if (onSuccess) onSuccess();
+    if (newOrgId) newOrgId(result.id);
   }, [result]);
 
   useEffect(() => {
-    if (!result) return;
-    onError();
+    if (!error) return;
+    if (onError) onError(error?.message);
   }, [error]);
 
   const clearError = (e) => {
