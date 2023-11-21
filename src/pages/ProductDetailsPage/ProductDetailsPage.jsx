@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { BsCardImage as ImageIcon } from 'react-icons/bs';
@@ -12,6 +12,8 @@ import randomString from '../../helpers/randomString';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import LoadingView from '../../components/LoadingView/LoadingView';
 import Button from '../../components/Button/Button';
+import consts from '../../helpers/consts';
+import getTokenPayload from '../../helpers/getTokenPayload';
 
 function ProductDetailsPage({ model }) {
   const { id } = useParams();
@@ -19,6 +21,8 @@ function ProductDetailsPage({ model }) {
   const {
     callFetch: fetchProductData, result: productData, loading, error,
   } = useFetch();
+
+  const [isAdmin, setIsAdmin] = useState();
 
   const token = useToken();
 
@@ -28,15 +32,23 @@ function ProductDetailsPage({ model }) {
     fetchProductData({ uri, header: { authorization: token } });
   }, [id]);
 
+  useEffect(() => {
+    if (!token) return;
+    const { role } = getTokenPayload(token);
+    setIsAdmin(role === consts.role.admin);
+  }, [token]);
+
   return (
     <>
       {productData && (
       <div className={styles.productDetailsPage}>
         <header className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>Detalles de producto</h1>
+          {isAdmin && (
           <Link to="editar">
             <Button text="Editar" />
           </Link>
+          )}
         </header>
         <div className={styles.pageContainer}>
           <div className={styles.dataContainer}>
