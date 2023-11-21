@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import styles from './NewProductModelPage.module.css';
 import InputSelect from '../../components/InputSelect/InputSelect';
 import InputText from '../../components/InputText/InputText';
@@ -13,12 +14,12 @@ import newProductModelSchema from './newProductModelSchema';
 import useFetch from '../../hooks/useFetch';
 import { serverHost } from '../../config';
 import useToken from '../../hooks/useToken';
-import SubLoadingView from '../../components/SubLoadingView/SubLoadingView';
 import usePopUp from '../../hooks/usePopUp';
 import SuccessNotificationPopUp from '../../components/SuccessNotificationPopUp/SuccessNotificationPopUp';
 import ErrorNotificationPopUp from '../../components/ErrorNotificationPopUp/ErrorNotificationPopUp';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import getTokenPayload from '../../helpers/getTokenPayload';
+import LoadingView from '../../components/LoadingView/LoadingView';
 
 function NewProductModelPage({ clientView }) {
   const {
@@ -26,6 +27,8 @@ function NewProductModelPage({ clientView }) {
   } = useForm({
     schema: newProductModelSchema,
   });
+
+  const [searchParams] = useSearchParams();
 
   const {
     callFetch: getTypesFetch,
@@ -55,7 +58,14 @@ function NewProductModelPage({ clientView }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!clientView && !token) return;
+    // Agregar id de org si viene en params
+    if (searchParams.has('org')) {
+      setData('idClientOrganization', searchParams.get('org'));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!clientView || !token) return;
 
     // agregar id de la organización del cliente, en clientView
     const { clientOrganizationId } = getTokenPayload(token);
@@ -120,7 +130,7 @@ function NewProductModelPage({ clientView }) {
     openSuccess();
   }, [productModelResult]);
 
-  const successCallback = () => navigate('/');
+  const successCallback = () => navigate(`/producto/modelo/${productModelResult.id}`);
 
   return (
     <div className={styles.newProductModelPage}>
@@ -165,7 +175,7 @@ function NewProductModelPage({ clientView }) {
           onChange={onChange}
           onFocus={(e) => clearFieldError(e.target.name)}
           onBlur={(e) => validateField(e.target.name)}
-          options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
+          options={productTypes?.result?.map((val) => ({ value: val.id, title: val.name }))}
           disabled={!productTypes}
         />
         {!clientView
@@ -198,10 +208,10 @@ function NewProductModelPage({ clientView }) {
             />
           )}
         </div>
-        {(loadingTypes || loadingOrganizations) && (
-          <SubLoadingView className={styles.loadingView} />
-        )}
       </form>
+      {(loadingTypes || loadingOrganizations) && (
+      <LoadingView />
+      )}
 
       <ErrorNotificationPopUp
         isOpen={isErrorOpen}

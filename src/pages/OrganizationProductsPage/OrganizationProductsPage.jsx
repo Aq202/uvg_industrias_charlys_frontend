@@ -75,7 +75,7 @@ function OrganizationProductsPage() {
     <div className={styles.organizationProductsPage}>
       <header className={styles.pageHeader}>
         <h2>Productos</h2>
-        <NavLink to="/producto/nuevo">
+        <NavLink to={`/producto/nuevo?org=${orgId}`}>
           <Button text="Nuevo producto" name="new-product" />
         </NavLink>
       </header>

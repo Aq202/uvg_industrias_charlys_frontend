@@ -124,7 +124,7 @@ function UpdateProductModelPage() {
 
     images?.forEach((file) => data.append('images[]', file, file.name));
 
-    if (imagesToDelete.length > 0) data.append('imagesToRemove[]', imagesToDelete);
+    imagesToDelete?.forEach((img) => data.append('imagesToRemove[]', img));
 
     // enviar información
     updateProductModel({
@@ -142,7 +142,7 @@ function UpdateProductModelPage() {
     openSuccess();
   }, [updateProductModelResult]);
 
-  const successCallback = () => navigate('/');
+  const successCallback = () => navigate(`/producto/modelo/${productId}`);
 
   return (
     <div className={styles.Page}>
@@ -187,7 +187,7 @@ function UpdateProductModelPage() {
             onChange={onChange}
             onFocus={(e) => clearFieldError(e.target.name)}
             onBlur={(e) => validateField(e.target.name)}
-            options={productTypes?.map((val) => ({ value: val.id, title: val.name }))}
+            options={productTypes?.result?.map((val) => ({ value: val.id, title: val.name }))}
             disabled={!productTypes}
           />
           <TextArea

@@ -5,9 +5,9 @@ import { serverHost } from '@/config';
 import { scrollbarGray } from '@styles/scrollbar.module.css';
 import styles from './ColorPicker.module.css';
 import useToken from '../../hooks/useToken';
-import SubLoadingView from '../SubLoadingView/SubLoadingView';
 import SearchInput from '../SearchInput/SearchInput';
 import Color from './Color/Color';
+import Spinner from '../Spinner/Spinner';
 
 function ColorPicker({ callBack }) {
   const [query, setQuery] = useState(null);
@@ -53,26 +53,25 @@ function ColorPicker({ callBack }) {
   }, [query]);
 
   useEffect(() => {
-    if (result?.length > 0) {
+    if (result?.result?.length > 0) {
       setColors((prevColors) => {
         const filteredColors = prevColors.filter((color) => color.check);
 
         const updatedColors = filteredColors.map((color) => {
-          const foundColor = result.find((resultColor) => resultColor.id === color.id);
+          const foundColor = result.result?.find((resultColor) => resultColor.id === color.id);
           if (foundColor) {
             return { ...color, check: true };
           }
           return color;
         });
 
-        const newColors = result.filter((resultColor) => (
+        const newColors = result.result?.filter((resultColor) => (
           !updatedColors.some((color) => color.id === resultColor.id)
         ));
         return [...updatedColors, ...newColors.map((color) => ({ ...color, check: false }))];
       });
     }
   }, [result]);
-
   return (
     <div className={`${styles.mainContainer}`}>
       Colores
@@ -83,9 +82,9 @@ function ColorPicker({ callBack }) {
         <div className={`${styles.colorsListContainer} ${scrollbarGray}`}>
           <ul className={`${styles.colorsList}`}>
             {error && <div className="error-message">{error?.message ?? 'Ocurrió un error.'}</div> }
-            {loading && <SubLoadingView />}
-            {colors?.length > 0 && !error
-            && colors.map((color) => (
+            {loading && <Spinner />}
+            {colors?.length > 0 && !loading
+            && colors?.map((color) => (
               <Color
                 id={color.id}
                 name={color.name}

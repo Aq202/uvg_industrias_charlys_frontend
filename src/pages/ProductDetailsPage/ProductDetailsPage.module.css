@@ -1,7 +1,11 @@
 .productDetailsPage{
   padding: var(--page-vertical-padding--) var(--page-horizontal-padding--);
 }
-
+.pageHeader{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .pageTitle{
   margin-bottom: 20px;
   font-size: var( --h1-title-size--);

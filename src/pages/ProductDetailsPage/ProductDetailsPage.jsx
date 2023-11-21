@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { BsCardImage as ImageIcon } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import styles from './ProductDetailsPage.module.css';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
 import useFetch from '../../hooks/useFetch';
@@ -10,6 +11,7 @@ import useToken from '../../hooks/useToken';
 import randomString from '../../helpers/randomString';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import LoadingView from '../../components/LoadingView/LoadingView';
+import Button from '../../components/Button/Button';
 
 function ProductDetailsPage({ model }) {
   const { id } = useParams();
@@ -30,7 +32,12 @@ function ProductDetailsPage({ model }) {
     <>
       {productData && (
       <div className={styles.productDetailsPage}>
-        <h1 className={styles.pageTitle}>Detalles de producto</h1>
+        <header className={styles.pageHeader}>
+          <h1 className={styles.pageTitle}>Detalles de producto</h1>
+          <Link to="editar">
+            <Button text="Editar" />
+          </Link>
+        </header>
         <div className={styles.pageContainer}>
           <div className={styles.dataContainer}>
             <h3 className={styles.dataTitle}>Organización cliente</h3>
